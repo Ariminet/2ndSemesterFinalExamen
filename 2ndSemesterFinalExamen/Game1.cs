@@ -13,6 +13,14 @@ enum GameStates
 	Upgrades,
 	Pause
 }
+
+enum Dir
+{
+	Down,
+	Up,
+	Left,
+	Right
+}
 namespace _2ndSemesterFinalExamen
 {
 	public class Game1 : Game
