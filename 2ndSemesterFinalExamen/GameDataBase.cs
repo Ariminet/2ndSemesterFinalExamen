@@ -15,27 +15,39 @@ namespace _2ndSemesterFinalExamen
 
         public virtual void Initialize()
         {
-            // TODO: Add your initialization logic here
-            connectionString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
-        
-        }
+			// TODO: Add your initialization logic here
+			connectionString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
 
+		}
 
+        //public void CreateTableDB()
+        //{
+        //    string query = "CREATE TABLE IF NOT EXISTS TestTwo (ID INTEGER PRIMARY KEY, Name NVARCHAR(50));";
+        //    using (connection = new SqlConnection(connectionString))
+        //    using (SqlCommand command = new SqlCommand(query, connection))
+        //    {
+        //        connection.Open();
+        //        //command.Parameters.AddWithValue("@FirstName", "LKFDJKGLDF");
+        //        //command.Parameters.AddWithValue("@LastName", "DSFGSDF");
+        //        command.ExecuteNonQuery();
 
-        public void readDataDB()
-        {
-            string query = "INSERT INTO Test VALUES(@FirstName, @LastName)";
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                connection.Open();
-                command.Parameters.AddWithValue("@FirstName", "PalleMikkelsen");
-                command.Parameters.AddWithValue("@LastName", "mikkelsen");
-                command.ExecuteNonQuery();
+        //    }
 
-            }
+        //}
 
-        }
+        //public void InsertDB()
+        //{
+        //    string query = "INSERT INTO TestThree VALUES(@Name)";
+        //    using (connection = new SqlConnection(connectionString))
+        //    using (SqlCommand command = new SqlCommand(query, connection))
+        //    {
+        //        connection.Open();
+        //        command.Parameters.AddWithValue("@Name", "LKFDJKGLDF");
+        //        command.ExecuteNonQuery();
+
+        //    }
+
+        //}
 
     }
 }
