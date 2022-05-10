@@ -32,6 +32,9 @@ namespace _2ndSemesterFinalExamen
 
 		private GameDataBase GameDB = new GameDataBase();
 
+		Texture2D skull, mon, ghost;
+
+		private EnemyFactory enemyFactory;
 
 		public Game1()
 		{
@@ -50,6 +53,12 @@ namespace _2ndSemesterFinalExamen
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
+
+			skull = Content.Load<Texture2D>("");
+			mon = Content.Load<Texture2D>("");
+			ghost = Content.Load<Texture2D>("");
+
+			enemyFactory = new EnemyFactory(skull, mon, ghost);
 
 			// TODO: use this.Content to load your game content here
 			//GameDB.CreateTableDB();
