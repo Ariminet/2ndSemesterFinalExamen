@@ -60,6 +60,11 @@ namespace _2ndSemesterFinalExamen
 
 			enemyFactory = new EnemyFactory(skull, mon, ghost);
 
+
+			enemyFactory.SkullSpawn();
+			enemyFactory.MonSpawn();
+			enemyFactory.GhostSpawn();
+
 			// TODO: use this.Content to load your game content here
 			//GameDB.CreateTableDB();
 			//GameDB.InsertDB();
