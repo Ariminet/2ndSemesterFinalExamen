@@ -25,5 +25,21 @@ namespace _2ndSemesterFinalExamen
             get { return dead; }
             set { dead = value; }
         }
+
+        public void Draw (GameTime gameTime, Vector2 playPos, bool PlayerDead)
+        {
+            anim.Position = new Vector2(pos.X - 48, pos.Y - 66);
+            anim.Update(gameTime);
+
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(!PlayerDead)
+            {
+                Vector2 moveDir = playPos - pos;
+                moveDir.Normalize();
+                pos += moveDir * (speed * dt);
+            }
+
+            
+        }
     }
 }
