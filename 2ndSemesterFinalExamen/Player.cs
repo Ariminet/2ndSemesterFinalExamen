@@ -12,7 +12,7 @@ namespace _2ndSemesterFinalExamen
         public string Tag { get; set; }
         public int Points { get; set; }
         public int CurrentLevel { get; set; }
-        public Vector2 position = new Vector2(500, 300);
+        //public Vector2 position = new Vector2(500, 300);
         private int speed = 300;
 
         //public Dir direction { get;  set; } = Dir.Down;
@@ -36,7 +36,7 @@ namespace _2ndSemesterFinalExamen
 		//}
 
 
-		public void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -79,45 +79,47 @@ namespace _2ndSemesterFinalExamen
 					case Dir.Down:
 						if (gameObject.transform.Position.Y < 1250)
 						{
-							gameObject.transform.Position += new Vector2(gameObject.transform.Position.X,speed * dt);
+							gameObject.transform.Position += new Vector2(gameObject.transform.Position.X, (float)speed * dt);
 						}
 						break;
 					case Dir.Up:
 						if (gameObject.transform.Position.Y > 200)
 						{
-							gameObject.transform.Position -= new Vector2(gameObject.transform.Position.X,speed * dt);
+							gameObject.transform.Position -= new Vector2( gameObject.transform.Position.X, (float)speed * dt);
 						}
 						break;
 					case Dir.Left:
 						if (gameObject.transform.Position.X > 225)
 						{
-							gameObject.transform.Position -= new Vector2(speed * dt, gameObject.transform.Position.Y);
+							gameObject.transform.Position -= new Vector2( (float)speed * dt,gameObject.transform.Position.Y);
 						}
 						break;
 					case Dir.Right:
 						if (gameObject.transform.Position.X < 1275)
 						{
-							gameObject.transform.Position += new Vector2(speed * dt, gameObject.transform.Position.Y);
+							gameObject.transform.Position += new Vector2( (float)speed * dt,gameObject.transform.Position.Y);
 						}
 						break;
 				}
 
 			}
 
-			// anim = animations[(int)direction];
+            ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).animations[(int)gameObject.transform.direction];
 
-			// anim.Position = new Vector2(position.X - 48, position.Y - 48);
-			// if (kState.IsKeyDown(Keys.Space))
-			// {
-			//         anim.setFrame(0);
-			// }
-			//else if (isMoving) {
-			//     anim.Update(gameTime);
-			// }else
-			// {
-			//     anim.setFrame(1);
-			// }
-			if ( kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
+            ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim.Position = new Vector2(gameObject.transform.Position.X - 48, gameObject.transform.Position.Y - 48);
+            if (kState.IsKeyDown(Keys.Space))
+            {
+                ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim.setFrame(0);
+            }
+            else if (gameObject.transform.isMoving)
+            {
+                ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim.AnimUpdate(gameTime);
+            }
+            else
+            {
+                ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim.setFrame(1);
+            }
+            if ( kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
             {
                 Projectile.projectiles.Add(new Projectile(gameObject.transform.Position,gameObject.transform.direction));
             }

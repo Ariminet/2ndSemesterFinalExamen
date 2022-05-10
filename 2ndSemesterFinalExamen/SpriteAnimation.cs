@@ -28,10 +28,11 @@ namespace _2ndSemesterFinalExamen
 
 
 
+
 		
-        public override void  Draw(SpriteBatch spriteBatch)
+        public void  Draw(SpriteBatch spriteBatch, Vector2 newPosition)
         {
-            spriteBatch.Draw(Texture, Position, Rectangles[FrameIndex], Color, Rotation, Origin, Scale, SpriteEffect, 0f);
+            spriteBatch.Draw(Texture, newPosition, Rectangles[FrameIndex], Color, Rotation, Origin, Scale, SpriteEffect, 0f);
         }
     }
 
@@ -48,9 +49,9 @@ namespace _2ndSemesterFinalExamen
             FramesPerSecond = fps;
         }
 
-        public void Update(GameTime gameTime)
+        public  void AnimUpdate(GameTime gameTime)
         {
-            KeyboardState kState = Keyboard.GetState();
+            //KeyboardState kState = Keyboard.GetState();
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (timeElapsed > timeToUpdate)
             {
@@ -64,21 +65,21 @@ namespace _2ndSemesterFinalExamen
             }
 
                 
-                anim = animations[(int)gameObject.transform.direction];
+                //anim = animations[(int)gameObject.transform.direction];
 
-                anim.Position = new Vector2(gameObject.transform.Position.X - 48, gameObject.transform.Position.Y - 48);
-                if (kState.IsKeyDown(Keys.Space))
-                {
-                    anim.setFrame(0);
-                }
-                else if (gameObject.transform.isMoving)
-                {
-                    anim.Update(gameTime);
-                }
-                else
-                {
-                    anim.setFrame(1);
-                }
+                //anim.Position = new Vector2(gameObject.transform.Position.X - 48, gameObject.transform.Position.Y - 48);
+                //if (kState.IsKeyDown(Keys.Space))
+                //{
+                //    anim.setFrame(0);
+                //}
+                //else if (gameObject.transform.isMoving)
+                //{
+                //    anim.Update(gameTime);
+                //}
+                //else
+                //{
+                //    anim.setFrame(1);
+                //}
         }
 
         public void setFrame(int frame)

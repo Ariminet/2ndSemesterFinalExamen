@@ -40,7 +40,7 @@ namespace _2ndSemesterFinalExamen
             set { collided = value; }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
