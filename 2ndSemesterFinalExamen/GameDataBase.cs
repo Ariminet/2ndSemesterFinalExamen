@@ -15,12 +15,14 @@ namespace _2ndSemesterFinalExamen
 
         public virtual void Initialize()
         {
-			// TODO: Add your initialization logic here
-			connectionString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
+            // TODO: Add your initialization logic here
+            string dbString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
+            string dbConnection = DecodeAPI.DecodeBase64(dbString);
+            connectionString = dbConnection;
 
 		}
-
        
+
 
         /// <summary>
         /// Adds Player information to DB with Unique ID, Player Tag + current points and level
