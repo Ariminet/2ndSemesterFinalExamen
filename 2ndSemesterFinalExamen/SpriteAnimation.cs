@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace _2ndSemesterFinalExamen
 {
-    public class SpriteManager
+     class SpriteManager : Component
     {
         protected Texture2D Texture;
         public Vector2 Position = Vector2.Zero;
@@ -14,7 +15,7 @@ namespace _2ndSemesterFinalExamen
         public SpriteEffects SpriteEffect;
         protected Rectangle[] Rectangles;
         protected int FrameIndex = 0;
-
+       
         public SpriteManager(Texture2D Texture, int frames)
         {
             this.Texture = Texture;
@@ -25,25 +26,31 @@ namespace _2ndSemesterFinalExamen
                 Rectangles[i] = new Rectangle(i * width, 0, width, Texture.Height);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+
+
+		
+        public override void  Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, Rectangles[FrameIndex], Color, Rotation, Origin, Scale, SpriteEffect, 0f);
         }
     }
 
-    public class SpriteAnimation : SpriteManager
+     class SpriteAnimation : SpriteManager
     {
         private float timeElapsed;
         public bool IsLooping = true;
         private float timeToUpdate; //default, you may have to change it
         public int FramesPerSecond { set { timeToUpdate = (1f / value); } }
+        public SpriteAnimation anim;
 
+        public SpriteAnimation[] animations = new SpriteAnimation[4];
         public SpriteAnimation(Texture2D Texture, int frames, int fps) : base(Texture, frames) {
             FramesPerSecond = fps;
         }
 
         public void Update(GameTime gameTime)
         {
+            KeyboardState kState = Keyboard.GetState();
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (timeElapsed > timeToUpdate)
             {
@@ -55,11 +62,30 @@ namespace _2ndSemesterFinalExamen
                 else if (IsLooping)
                     FrameIndex = 0;
             }
+
+                
+                anim = animations[(int)gameObject.transform.direction];
+
+                anim.Position = new Vector2(gameObject.transform.Position.X - 48, gameObject.transform.Position.Y - 48);
+                if (kState.IsKeyDown(Keys.Space))
+                {
+                    anim.setFrame(0);
+                }
+                else if (gameObject.transform.isMoving)
+                {
+                    anim.Update(gameTime);
+                }
+                else
+                {
+                    anim.setFrame(1);
+                }
         }
 
         public void setFrame(int frame)
         {
             FrameIndex = frame;
         }
+
+       
     }
 }
