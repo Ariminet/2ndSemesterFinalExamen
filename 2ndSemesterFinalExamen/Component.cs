@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace GamePatternsProject
+namespace _2ndSemesterFinalExamen
 {
 	public class Component : ICloneable
 	{

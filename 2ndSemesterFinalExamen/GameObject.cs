@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-namespace GamePatternsProject
+namespace _2ndSemesterFinalExamen
 {
-	public class GameObject : ICloneable
+	 class GameObject : ICloneable
 	{
 		public Transform transform { get; set; } = new Transform();
 		List<Component> components = new List<Component>();
-
+		
 		public Component AddComponent(Component c)
         {
 			c.gameObject = this;
