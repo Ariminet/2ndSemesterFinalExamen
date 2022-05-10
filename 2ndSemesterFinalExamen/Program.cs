@@ -7,7 +7,7 @@ namespace _2ndSemesterFinalExamen
 		[STAThread]
 		static void Main()
 		{
-			using (var game = new Game1())
+			using (Game1 game = Game1.Instance)
 				game.Run();
 		}
 	}

@@ -2,15 +2,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 
 namespace _2ndSemesterFinalExamen
 {
-	public class Component : ICloneable
+	 class Component : ICloneable
 	{
 		public bool isEnabled { get; set; }
 		public GameObject gameObject { get; set; }
-        public string BoxName { get; private set; }
 
 		public virtual void Awake()
         {
@@ -22,7 +22,7 @@ namespace _2ndSemesterFinalExamen
 
         }
 
-		public virtual void Update()
+		public virtual void Update(GameTime gameObject)
         {
             
         }

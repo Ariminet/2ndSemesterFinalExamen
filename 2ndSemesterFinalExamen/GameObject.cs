@@ -39,11 +39,11 @@ namespace _2ndSemesterFinalExamen
 			}
 		}
 
-		public void Update()
+		public void Update(GameTime gameTime)
 		{
 			foreach (Component c in components)
 			{
-				c.Update();
+				c.Update(gameTime);
 
 			}
 		}
