@@ -34,7 +34,7 @@ namespace _2ndSemesterFinalExamen
 
 		private GameDataBase GameDB = new GameDataBase();
 		SpriteFont gameFont;
-		Texture2D skull, mon, ghost;
+		public static Texture2D skull, mon, ghost,ball, background;
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
 		private EnemyFactory enemyFactory;
 		Camera camera;
@@ -81,7 +81,9 @@ namespace _2ndSemesterFinalExamen
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
+			background = Content.Load<Texture2D>("./assets/images/background");
 			gameFont = Content.Load<SpriteFont>("assets/font/gameFont");
+			ball = Content.Load<Texture2D>("assets/images/ball");
 			//skull = Content.Load<Texture2D>("");
 			//mon = Content.Load<Texture2D>("");
 			//ghost = Content.Load<Texture2D>("");
@@ -118,12 +120,41 @@ namespace _2ndSemesterFinalExamen
 			foreach (GameObject gO in gameObjects)
 			{
 				gO.Update(gameTime);
-				if(((Player)gO.GetComponent<Player>()) != null)
+				if (((Player)gO.GetComponent<Player>()) != null)
 				{
-					this.camera.Position = gO.transform.Position + new Vector2(48,48);
+					this.camera.Position = gO.transform.Position + new Vector2(48, 48);
 					this.camera.Update(gameTime);
 				}
+
+				if (((Projectile)gO.GetComponent<Projectile>()) != null)
+				{
+					foreach (Projectile p in ((Projectile)gO.GetComponent<Projectile>()).projectiles)
+					{
+						p.Update(gameTime);
+					}
+
+					//foreach (Enemy enemy in Enemy.enemies)
+					//{
+					//	int sum = proj.radius + enemy.radius;
+
+					//	if (Vector2.Distance(proj.Position, enemy.Position) < sum)
+					//	{
+					//		proj.Collided = true;
+					//		enemy.Dead = true;
+					//	}
+					//}
+				}
+				
 			}
+			
+			foreach (GameObject gO in gameObjects)
+			{
+				if (((Projectile)gO.GetComponent<Projectile>()) != null)
+				{
+					((Projectile)gO.GetComponent<Projectile>()).projectiles.RemoveAll(p => p.Collided);
+				}
+			}
+			//Enemy.enemies.RemoveAll(e => e.Dead);
 
 			switch (gameState)
 			{
@@ -154,14 +185,23 @@ namespace _2ndSemesterFinalExamen
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 			_spriteBatch.Begin(this.camera);
 			// TODO: Add your drawing code here
+			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
 			foreach (GameObject gO in gameObjects)
 			{
+				if (((Projectile)gO.GetComponent<Projectile>()) != null)
+				{
+					
+				}
 				//gO.Draw(_spriteBatch);
-				//if(((Player)gO.GetComponent<Player>())!= null)
-				//{
+				if (((Player)gO.GetComponent<Player>()) != null)
+				{
+					foreach (Projectile p in ((Projectile)gO.GetComponent<Projectile>()).projectiles)
+					{
+						p.Draw(_spriteBatch);
+					}
+				}
 				((SpriteAnimation)gO.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, gO.transform.Position);
 				//}
-				_spriteBatch.DrawString(gameFont, "Current Position: " + gO.transform.Position, new Vector2(500, 500), Color.White);
 			
 			}
 			_spriteBatch.End();
@@ -195,13 +235,15 @@ namespace _2ndSemesterFinalExamen
 		{
 			GameObject Player = new GameObject();
 			Player.AddComponent(new Player());
+			Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2 - 48, _graphics.PreferredBackBufferHeight / 2 - 48);
+			Player.AddComponent(new Projectile(Player.transform.direction,Player.transform.Position));
 			Player.AddComponent(new SpriteAnimation(Content.Load<Texture2D>("assets/Player/player"),1,8));
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkDown"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[1] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkUp"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[2] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkLeft"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[3] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkRight"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[0];
-			Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth/2 - 48 , _graphics.PreferredBackBufferHeight / 2 - 48);
+			
 			gameObjects.Add(Player);
 			
 		}

@@ -16,7 +16,8 @@ namespace _2ndSemesterFinalExamen
         public virtual void Initialize()
         {
             // TODO: Add your initialization logic here
-            string dbString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
+            //string dbString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
+            string dbString = "RGF0YSBTb3VyY2U9MzQuODkuMTcyLjE1MztEYXRhYmFzZT1KYWNrVGhlR2hvc3RIdW50ZXI7VXNlcj1zcWxzZXJ2ZXI7UGFzc3dvcmQ9dGVzdDEyMzQ=";
             string dbConnection = DecodeAPI.DecodeBase64(dbString);
             connectionString = dbConnection;
 
