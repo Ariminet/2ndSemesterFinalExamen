@@ -29,14 +29,14 @@ namespace _2ndSemesterFinalExamen
         public void Draw (GameTime gameTime, Vector2 playPos, bool PlayerDead)
         {
             anim.Position = new Vector2(pos.X - 48, pos.Y - 66);
-            anim.Update(gameTime);
+            anim.AnimUpdate(gameTime);
 
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if(!PlayerDead)
             {
                 Vector2 moveDir = playPos - pos;
                 moveDir.Normalize();
-                pos += moveDir * (speed * dt);
+                pos += moveDir * (speed * Game1.dt);
             }
 
             
