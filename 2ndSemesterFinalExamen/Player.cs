@@ -39,7 +39,7 @@ namespace _2ndSemesterFinalExamen
 		public override void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             gameObject.transform.isMoving = false;
 
@@ -79,25 +79,25 @@ namespace _2ndSemesterFinalExamen
 					case Dir.Down:
 						if (gameObject.transform.Position.Y < 1250)
 						{
-							gameObject.transform.Position += new Vector2(gameObject.transform.Position.X, (float)speed * dt);
-						}
+							gameObject.transform.Position += new Vector2(0, (float)speed * Game1.dt);
+                        }
 						break;
 					case Dir.Up:
 						if (gameObject.transform.Position.Y > 200)
 						{
-							gameObject.transform.Position -= new Vector2( gameObject.transform.Position.X, (float)speed * dt);
+							gameObject.transform.Position -= new Vector2( 0, (float)speed * Game1.dt );
 						}
 						break;
 					case Dir.Left:
 						if (gameObject.transform.Position.X > 225)
 						{
-							gameObject.transform.Position -= new Vector2( (float)speed * dt,gameObject.transform.Position.Y);
+							gameObject.transform.Position -= new Vector2( (float)speed * Game1.dt , 0);
 						}
 						break;
 					case Dir.Right:
 						if (gameObject.transform.Position.X < 1275)
 						{
-							gameObject.transform.Position += new Vector2( (float)speed * dt,gameObject.transform.Position.Y);
+							gameObject.transform.Position += new Vector2( (float)speed * Game1.dt ,0);
 						}
 						break;
 				}

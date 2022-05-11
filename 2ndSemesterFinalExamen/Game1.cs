@@ -51,6 +51,9 @@ namespace _2ndSemesterFinalExamen
 				return instance;
 			}
 		}
+
+
+		public static float dt { get; private set; }
 		private Game1()
 		{
 			_graphics = new GraphicsDeviceManager(this);
@@ -93,6 +96,11 @@ namespace _2ndSemesterFinalExamen
 			// TODO: use this.Content to load your game content here
 			//GameDB.CreateTableDB();
 			//GameDB.InsertDB();
+
+			foreach (GameObject gO in gameObjects)
+			{
+				gO.Start();
+			}
 		}
 
 		
@@ -103,9 +111,18 @@ namespace _2ndSemesterFinalExamen
 				Exit();
 
 			// TODO: Add your update logic here
+			dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+			
+			
 			foreach (GameObject gO in gameObjects)
 			{
 				gO.Update(gameTime);
+				if(((Player)gO.GetComponent<Player>()) != null)
+				{
+					this.camera.Position = gO.transform.Position + new Vector2(48,48);
+					this.camera.Update(gameTime);
+				}
 			}
 
 			switch (gameState)
@@ -135,7 +152,7 @@ namespace _2ndSemesterFinalExamen
 		protected override void Draw(GameTime gameTime)
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
-			_spriteBatch.Begin();
+			_spriteBatch.Begin(this.camera);
 			// TODO: Add your drawing code here
 			foreach (GameObject gO in gameObjects)
 			{
@@ -184,7 +201,7 @@ namespace _2ndSemesterFinalExamen
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[2] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkLeft"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[3] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkRight"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[0];
-			Player.transform.Position = new Vector2(500, 500);
+			Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth/2 - 48 , _graphics.PreferredBackBufferHeight / 2 - 48);
 			gameObjects.Add(Player);
 			
 		}
