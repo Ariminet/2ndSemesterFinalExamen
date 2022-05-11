@@ -9,21 +9,21 @@ namespace _2ndSemesterFinalExamen
 {
     class Projectile : Component
     {
-        public static List<Projectile> projectiles = new List<Projectile>();
+        public List<Projectile> projectiles = new List<Projectile>();
 
-        //private Vector2 position;
+        private Vector2 position;
         private int speed = 1000;
         public int radius = 18;
-        //private Dir direction;
+        private Dir direction;
         private bool collided = false;
 
        
 
 
-        public Projectile(Vector2 newPos, Dir newDir)
+        public Projectile(Dir playerDir, Vector2 newPos)
         {
-            gameObject.transform.Position = newPos;
-            gameObject.transform.direction = newDir;
+            position = newPos;
+            direction = playerDir;
         }
 
         public Vector2 Position
@@ -44,22 +44,27 @@ namespace _2ndSemesterFinalExamen
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            switch (gameObject.transform.direction)
+            switch (direction)
             {
                 case Dir.Down:
-                    gameObject.transform.Position += new Vector2(gameObject.transform.Position.X, speed * dt);
+                    position += new Vector2(0, speed * Game1.dt);
                     break;
                 case Dir.Up:
-                    gameObject.transform.Position -= new Vector2(gameObject.transform.Position.X, speed * dt);
+                    position -= new Vector2(0, speed * Game1.dt);
                     break;
                 case Dir.Left:
-                    gameObject.transform.Position -= new Vector2(speed * dt, gameObject.transform.Position.Y);
+                    position -= new Vector2(speed * Game1.dt, 0);
                     break;
                 case Dir.Right:
-                    gameObject.transform.Position += new Vector2(speed * dt, gameObject.transform.Position.Y);
+                    position += new Vector2(speed * Game1.dt, 0);
                     break;
             }
 
+        }
+
+        public override void Draw(SpriteBatch _spriteBatch)
+        {
+            _spriteBatch.Draw(Game1.ball, new Vector2(position.X , position.Y ), Color.White);
         }
     }
 }

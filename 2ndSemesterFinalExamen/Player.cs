@@ -121,7 +121,7 @@ namespace _2ndSemesterFinalExamen
             }
             if ( kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
             {
-                Projectile.projectiles.Add(new Projectile(gameObject.transform.Position,gameObject.transform.direction));
+                ((Projectile)gameObject.GetComponent<Projectile>()).projectiles.Add(new Projectile(gameObject.transform.direction ,gameObject.transform.Position));
             }
 
             kStateOld = kState;
