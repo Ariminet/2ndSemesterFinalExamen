@@ -6,40 +6,53 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace _2ndSemesterFinalExamen
 {
-    class Enemy
+    class Enemy : Component
 {
         private Vector2 pos;
         private int speed;
-        public SpriteAnimation anim;
         public int radius = 30;
 
         bool dead = true;
 
-        public Enemy(Texture2D text, int spe) //skabellsen af fjende typen
+        public Enemy(int spe) //skabellsen af fjende typen
         {
             this.speed = spe;
-            anim = new SpriteAnimation(text, 10, 6);
+            
         }
         public bool Dead
         {
             get { return dead; }
             set { dead = value; }
         }
-
-        public void Draw (GameTime gameTime, Vector2 playPos, bool PlayerDead)
+        public Vector2 Position
         {
-            anim.Position = new Vector2(pos.X - 48, pos.Y - 66);
-            anim.AnimUpdate(gameTime);
+            get { return pos; }
+            set { pos = value; }
+        }
+
+        public void Move(GameTime gameTime, Vector2 playPos, bool PlayerDead)
+        { 
 
             //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if(!PlayerDead)
             {
-                Vector2 moveDir = playPos - pos;
+                Vector2 moveDir = playPos - gameObject.transform.Position;
                 moveDir.Normalize();
-                pos += moveDir * (speed * Game1.dt);
+                gameObject.transform.Position += moveDir * (speed * Game1.dt);
+
             }
 
             
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (gameObject.transform.isMoving)
+            {
+            ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim.AnimUpdate(gameTime);
+            }
+        }
+
+
     }
 }
