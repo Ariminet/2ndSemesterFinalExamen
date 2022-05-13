@@ -15,7 +15,8 @@ namespace _2ndSemesterFinalExamen
         public GameObject[] monEnemies = new GameObject[250];
         public GameObject[] ghostEnemies = new GameObject[250];
         public double timer = 2D;
-        public double spawnTimer = 1;
+        public double spawnTimer = 2D;
+        public double totalTime = 0;
 
 
         static Random rNum = new Random();
@@ -88,7 +89,6 @@ namespace _2ndSemesterFinalExamen
            while (Game1.gameState == GameStates.InGame)
             {
 
-                //timer -= Game1.dt;
 
                 if (timer <= 0)
                 {
@@ -154,6 +154,11 @@ namespace _2ndSemesterFinalExamen
                     }
                     
                     
+                }
+
+                if (spawnTimer > 0.5)
+                {
+                    spawnTimer -= 0.1;
                 }
 
             }
