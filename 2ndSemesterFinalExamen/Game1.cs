@@ -124,6 +124,8 @@ namespace _2ndSemesterFinalExamen
 			dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			enemyFactory.timer -= dt;
 
+			
+
 			Player.Update(gameTime);
 			this.camera.Position = Player.transform.Position + new Vector2(48, 48);
 			this.camera.Update(gameTime);
@@ -186,7 +188,8 @@ namespace _2ndSemesterFinalExamen
 					{
 						proj.Collided = true;
 						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-					}
+						enemy.transform.Position = new Vector2(-5000, -5000);
+						}
 				}
 				foreach (GameObject enemy in enemyFactory.monEnemies)
 				{
@@ -196,7 +199,8 @@ namespace _2ndSemesterFinalExamen
 					{
 						proj.Collided = true;
 						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-					}
+						enemy.transform.Position = new Vector2(-5000, -5000);
+						}
 				}
 				foreach (GameObject enemy in enemyFactory.ghostEnemies)
 				{
@@ -206,6 +210,7 @@ namespace _2ndSemesterFinalExamen
 					{
 						proj.Collided = true;
 						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+						enemy.transform.Position = new Vector2(-5000, -5000);
 					}
 				}
 			}
@@ -223,6 +228,9 @@ namespace _2ndSemesterFinalExamen
 					break;
 				case GameStates.Menu:
 					GameMenu();
+					enemyFactory.totalTime = 0;
+					enemyFactory.timer = 2D;
+					enemyFactory.spawnTimer = 2D;
 					break;
 				case GameStates.InGame:
 					InGame();
