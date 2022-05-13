@@ -14,8 +14,9 @@ namespace _2ndSemesterFinalExamen
         public GameObject[] skullEnemies = new GameObject[250];
         public GameObject[] monEnemies = new GameObject[250];
         public GameObject[] ghostEnemies = new GameObject[250];
+        public double timer = 2D;
+        public double spawnTimer = 1;
 
-        public int timer = 0;
 
         static Random rNum = new Random();
 
@@ -37,6 +38,7 @@ namespace _2ndSemesterFinalExamen
 
         private EnemyFactory()
         {
+            timer = spawnTimer;
             for (int i = 0; i < skullEnemies.Length; i++)
             {
                 GameObject tmp = new GameObject();
@@ -82,13 +84,15 @@ namespace _2ndSemesterFinalExamen
 
         public void SkullSpawn()
         {
-            while (Game1.gameState == GameStates.InGame)
+           
+           while (Game1.gameState == GameStates.InGame)
             {
 
-                timer++;
+                //timer -= Game1.dt;
 
-                if (timer <= 5)
+                if (timer <= 0)
                 {
+                    timer = spawnTimer;
                     int side = rNum.Next(4);
 
                     switch (side)
@@ -104,6 +108,7 @@ namespace _2ndSemesterFinalExamen
                                     ((Enemy)e.GetComponent<Enemy>()).Dead = false;
                                     break;
                                 }
+                                
                             }
                             break;
                         case 1:
@@ -115,7 +120,9 @@ namespace _2ndSemesterFinalExamen
                                     e.transform.Position = new Vector2(-500, rNum.Next(2000, 2000));
                                     ((Enemy)e.GetComponent<Enemy>()).Dead = false;
                                     break;
+
                                 }
+
                             }
                             break;
                         case 2:
@@ -127,7 +134,9 @@ namespace _2ndSemesterFinalExamen
                                     e.transform.Position = (new Vector2(rNum.Next(-500, 2000), -500));
                                     ((Enemy)e.GetComponent<Enemy>()).Dead = false;
                                     break;
+
                                 }
+
                             }
                             break;
                         case 3:
@@ -143,7 +152,8 @@ namespace _2ndSemesterFinalExamen
                             }
                             break;
                     }
-                    timer = 0;
+                    
+                    
                 }
 
             }
