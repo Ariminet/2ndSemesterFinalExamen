@@ -10,11 +10,24 @@ namespace _2ndSemesterFinalExamen
         public int MaxLevel { get; private set; }
         public int CurrentLevel { get; set; }
 
+        public string Description { get; private set; }
+
+        public List<Edge> edges { get; private set; } = new List<Edge>();
+
+        public bool Discovered { get; set; } = false;
+
+        public Talent Parent { get; set; }
+
         public Talent(string Tag, int MaxLevel, int CurrentLevel)
 		{
             this.Tag = Tag;
             this.MaxLevel = MaxLevel;
             this.CurrentLevel = CurrentLevel;
 		}
+
+        public void AddEdge(Talent other)
+        {
+            edges.Add(new Edge(this, other));
+        }
 }
 }
