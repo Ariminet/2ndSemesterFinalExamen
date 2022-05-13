@@ -31,10 +31,11 @@ namespace _2ndSemesterFinalExamen
         }
 
         public void Move(GameTime gameTime, Vector2 playPos, bool PlayerDead)
-        { 
+        {
 
+			
             //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if(!PlayerDead)
+            if(!PlayerDead && !dead)
             {
                 Vector2 moveDir = playPos - gameObject.transform.Position;
                 moveDir.Normalize();
@@ -44,7 +45,13 @@ namespace _2ndSemesterFinalExamen
 
             
         }
+  //      public void SetToDead()
+		//{
+		//	if (dead)
+		//	{
 
+		//	}
+		//}
         public override void Update(GameTime gameTime)
         {
             if (gameObject.transform.isMoving)

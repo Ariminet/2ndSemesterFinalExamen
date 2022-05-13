@@ -30,7 +30,7 @@ namespace _2ndSemesterFinalExamen
         {
             get
             {
-                return gameObject.transform.Position;
+                return position;
             }
         }
 

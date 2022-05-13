@@ -122,7 +122,7 @@ namespace _2ndSemesterFinalExamen
 
 			// TODO: Add your update logic here
 			dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+			enemyFactory.timer -= dt;
 
 			Player.Update(gameTime);
 			this.camera.Position = Player.transform.Position + new Vector2(48, 48);
@@ -136,60 +136,85 @@ namespace _2ndSemesterFinalExamen
 
 			}
 
-				//         foreach (GameObject gO in gameObjects)
-				//         {
-				//             gO.Update(gameTime);
-				//             if (((Player)gO.GetComponent<Player>()) != null)
-				//             {
-				//                 this.camera.Position = gO.transform.Position + new Vector2(48, 48);
-				//                 this.camera.Update(gameTime);
-				//             }
-
-				//             if (((Projectile)gO.GetComponent<Projectile>()) != null)
-				//             {
-				//                 foreach (Projectile p in ((Projectile)gO.GetComponent<Projectile>()).projectiles)
-				//                 {
-				//                     p.Update(gameTime);
-				//                 }
-
-				//                 //foreach (Enemy enemy in Enemy.enemies)
-				//                 //{
-				//                 //	int sum = proj.radius + enemy.radius;
-
-				//                 //	if (Vector2.Distance(proj.Position, enemy.Position) < sum)
-				//                 //	{
-				//                 //		proj.Collided = true;
-				//                 //		enemy.Dead = true;
-				//                 //	}
-				//                 //}
-				//             }
-
-				//}
-
-				foreach (GameObject gO in gameObjects)
-			{
-				if (((Projectile)gO.GetComponent<Projectile>()) != null)
-				{
-					((Projectile)gO.GetComponent<Projectile>()).projectiles.RemoveAll(p => p.Collided);
-				}
-			}
-
             foreach (GameObject e in enemyFactory.skullEnemies)
             {
 				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
 				((Enemy)e.GetComponent<Enemy>()).Move(gameTime, Player.transform.Position, ((Player)Player.GetComponent<Player>()).dead);
+				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
+
+				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
+				{
+					((Player)Player.GetComponent<Player>()).dead = true;
+				}
 			}
 
             foreach (GameObject e in enemyFactory.monEnemies)
             {
 				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
+
+				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
+				{
+					((Player)Player.GetComponent<Player>()).dead = true;
+				}
 			}
 
             foreach (GameObject e in enemyFactory.ghostEnemies)
             {
 				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
+
+				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
+				{
+					((Player)Player.GetComponent<Player>()).dead = true;
+				}
 			}
-			//Enemy.enemies.RemoveAll(e => e.Dead);
+
+			
+
+			if (((Projectile)Player.GetComponent<Projectile>()).projectiles.Count > 0)
+			{
+
+			foreach (Projectile proj in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
+			{
+
+				foreach (GameObject enemy in enemyFactory.skullEnemies)
+				{
+					int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+
+					if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+					{
+						proj.Collided = true;
+						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+					}
+				}
+				foreach (GameObject enemy in enemyFactory.monEnemies)
+				{
+					int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+
+					if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+					{
+						proj.Collided = true;
+						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+					}
+				}
+				foreach (GameObject enemy in enemyFactory.ghostEnemies)
+				{
+					int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+
+					if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+					{
+						proj.Collided = true;
+						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+					}
+				}
+			}
+			}
+
+
+			((Projectile)Player.GetComponent<Projectile>()).projectiles.RemoveAll(p => p.Collided);
+
+				//enemyFactory.ghostEnemies.RemoveAll(e => e.Dead);
 
 			switch (gameState)
 			{
@@ -239,12 +264,15 @@ namespace _2ndSemesterFinalExamen
 			//	//}
 
 			//}
-
-			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, Player.transform.Position);
+			
 
 			if (((Player)Player.GetComponent<Player>()) != null)
             {
-                foreach (Projectile p in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
+				if (!((Player)Player.GetComponent<Player>()).dead)
+				{
+					((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, Player.transform.Position);
+				}
+				foreach (Projectile p in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
                 {
                     p.Draw(_spriteBatch);
                 }
