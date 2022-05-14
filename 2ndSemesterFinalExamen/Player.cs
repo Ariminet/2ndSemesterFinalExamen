@@ -42,7 +42,7 @@ namespace _2ndSemesterFinalExamen
             //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             gameObject.transform.isMoving = false;
-
+			if (!dead) { 
             if (kState.IsKeyDown(Keys.Right))
             {
                 gameObject.transform.direction = Dir.Right;
@@ -125,6 +125,7 @@ namespace _2ndSemesterFinalExamen
             }
 
             kStateOld = kState;
+           }
         }
     }
 }

@@ -121,105 +121,8 @@ namespace _2ndSemesterFinalExamen
 				Exit();
 
 			// TODO: Add your update logic here
-			dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-			enemyFactory.timer -= dt;
-
 			
 
-			Player.Update(gameTime);
-			this.camera.Position = Player.transform.Position + new Vector2(48, 48);
-			this.camera.Update(gameTime);
-			if (((Projectile)Player.GetComponent<Projectile>()) != null)
-			{
-				foreach (Projectile p in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
-				{
-					p.Update(gameTime);
-				}
-
-			}
-
-            foreach (GameObject e in enemyFactory.skullEnemies)
-            {
-				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
-				((Enemy)e.GetComponent<Enemy>()).Move(gameTime, Player.transform.Position, ((Player)Player.GetComponent<Player>()).dead);
-				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
-
-				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
-				{
-					((Player)Player.GetComponent<Player>()).dead = true;
-				}
-			}
-
-            foreach (GameObject e in enemyFactory.monEnemies)
-            {
-				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
-				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
-
-				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
-				{
-					((Player)Player.GetComponent<Player>()).dead = true;
-				}
-			}
-
-            foreach (GameObject e in enemyFactory.ghostEnemies)
-            {
-				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
-				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
-
-				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
-				{
-					((Player)Player.GetComponent<Player>()).dead = true;
-				}
-			}
-
-			
-
-			if (((Projectile)Player.GetComponent<Projectile>()).projectiles.Count > 0)
-			{
-
-			foreach (Projectile proj in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
-			{
-
-				foreach (GameObject enemy in enemyFactory.skullEnemies)
-				{
-					int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
-
-					if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
-					{
-						proj.Collided = true;
-						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-						enemy.transform.Position = new Vector2(-5000, -5000);
-						}
-				}
-				foreach (GameObject enemy in enemyFactory.monEnemies)
-				{
-					int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
-
-					if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
-					{
-						proj.Collided = true;
-						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-						enemy.transform.Position = new Vector2(-5000, -5000);
-						}
-				}
-				foreach (GameObject enemy in enemyFactory.ghostEnemies)
-				{
-					int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
-
-					if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
-					{
-						proj.Collided = true;
-						((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-						enemy.transform.Position = new Vector2(-5000, -5000);
-					}
-				}
-			}
-			}
-
-
-			((Projectile)Player.GetComponent<Projectile>()).projectiles.RemoveAll(p => p.Collided);
-
-				//enemyFactory.ghostEnemies.RemoveAll(e => e.Dead);
 
 			switch (gameState)
 			{
@@ -233,7 +136,7 @@ namespace _2ndSemesterFinalExamen
 					enemyFactory.spawnTimer = 2D;
 					break;
 				case GameStates.InGame:
-					InGame();
+					InGameUpdate(gameTime);
 					break;
 				case GameStates.Upgrades:
 					UpgradesMenu();
@@ -253,6 +156,153 @@ namespace _2ndSemesterFinalExamen
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 			_spriteBatch.Begin(this.camera);
 			// TODO: Add your drawing code here
+
+			switch (gameState)
+			{
+				case GameStates.PreGame:
+					DrawPreGame();
+					break;
+				case GameStates.Menu:
+					DrawGameMenu();
+					
+					break;
+				case GameStates.InGame:
+					InGameDraw(_spriteBatch);
+					break;
+				case GameStates.Upgrades:
+					DrawUpgradesMenu();
+					break;
+				case GameStates.Pause:
+					DrawPauseGame();
+					break;
+				default:
+					break;
+			}
+
+			_spriteBatch.End();
+			base.Draw(gameTime);
+		}
+
+	
+
+		public void PreGame()
+		{
+
+		}
+		public void DrawPreGame()
+		{
+
+		}
+		public void GameMenu()
+		{
+
+		}
+		public void DrawGameMenu()
+		{
+
+		}
+		public void InGameUpdate(GameTime gameTime) 
+		{
+			dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			enemyFactory.timer -= dt;
+
+
+
+			Player.Update(gameTime);
+			this.camera.Position = Player.transform.Position + new Vector2(48, 48);
+			this.camera.Update(gameTime);
+			if (((Projectile)Player.GetComponent<Projectile>()) != null)
+			{
+				foreach (Projectile p in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
+				{
+					p.Update(gameTime);
+				}
+
+			}
+
+			foreach (GameObject e in enemyFactory.skullEnemies)
+			{
+				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				((Enemy)e.GetComponent<Enemy>()).Move(gameTime, Player.transform.Position, ((Player)Player.GetComponent<Player>()).dead);
+				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
+
+				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
+				{
+					((Player)Player.GetComponent<Player>()).dead = true;
+				}
+			}
+
+			foreach (GameObject e in enemyFactory.monEnemies)
+			{
+				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
+
+				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
+				{
+					((Player)Player.GetComponent<Player>()).dead = true;
+				}
+			}
+
+			foreach (GameObject e in enemyFactory.ghostEnemies)
+			{
+				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
+
+				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
+				{
+					((Player)Player.GetComponent<Player>()).dead = true;
+				}
+			}
+
+
+
+			if (((Projectile)Player.GetComponent<Projectile>()).projectiles.Count > 0)
+			{
+
+				foreach (Projectile proj in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
+				{
+
+					foreach (GameObject enemy in enemyFactory.skullEnemies)
+					{
+						int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+
+						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+						{
+							proj.Collided = true;
+							((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+							enemy.transform.Position = new Vector2(-5000, -5000);
+						}
+					}
+					foreach (GameObject enemy in enemyFactory.monEnemies)
+					{
+						int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+
+						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+						{
+							proj.Collided = true;
+							((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+							enemy.transform.Position = new Vector2(-5000, -5000);
+						}
+					}
+					foreach (GameObject enemy in enemyFactory.ghostEnemies)
+					{
+						int sum = proj.radius + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+
+						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+						{
+							proj.Collided = true;
+							((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+							enemy.transform.Position = new Vector2(-5000, -5000);
+						}
+					}
+				}
+			}
+
+
+			((Projectile)Player.GetComponent<Projectile>()).projectiles.RemoveAll(p => p.Collided);
+		}
+		public void InGameDraw(SpriteBatch _spriteBatch)
+		{
 			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
 			//foreach (GameObject gO in gameObjects)
 			//{
@@ -272,53 +322,42 @@ namespace _2ndSemesterFinalExamen
 			//	//}
 
 			//}
-			
+
 
 			if (((Player)Player.GetComponent<Player>()) != null)
-            {
+			{
 				if (!((Player)Player.GetComponent<Player>()).dead)
 				{
 					((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, Player.transform.Position);
 				}
 				foreach (Projectile p in ((Projectile)Player.GetComponent<Projectile>()).projectiles)
-                {
-                    p.Draw(_spriteBatch);
-                }
-            }
+				{
+					p.Draw(_spriteBatch);
+				}
+			}
 
-            foreach (GameObject e in enemyFactory.skullEnemies)
-            {
-                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
-                {
+			foreach (GameObject e in enemyFactory.skullEnemies)
+			{
+				if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+				{
 					((SpriteAnimation)e.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, e.transform.Position);
 				}
-            }
+			}
 
-			
-
-			_spriteBatch.End();
-			base.Draw(gameTime);
-		}
-
-	
-
-		public void PreGame()
-		{
-
-		}
-		public void GameMenu()
-		{
-
-		}
-		public void InGame() 
-		{
-		
 		}
 		public void UpgradesMenu() 
 		{
 
 		}
+		public void DrawUpgradesMenu()
+		{
+
+		}
 		public void PauseGame()
+		{
+
+		}
+		public void DrawPauseGame()
 		{
 
 		}
