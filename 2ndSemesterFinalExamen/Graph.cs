@@ -8,9 +8,9 @@ namespace _2ndSemesterFinalExamen
 {
         public List<Talent> Talents { get; private set; } = new List<Talent>();
 
-        public void AddTalent(string tag, int maxlevel, int Currentlevel)
+        public void AddTalent(string tag, int maxlevel, int Currentlevel, string Description)
         {
-            Talents.Add(new Talent(tag, maxlevel, Currentlevel));
+            Talents.Add(new Talent(tag, maxlevel, Currentlevel, Description));
         }
 
         public void AddDirectionalEdge (string from, string to)

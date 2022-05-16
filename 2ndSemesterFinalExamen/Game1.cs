@@ -10,6 +10,8 @@ using Comora;
 enum GameStates
 {
 	PreGame,
+	LoadGame,
+	NewGame,
 	Menu,
 	InGame,
 	Upgrades,
@@ -30,16 +32,19 @@ namespace _2ndSemesterFinalExamen
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
-		public static GameStates gameState = GameStates.PreGame;
+		public  GameStates gameState = GameStates.PreGame;
 
 		private GameDataBase GameDB = new GameDataBase();
-		SpriteFont gameFont;
-		public static Texture2D skull, mon, ghost,ball, background;
+		public SpriteFont gameFont;
+		public  Texture2D skull, mon, ghost,ball, background,buttonText;
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
 
 		public EnemyFactory enemyFactory;
+		public MenuNavigator menuNavigator;
 
-		GameObject Player = new GameObject();
+		
+
+		public GameObject Player = new GameObject();
 		Camera camera;
 		private static Game1 instance;
 
@@ -76,6 +81,7 @@ namespace _2ndSemesterFinalExamen
 			
 
 			this.camera = new Camera(_graphics.GraphicsDevice);
+			this.camera.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
 			GameDB.Initialize();
 			IniciateGameComponents();
 
@@ -95,11 +101,11 @@ namespace _2ndSemesterFinalExamen
 			skull = Content.Load<Texture2D>("assets/Enemy/skull");
 			mon = Content.Load<Texture2D>("assets/Enemy/skull");
 			ghost = Content.Load<Texture2D>("assets/Enemy/skull");
+			buttonText = Content.Load<Texture2D>("assets/Buttons/knap");
 
-			
-			enemyFactory = EnemyFactory.Instance; 
+			enemyFactory = EnemyFactory.Instance;
+			menuNavigator = MenuNavigator.Instance;
 
-			
 			//enemyFactory.MonSpawn();
 			//enemyFactory.GhostSpawn();
 
@@ -121,7 +127,8 @@ namespace _2ndSemesterFinalExamen
 				Exit();
 
 			// TODO: Add your update logic here
-			
+
+			menuNavigator.Update(gameTime);
 
 
 			switch (gameState)
@@ -156,7 +163,11 @@ namespace _2ndSemesterFinalExamen
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 			_spriteBatch.Begin(this.camera);
+			
+			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
+
 			// TODO: Add your drawing code here
+			menuNavigator.Draw(_spriteBatch);
 
 			switch (gameState)
 			{
@@ -304,7 +315,6 @@ namespace _2ndSemesterFinalExamen
 		}
 		public void InGameDraw(SpriteBatch _spriteBatch)
 		{
-			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
 			//foreach (GameObject gO in gameObjects)
 			//{
 			//	if (((Projectile)gO.GetComponent<Projectile>()) != null)
