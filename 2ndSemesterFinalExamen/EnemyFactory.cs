@@ -83,6 +83,12 @@ namespace _2ndSemesterFinalExamen
 
         }
 
+        public void EnemyPaused()
+		{
+           totalTime = 0;
+           timer = 2D;
+           spawnTimer = 2D;
+        }
         public void SkullSpawn()
         {
            

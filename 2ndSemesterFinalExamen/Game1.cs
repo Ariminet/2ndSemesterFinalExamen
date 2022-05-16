@@ -128,21 +128,22 @@ namespace _2ndSemesterFinalExamen
 			{
 				case GameStates.PreGame:
 					PreGame();
+					enemyFactory.EnemyPaused();
 					break;
 				case GameStates.Menu:
 					GameMenu();
-					enemyFactory.totalTime = 0;
-					enemyFactory.timer = 2D;
-					enemyFactory.spawnTimer = 2D;
+					enemyFactory.EnemyPaused();
 					break;
 				case GameStates.InGame:
 					InGameUpdate(gameTime);
 					break;
 				case GameStates.Upgrades:
 					UpgradesMenu();
+					enemyFactory.EnemyPaused();
 					break;
 				case GameStates.Pause:
 					PauseGame();
+					enemyFactory.EnemyPaused();
 					break;
 				default:
 					break;
