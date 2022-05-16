@@ -64,7 +64,7 @@ namespace _2ndSemesterFinalExamen
 
         public override void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(Game1.ball, new Vector2(position.X , position.Y ), Color.White);
+            _spriteBatch.Draw(Game1.Instance.ball, new Vector2(position.X , position.Y ), Color.White);
         }
     }
 }

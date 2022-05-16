@@ -44,8 +44,8 @@ namespace _2ndSemesterFinalExamen
             {
                 GameObject tmp = new GameObject();
                 tmp.AddComponent(new Enemy(150));
-                tmp.AddComponent(new SpriteAnimation(Game1.skull, 4, 8));
-                ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.skull, 10, 8);
+                tmp.AddComponent(new SpriteAnimation(Game1.Instance.skull, 4, 8));
+                ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.Instance.skull, 10, 8);
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0];
                 skullEnemies[i] = tmp;
             }
@@ -53,8 +53,8 @@ namespace _2ndSemesterFinalExamen
             {
                 GameObject tmp = new GameObject();
                 tmp.AddComponent(new Enemy(150));
-                tmp.AddComponent(new SpriteAnimation(Game1.mon, 4, 8));
-                ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.mon, 10, 8);
+                tmp.AddComponent(new SpriteAnimation(Game1.Instance.mon, 4, 8));
+                ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.Instance.mon, 10, 8);
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0];
                 monEnemies[i] = tmp;
             }
@@ -62,8 +62,8 @@ namespace _2ndSemesterFinalExamen
             {
                 GameObject tmp = new GameObject();
                 tmp.AddComponent(new Enemy(150));
-                tmp.AddComponent(new SpriteAnimation(Game1.ghost, 4, 8));
-                ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.ghost, 10, 8);
+                tmp.AddComponent(new SpriteAnimation(Game1.Instance.ghost, 4, 8));
+                ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.Instance.ghost, 10, 8);
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0];
                 ghostEnemies[i] = tmp;
             }
@@ -92,7 +92,7 @@ namespace _2ndSemesterFinalExamen
         public void SkullSpawn()
         {
            
-           while (Game1.gameState == GameStates.InGame)
+           while (Game1.Instance.gameState == GameStates.InGame)
             {
 
 
