@@ -149,7 +149,7 @@ namespace _2ndSemesterFinalExamen
         public List<Talent> GetTalents(Player p)
 		{
             List<Talent> listTalent = new List<Talent>();
-            string query = $"SELECT A.Tag, A.Max_level, B.Current_level FROM TalentTree A INNER JOIN PlayerTalentTree B ON (A.ID = B.Talent_tree_id) WHERE B.player_id = (SELECT ID FROM Player WHERE Tag LIKE @Tag)";
+            string query = $"SELECT A.Tag, A.Max_level, B.Current_level, A.description FROM TalentTree A INNER JOIN PlayerTalentTree B ON (A.ID = B.Talent_tree_id) WHERE B.player_id = (SELECT ID FROM Player WHERE Tag LIKE @Tag)";
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -158,7 +158,7 @@ namespace _2ndSemesterFinalExamen
                 command.Parameters.AddWithValue("@Tag", p.Tag);
                 while (readTalentData.Read())
                 {
-                    listTalent.Add(new Talent(readTalentData.GetString(1), readTalentData.GetInt32(2), readTalentData.GetInt32(3)));
+                    listTalent.Add(new Talent(readTalentData.GetString(1), readTalentData.GetInt32(2), readTalentData.GetInt32(3), readTalentData.GetString(4)));
                 }
             }
             return listTalent;

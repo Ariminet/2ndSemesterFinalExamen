@@ -30,7 +30,7 @@ namespace _2ndSemesterFinalExamen
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
-		public static GameStates gameState = GameStates.InGame;
+		public static GameStates gameState = GameStates.PreGame;
 
 		private GameDataBase GameDB = new GameDataBase();
 		SpriteFont gameFont;
