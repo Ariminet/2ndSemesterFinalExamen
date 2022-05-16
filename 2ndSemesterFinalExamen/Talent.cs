@@ -18,12 +18,14 @@ namespace _2ndSemesterFinalExamen
 
         public Talent Parent { get; set; }
 
-        public Talent(string Tag, int MaxLevel, int CurrentLevel)
+        public Talent(string Tag, int MaxLevel, int CurrentLevel, string Description)
 		{
             this.Tag = Tag;
             this.MaxLevel = MaxLevel;
             this.CurrentLevel = CurrentLevel;
-		}
+            this.Description = Description;
+
+        }
 
         public void AddEdge(Talent other)
         {
