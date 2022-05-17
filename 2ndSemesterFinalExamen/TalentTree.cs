@@ -13,18 +13,18 @@ namespace _2ndSemesterFinalExamen
         {
             Graph graph = new Graph();
 
-            graph.AddTalent("Shoot", 1, 1);
-            graph.AddTalent("Faster shots", 3, 0);
-            graph.AddTalent("Quick reload", 3, 0);
-            graph.AddTalent("Speed", 3, 0);
-            graph.AddTalent("Spray shot", 1, 0);
-            graph.AddTalent("Damage", 3, 0);
-            graph.AddTalent("Bigger projectiles", 2, 0);
-            graph.AddTalent("Piercing shot", 1, 0);
-            graph.AddTalent("Dash", 1, 0);
-            graph.AddTalent("Bullet shield", 2, 0);
-            graph.AddTalent("Explosive shot", 1, 0);
-            graph.AddTalent("Explode", 1, 0);
+            graph.AddTalent("Shoot", 1, 1,"blabla");
+            graph.AddTalent("Faster shots", 3, 0, "blabla");
+            graph.AddTalent("Quick reload", 3, 0, "blabla");
+            graph.AddTalent("Speed", 3, 0, "blabla");
+            graph.AddTalent("Spray shot", 1, 0, "blabla");
+            graph.AddTalent("Damage", 3, 0, "blabla");
+            graph.AddTalent("Bigger projectiles", 2, 0, "blabla");
+            graph.AddTalent("Piercing shot", 1, 0, "blabla");
+            graph.AddTalent("Dash", 1, 0, "blabla");
+            graph.AddTalent("Bullet shield", 2, 0, "blabla");
+            graph.AddTalent("Explosive shot", 1, 0, "blabla");
+            graph.AddTalent("Explode", 1, 0, "blabla");
 
             graph.AddEdge("Shoot", "Faster shots");
             graph.AddEdge("Shoot", "Quick reload");
@@ -72,7 +72,7 @@ namespace _2ndSemesterFinalExamen
 
             static void Draw(SpriteBatch spBt, Texture2D shot)
             {
-                while (Game1.gameState == GameStates.InGame)
+                while (Game1.Instance.gameState == GameStates.InGame)
                 {
                     spBt.Draw(shot, new Vector2(50, 50), Color.White);
                 }

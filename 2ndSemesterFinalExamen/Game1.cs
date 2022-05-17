@@ -32,7 +32,7 @@ namespace _2ndSemesterFinalExamen
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
-		public  GameStates gameState = GameStates.PreGame;
+		public  GameStates gameState = GameStates.InGame;
 
 		private GameDataBase GameDB = new GameDataBase();
 		public SpriteFont gameFont;
@@ -99,8 +99,8 @@ namespace _2ndSemesterFinalExamen
 			gameFont = Content.Load<SpriteFont>("assets/font/gameFont");
 			ball = Content.Load<Texture2D>("assets/images/ball");
 			skull = Content.Load<Texture2D>("assets/Enemy/skull");
-			mon = Content.Load<Texture2D>("assets/Enemy/skull");
-			ghost = Content.Load<Texture2D>("assets/Enemy/skull");
+			mon = Content.Load<Texture2D>("assets/Enemy/monster");
+			ghost = Content.Load<Texture2D>("assets/Enemy/Ghost");
 			buttonText = Content.Load<Texture2D>("assets/Buttons/knap");
 
 			enemyFactory = EnemyFactory.Instance;
@@ -247,6 +247,7 @@ namespace _2ndSemesterFinalExamen
 			foreach (GameObject e in enemyFactory.monEnemies)
 			{
 				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				((Enemy)e.GetComponent<Enemy>()).Move(gameTime, Player.transform.Position, ((Player)Player.GetComponent<Player>()).dead);
 				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
 
 				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
@@ -258,6 +259,7 @@ namespace _2ndSemesterFinalExamen
 			foreach (GameObject e in enemyFactory.ghostEnemies)
 			{
 				((Enemy)e.GetComponent<Enemy>()).Update(gameTime);
+				((Enemy)e.GetComponent<Enemy>()).Move(gameTime, Player.transform.Position, ((Player)Player.GetComponent<Player>()).dead);
 				int sum = 32 + ((Enemy)e.GetComponent<Enemy>()).radius;
 
 				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
@@ -348,6 +350,20 @@ namespace _2ndSemesterFinalExamen
 			}
 
 			foreach (GameObject e in enemyFactory.skullEnemies)
+			{
+				if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+				{
+					((SpriteAnimation)e.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, e.transform.Position);
+				}
+			}
+			foreach (GameObject e in enemyFactory.monEnemies)
+			{
+				if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+				{
+					((SpriteAnimation)e.GetComponent<SpriteAnimation>()).anim.Draw(_spriteBatch, e.transform.Position);
+				}
+			}
+			foreach (GameObject e in enemyFactory.ghostEnemies)
 			{
 				if (!((Enemy)e.GetComponent<Enemy>()).Dead)
 				{

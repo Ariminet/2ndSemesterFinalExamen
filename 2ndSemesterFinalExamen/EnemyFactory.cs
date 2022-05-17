@@ -21,7 +21,8 @@ namespace _2ndSemesterFinalExamen
 
         static Random rNum = new Random();
 
-        Thread skullThread, monThread, ghostThread;
+        //Thread skullThread, monThread, ghostThread;
+        Thread spawnThread;
 
         private static EnemyFactory instance;
 
@@ -68,9 +69,9 @@ namespace _2ndSemesterFinalExamen
                 ghostEnemies[i] = tmp;
             }
 
-            skullThread = new Thread(new ThreadStart(SkullSpawn));
-            skullThread.IsBackground = true;
-            skullThread.Start();
+            spawnThread = new Thread(new ThreadStart(Spawner));
+            spawnThread.IsBackground = true;
+            spawnThread.Start();
 
             //monThread = new Thread(new ThreadStart(MonSpawn));
             //monThread.IsBackground = true;
@@ -89,7 +90,201 @@ namespace _2ndSemesterFinalExamen
            timer = 2D;
            spawnTimer = 2D;
         }
-        public void SkullSpawn()
+
+        public void SkullSpawner()
+		{
+            timer = spawnTimer;
+            int side = rNum.Next(4);
+
+            switch (side)
+            {
+                case 0:
+                    foreach (GameObject e in skullEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
+
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+                        }
+
+                    }
+                    break;
+                case 1:
+                    foreach (GameObject e in skullEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+
+                        }
+
+                    }
+                    break;
+                case 2:
+                    foreach (GameObject e in skullEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = (new Vector2(rNum.Next(-500, 2000), -500));
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+
+                        }
+
+                    }
+                    break;
+                case 3:
+                    foreach (GameObject e in skullEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = (new Vector2(rNum.Next(-500, 2000), 2000));
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public void GhostSpawner()
+		{
+            
+                timer = spawnTimer;
+                int side = rNum.Next(4);
+
+                switch (side)
+                {
+                    case 0:
+                        foreach (GameObject e in ghostEnemies)
+                        {
+                            if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                            {
+                                e.transform.isMoving = true;
+                                e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
+
+                                ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                                break;
+                            }
+
+                        }
+                        break;
+                    case 1:
+                        foreach (GameObject e in ghostEnemies)
+                        {
+                            if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                            {
+                                e.transform.isMoving = true;
+                                e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
+                                ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                                break;
+
+                            }
+
+                        }
+                        break;
+                    case 2:
+                        foreach (GameObject e in ghostEnemies)
+                        {
+                            if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                            {
+                                e.transform.isMoving = true;
+                                e.transform.Position = (new Vector2(rNum.Next(-500, 2000), -500));
+                                ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                                break;
+
+                            }
+
+                        }
+                        break;
+                    case 3:
+                        foreach (GameObject e in ghostEnemies)
+                        {
+                            if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                            {
+                                e.transform.isMoving = true;
+                                e.transform.Position = (new Vector2(rNum.Next(-500, 2000), 2000));
+                                ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                                break;
+                            }
+                        }
+                        break;
+                }
+            
+        }
+
+        public void MonSpawner()
+		{
+            timer = spawnTimer;
+            int side = rNum.Next(4);
+
+            switch (side)
+            {
+                case 0:
+                    foreach (GameObject e in monEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
+
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+                        }
+
+                    }
+                    break;
+                case 1:
+                    foreach (GameObject e in monEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+
+                        }
+
+                    }
+                    break;
+                case 2:
+                    foreach (GameObject e in monEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = (new Vector2(rNum.Next(-500, 2000), -500));
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+
+                        }
+
+                    }
+                    break;
+                case 3:
+                    foreach (GameObject e in monEnemies)
+                    {
+                        if (((Enemy)e.GetComponent<Enemy>()).Dead)
+                        {
+                            e.transform.isMoving = true;
+                            e.transform.Position = (new Vector2(rNum.Next(-500, 2000), 2000));
+                            ((Enemy)e.GetComponent<Enemy>()).Dead = false;
+                            break;
+                        }
+                    }
+                    break;
+            }
+        }
+        public void Spawner()
         {
            
            while (Game1.Instance.gameState == GameStates.InGame)
@@ -98,66 +293,22 @@ namespace _2ndSemesterFinalExamen
 
                 if (timer <= 0)
                 {
-                    timer = spawnTimer;
-                    int side = rNum.Next(4);
-
-                    switch (side)
-                    {
+                    int monType = rNum.Next(3);
+					switch (monType)
+					{
                         case 0:
-                            foreach (GameObject e in skullEnemies)
-                            {
-                                if (((Enemy)e.GetComponent<Enemy>()).Dead)
-                                {
-                                    e.transform.isMoving = true;
-                                    e.transform.Position = new Vector2(-500, rNum.Next(-500, 2000));
-                                    
-                                    ((Enemy)e.GetComponent<Enemy>()).Dead = false;
-                                    break;
-                                }
-                                
-                            }
+                            SkullSpawner();
                             break;
                         case 1:
-                            foreach (GameObject e in skullEnemies)
-                            {
-                                if (((Enemy)e.GetComponent<Enemy>()).Dead)
-                                {
-                                    e.transform.isMoving = true;
-                                    e.transform.Position = new Vector2(-500, rNum.Next(2000, 2000));
-                                    ((Enemy)e.GetComponent<Enemy>()).Dead = false;
-                                    break;
-
-                                }
-
-                            }
+                            GhostSpawner();
                             break;
                         case 2:
-                            foreach (GameObject e in skullEnemies)
-                            {
-                                if (((Enemy)e.GetComponent<Enemy>()).Dead)
-                                {
-                                    e.transform.isMoving = true;
-                                    e.transform.Position = (new Vector2(rNum.Next(-500, 2000), -500));
-                                    ((Enemy)e.GetComponent<Enemy>()).Dead = false;
-                                    break;
-
-                                }
-
-                            }
+                            MonSpawner();
                             break;
-                        case 3:
-                            foreach (GameObject e in skullEnemies)
-                            {
-                                if (((Enemy)e.GetComponent<Enemy>()).Dead)
-                                {
-                                    e.transform.isMoving = true;
-                                    e.transform.Position = (new Vector2(rNum.Next(-500, 2000), 2000));
-                                    ((Enemy)e.GetComponent<Enemy>()).Dead = false;
-                                    break;
-                                }
-                            }
-                            break;
-                    }
+                        default:
+							break;
+					}
+					
                     
                     
                 }
