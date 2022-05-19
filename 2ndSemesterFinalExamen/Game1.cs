@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System;
 using Comora;
 
 enum GameStates
@@ -36,11 +37,13 @@ namespace _2ndSemesterFinalExamen
 
 		private GameDataBase GameDB = new GameDataBase();
 		public SpriteFont gameFont;
-		public  Texture2D skull, mon, ghost,ball, background,buttonText;
+		public  Texture2D skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line;
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
 
 		public EnemyFactory enemyFactory;
 		public MenuNavigator menuNavigator;
+
+		public float angleOfLine;
 
 		
 
@@ -89,8 +92,12 @@ namespace _2ndSemesterFinalExamen
 			{
 				gO.Awake();
 			}
+
+			
+
 			base.Initialize();
 		}
+
 
 		protected override void LoadContent()
 		{
@@ -102,6 +109,20 @@ namespace _2ndSemesterFinalExamen
 			mon = Content.Load<Texture2D>("assets/Enemy/monster");
 			ghost = Content.Load<Texture2D>("assets/Enemy/Ghost");
 			buttonText = Content.Load<Texture2D>("assets/Buttons/knap");
+
+			//Talent icons
+			shoot = Content.Load<Texture2D>("assets/Icons/Shoot");
+			fasterShots = Content.Load<Texture2D>("assets/Icons/faster shooting");
+			quickReload = Content.Load<Texture2D>("assets/Icons/quick reload");
+			speed = Content.Load<Texture2D>("assets/Icons/Speed");
+			sprayShot = Content.Load<Texture2D>("assets/Icons/Spray Shot");
+			damage = Content.Load<Texture2D>("assets/Icons/damage");
+			bulletShield = Content.Load<Texture2D>("assets/Icons/bullet shield");
+			biggerProjectiles = Content.Load<Texture2D>("assets/Icons/bigger projectiles");
+			piercingShot = Content.Load<Texture2D>("assets/Icons/piercing shot");
+			dash = Content.Load<Texture2D>("assets/Icons/dash");
+			explosiveShot = Content.Load<Texture2D>("assets/Icons/explosive shot");
+			explode = Content.Load<Texture2D>("assets/Icons/explosion");
 
 			enemyFactory = EnemyFactory.Instance;
 			menuNavigator = MenuNavigator.Instance;
