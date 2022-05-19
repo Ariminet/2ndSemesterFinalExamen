@@ -25,6 +25,7 @@ namespace _2ndSemesterFinalExamen
 
         private MenuNavigator()
         {
+            //PRE - GAME 
             var logIn = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
                 PosPlayer = new Vector2(0, -30),
@@ -45,6 +46,10 @@ namespace _2ndSemesterFinalExamen
                 logIn,
                 createNewGame,
             };
+            //PRE - GAME 
+
+
+
 
         }
 
