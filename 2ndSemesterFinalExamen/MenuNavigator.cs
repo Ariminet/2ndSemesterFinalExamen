@@ -46,6 +46,19 @@ namespace _2ndSemesterFinalExamen
                 createNewGame,
             };
 
+
+            //UPGRADE
+
+            var shot = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.shoot, "shoot", new Vector2(-50,-50) )
+            {
+              
+            };
+
+            inGameComponents = new List<Component>()
+            {
+                shot,
+            };
+
         }
 
         public  void Update(GameTime gameTime)
@@ -77,7 +90,10 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.InGame:
-                    
+                    foreach (var component in inGameComponents)
+                    {
+                        component.Update(gameTime);
+                    }
                     break;
 				case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
@@ -125,7 +141,10 @@ namespace _2ndSemesterFinalExamen
                     }
                      break;
                 case GameStates.InGame:
-                    
+                    foreach (var component in inGameComponents)
+                    {
+                        component.Draw(_spriteBatch);
+                    }
                     break;
                 case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
