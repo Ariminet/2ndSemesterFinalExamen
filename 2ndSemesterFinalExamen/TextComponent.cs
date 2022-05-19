@@ -22,6 +22,8 @@ namespace _2ndSemesterFinalExamen
             }
         }
 
+        public bool active = true;
+
         public string Text { get; set; }
         public TextComponent(Texture2D textureHere, SpriteFont fontHere)
         {
@@ -36,6 +38,8 @@ namespace _2ndSemesterFinalExamen
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (active)
+            {
 
             spriteBatch.Draw(texture, Rectangle, Color.White);
 
@@ -45,6 +49,7 @@ namespace _2ndSemesterFinalExamen
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), Color.Black);
+            }
             }
 
         }

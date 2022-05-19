@@ -22,14 +22,11 @@ namespace _2ndSemesterFinalExamen
         public Color PenColour { get; set; }
         private Vector2 Position;
         public Vector2 PosPlayer { get; set; }
-        public Rectangle Rectangle
-        {
-            get
-            {
-                return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
-            }
-        }
+        public Rectangle Rectangle;
+        
+        
 
+        public TextComponent child;
         public string Text { get; set; }
 
         //Methods
@@ -57,6 +54,7 @@ namespace _2ndSemesterFinalExamen
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
             }
 
+
         }
        
         public override void Update(GameTime gameTime)
@@ -68,7 +66,14 @@ namespace _2ndSemesterFinalExamen
             
             isHovering = false;
 
+            if (child != null)
+            {
+                child.active = false;
+            }
+
             Position = Game1.Instance.Player.transform.Position + PosPlayer;
+
+            Rectangle = new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
 
             if (mouseRectangle.Intersects(Rectangle))
             {
@@ -78,6 +83,10 @@ namespace _2ndSemesterFinalExamen
                 {
                     Click?.Invoke(this, new EventArgs());
 
+                }
+                if (child != null)
+                {
+                    child.active = true;
                 }
             }
         }
