@@ -33,9 +33,9 @@ namespace _2ndSemesterFinalExamen
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
-		public  GameStates gameState = GameStates.InGame;
+		public  GameStates gameState = GameStates.PreGame;
 
-		private GameDataBase GameDB = new GameDataBase();
+		public GameDataBase GameDB = new GameDataBase();
 		public SpriteFont gameFont;
 		public  Texture2D skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line;
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
@@ -155,12 +155,15 @@ namespace _2ndSemesterFinalExamen
 			switch (gameState)
 			{
 				case GameStates.PreGame:
-					PreGame();
 					enemyFactory.EnemyPaused();
+					break;
+				case GameStates.LoadGame:
+					break;
+				case GameStates.NewGame:
 					break;
 				case GameStates.Menu:
 					GameMenu();
-					enemyFactory.EnemyPaused();
+					
 					break;
 				case GameStates.InGame:
 					InGameUpdate(gameTime);
@@ -193,11 +196,9 @@ namespace _2ndSemesterFinalExamen
 			switch (gameState)
 			{
 				case GameStates.PreGame:
-					DrawPreGame();
 					break;
 				case GameStates.Menu:
 					DrawGameMenu();
-					
 					break;
 				case GameStates.InGame:
 					InGameDraw(_spriteBatch);
@@ -218,14 +219,8 @@ namespace _2ndSemesterFinalExamen
 
 	
 
-		public void PreGame()
-		{
-
-		}
-		public void DrawPreGame()
-		{
-
-		}
+		
+		
 		public void GameMenu()
 		{
 

@@ -10,7 +10,9 @@ namespace _2ndSemesterFinalExamen
     {
         private static MenuNavigator instance;
         public List<Component> preGameComponents, loadGameComponents, newGameComponents, inGameComponents, menuGameComponents, pauseGameComponents, upgradeGameComponents;
-
+        private InputComponent userTag;
+        private GameStates currentGS = GameStates.PreGame;
+        private GameStates previousGS;
         public static MenuNavigator Instance
         {
             get
@@ -25,6 +27,12 @@ namespace _2ndSemesterFinalExamen
 
         private MenuNavigator()
         {
+            var backButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(-550, -300),
+                Text = "Back"
+            };
+            backButton.Click += PreviousGameState;
             //PRE - GAME 
             var logIn = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
@@ -48,9 +56,64 @@ namespace _2ndSemesterFinalExamen
             };
             //PRE - GAME 
 
+            //LOAD - GAME 
+            var userTagInfo = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(-225, -30),
+                Text = "User Tag:"
+            };
+             userTag = new InputComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, -30),
+                startText = "...",
+            };
 
+            var SendLogin = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 30),
+                Text = "Login In"
+            };
 
+            SendLogin.Click += LogInToChar;
 
+            loadGameComponents = new List<Component>()
+            {
+                userTagInfo,
+                userTag,
+                SendLogin,
+                backButton,
+            };
+            //LOAD - GAME 
+
+            //MENU - GAME 
+            var resumeGame = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, -60),
+                Text = "ResumeGame"
+            };
+            var upgradesButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 0),
+                Text = "Talents",
+            };
+
+            var quitButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 60),
+                Text = "Quit Game"
+            };
+
+            resumeGame.Click += ResumePlayingGame;
+            upgradesButton.Click += GoToUpgrades;
+            quitButton.Click += StopPlayingGame;
+            menuGameComponents = new List<Component>()
+            {
+                resumeGame,
+                upgradesButton,
+                quitButton,
+                backButton,
+            };
+            //MENU - GAME 
 
             //UPGRADE
 
@@ -68,7 +131,11 @@ namespace _2ndSemesterFinalExamen
 
         public  void Update(GameTime gameTime)
 		{
-			switch (Game1.Instance.gameState)
+            if(Game1.Instance.gameState != currentGS)
+			{
+                Game1.Instance.gameState = currentGS;
+            }
+            switch (Game1.Instance.gameState)
 			{
 				case GameStates.PreGame:
                     foreach (var component in preGameComponents)
@@ -168,13 +235,51 @@ namespace _2ndSemesterFinalExamen
             }
         }
 
+        private void PreviousGameState(object sender, System.EventArgs e)
+        {
+            currentGS = previousGS;
+        }
         private void LogInStateChange(object sender, System.EventArgs e)
         {
-            Game1.Instance.gameState = GameStates.LoadGame;
+            previousGS = currentGS;
+            currentGS = GameStates.LoadGame;
         }
         private void CreateNewGame(object sender, System.EventArgs e)
         {
-            Game1.Instance.gameState = GameStates.NewGame;
+            previousGS = Game1.Instance.gameState;
+            currentGS = GameStates.NewGame;
+        }
+
+        private void LogInToChar(object sender, System.EventArgs e)
+        {
+            ((Player)Game1.Instance.Player.GetComponent<Player>()).Tag = userTag.CurrentValue;
+            bool failedOrPassed = Game1.Instance.GameDB.GetPlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+            if (failedOrPassed)
+            {
+                currentGS = GameStates.Menu;
+            }
+            else
+            {
+                currentGS = GameStates.PreGame;
+            }
+        }
+
+
+        private void ResumePlayingGame(object sender, System.EventArgs e)
+		{
+            currentGS = GameStates.InGame;
+		}
+        private void GoToUpgrades(object sender, System.EventArgs e)
+        {
+            currentGS = GameStates.Upgrades;
+        }
+        private void StopPlayingGame(object sender, System.EventArgs e)
+        {
+            GameSaveData gameSave = new GameSaveData();
+            gameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
+            Game1.Instance.GameDB.SaveGameSession(((Player)Game1.Instance.Player.GetComponent<Player>()), gameSave);
+            
+            //Game1.Instance.Exit();
         }
     }
 }
