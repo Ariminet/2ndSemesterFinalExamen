@@ -15,11 +15,11 @@ namespace _2ndSemesterFinalExamen
 
         public virtual void Initialize()
         {
-            // TODO: Add your initialization logic here
-            //string dbString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
-            string dbString = "RGF0YSBTb3VyY2U9MzQuODkuMTcyLjE1MztEYXRhYmFzZT1KYWNrVGhlR2hvc3RIdW50ZXI7VXNlcj1zcWxzZXJ2ZXI7UGFzc3dvcmQ9dGVzdDEyMzQ=";
-            string dbConnection = DecodeAPI.DecodeBase64(dbString);
-            connectionString = dbConnection;
+			// TODO: Add your initialization logic here
+			//string dbString = ConfigurationManager.ConnectionStrings["GameDB.Properties.Settings.GameDBConnectionString"].ConnectionString;
+			string dbString = "RGF0YSBTb3VyY2U9MzQuODkuMTcyLjE1MztEYXRhYmFzZT1KYWNrVGhlR2hvc3RIdW50ZXI7VXNlcj1zcWxzZXJ2ZXI7UGFzc3dvcmQ9dGVzdDEyMzQ=";
+			string dbConnection = DecodeAPI.DecodeBase64(dbString);
+			connectionString = dbConnection;
 
 		}
        
@@ -64,35 +64,41 @@ namespace _2ndSemesterFinalExamen
         }
 
 
-        /// <summary>
-        /// Gets Player Data and adds to current CLASS of player 
-        /// to be able to LOAD an old save
-        /// </summary>
-        /// <param name="p"></param>
-        public void GetPlayer(Player p)
+		/// <summary>
+		/// Gets Player Data and adds to current CLASS of player 
+		/// to be able to LOAD an old save
+		/// </summary>
+		/// <param name="p"></param>
+		public bool GetPlayer(Player p)
 		{
-          
+			bool passedFailed = false;
 
-            string query = $"SELECT * FROM Player WHERE Tag = {p.Tag}";
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                var readTalentData = command.ExecuteReader();
-                connection.Open();
-                while (readTalentData.Read())
-                {
-                    p.Tag = readTalentData.GetString(1);
-                    p.Points = readTalentData.GetInt32(2);
-                    p.CurrentLevel = readTalentData.GetInt32(3);
-                }
-            }
+			string query = $"SELECT * FROM Player WHERE Tag = '{p.Tag}'";
+			using (connection = new SqlConnection(connectionString))
+			using (SqlCommand command = new SqlCommand(query, connection))
+			{
+				connection.Open();
+				var readTalentData = command.ExecuteReader();
 
-        }
-        /// <summary>
-        /// On player Creation it instaciates a techTree for that specific Player in DB where all talents = lvl 0
-        /// </summary>
-        /// <param name="p">Player p</param>
-        public void AddPlayerTalentTree(Player p)
+				while (readTalentData.Read())
+				{
+					p.Tag = readTalentData.GetString(1);
+					p.Points = readTalentData.GetInt32(2);
+					p.CurrentLevel = readTalentData.GetInt16(3);
+					passedFailed = readTalentData.HasRows;
+				}
+			}
+			return passedFailed;
+
+
+		}
+
+
+		/// <summary>
+		/// On player Creation it instaciates a techTree for that specific Player in DB where all talents = lvl 0
+		/// </summary>
+		/// <param name="p">Player p</param>
+		public void AddPlayerTalentTree(Player p)
 		{
 
             List<int> TalentTreeID = new List<int>();
@@ -200,12 +206,31 @@ namespace _2ndSemesterFinalExamen
 
             }
             query += ";";
+
+            StringBuilder errorMessages = new StringBuilder();
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                command.Parameters.AddWithValue("@Tag", p.Tag);
-                command.ExecuteNonQuery();
+
+                try
+                {
+                    connection.Open();
+                    command.Parameters.AddWithValue("@Tag", p.Tag);
+                    command.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    for (int i = 0; i < ex.Errors.Count; i++)
+                    {
+                        errorMessages.Append("Index #" + i + "\n" +
+                            "Message: " + ex.Errors[i].Message + "\n" +
+                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
+                            "Source: " + ex.Errors[i].Source + "\n" +
+                            "Procedure: " + ex.Errors[i].Procedure + "\n");
+                    }
+                    string randomError = errorMessages.ToString();
+                }
+               
             }
 
         }

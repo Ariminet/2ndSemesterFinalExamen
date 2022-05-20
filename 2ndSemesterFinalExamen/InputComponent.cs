@@ -32,7 +32,9 @@ namespace _2ndSemesterFinalExamen
         private string buttonTitle;
 
         public string CurrentText;
-        public int CurrentValue;
+        public string CurrentValue;
+
+        private KeyboardState oldKState;
 
         private Vector2 Position;
         public Vector2 PosPlayer { get; set; }
@@ -59,10 +61,9 @@ namespace _2ndSemesterFinalExamen
                 colour = Color.Gray;
             }
 
-            if (Int32.TryParse(CurrentText, out int CurrenValue))
-            {
-                CurrentValue = Int32.Parse(CurrentText);
-            }
+
+            CurrentValue = CurrentText;
+            
 
 
             spriteBatch.Draw(texture, Rectangle, colour);
@@ -125,11 +126,11 @@ namespace _2ndSemesterFinalExamen
                 var tmpTx = currentKeyboard.GetPressedKeys();
 
 
-                if (currentKeyboard.IsKeyDown(Keys.Back) && NumberOfLetters > 0 && tmpBool)
+                if (currentKeyboard.IsKeyDown(Keys.Back) && oldKState.IsKeyUp(Keys.Back)  )
                 {
-                        tmpBool = false;
+                        //tmpBool = false;
                         RemoveText();
-                        NumberOfLetters--; 
+                        //NumberOfLetters--; 
                 }
 
                 if (tmpTx.Length > 0)
@@ -138,33 +139,38 @@ namespace _2ndSemesterFinalExamen
 
                     tmpText = tmpTx[0].ToString();
 
+                    
 
-
-                    if (tmpBool && tmpText.Any(c=>char.IsDigit(c)) && NumberOfLetters<10)
+                    if (currentKeyboard.IsKeyDown(currentKeyboard.GetPressedKeys()[0]) && oldKState.IsKeyUp(currentKeyboard.GetPressedKeys()[0]) && !currentKeyboard.IsKeyDown(Keys.Back) && tmpText.Any(c => char.IsLetter(c))&& CurrentText.Length <= 50 )
                     {
-
-                        tmpText = tmpText.TrimStart('D');
-                        AddMoreText(tmpText);
+                        if(tmpText.Length <= 1)
+						{
+                            //tmpBool = false;
+                            tmpText = tmpText.TrimStart('D');
+                            AddMoreText(tmpText);
+                        }
+                       
                         
-                        tmpBool = false;
+                        
 
-                        NumberOfLetters++;
+                        //NumberOfLetters++;
                         
                     }
 
 
 
                 }
-                    if (!tmpBool)
-                    {
-                        timer++; 
-                        if (timer > 8)
-                        {
-                            tmpBool = true;
-                            timer = 0;
-                        }
+                oldKState = currentKeyboard;
+                //if (!tmpBool)
+                //{
+                //    timer++;
+                //    if (timer > 8)
+                //    {
+                //        tmpBool = true;
+                //        timer = 0;
+                //    }
 
-                    }
+                //}
             }
         }
 
@@ -182,12 +188,12 @@ namespace _2ndSemesterFinalExamen
             {
                 list.Add(CurrentText[i]);
             }
-            if(NumberOfLetters > 0)
+			if (list.Count > 0)
 			{
-                list.RemoveAt(NumberOfLetters - 1);
-            }
+				list.RemoveAt(list.Count - 1);
+		}
 
-            string output = new string(list.ToArray());
+		string output = new string(list.ToArray());
 
             CurrentText = output;
             
