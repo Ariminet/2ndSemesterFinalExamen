@@ -20,6 +20,7 @@ namespace _2ndSemesterFinalExamen
             {
                 return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
             }
+           
         }
 
         public bool active = true;
@@ -45,8 +46,8 @@ namespace _2ndSemesterFinalExamen
 
             if (!string.IsNullOrEmpty(Text))
             {
-                var x = (Rectangle.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
-                var y = (Rectangle.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
+                var x = (Position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
+                var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), Color.Black);
             }
@@ -56,7 +57,11 @@ namespace _2ndSemesterFinalExamen
 
         public override void Update(GameTime gameTime)
         {
-            Position = Game1.Instance.Player.transform.Position + PosPlayer;
+            if (Position != Game1.Instance.buttonsWorldPosition + PosPlayer)
+            {
+                Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
+            }
+
         }
 
     }

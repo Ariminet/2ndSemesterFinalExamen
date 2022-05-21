@@ -35,7 +35,7 @@ namespace _2ndSemesterFinalExamen
 
 			
             //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if(!PlayerDead && !dead)
+            if(!PlayerDead && !dead && Game1.Instance.gameState == GameStates.InGame)
             {
                 Vector2 moveDir = playPos - gameObject.transform.Position;
                 moveDir.Normalize();

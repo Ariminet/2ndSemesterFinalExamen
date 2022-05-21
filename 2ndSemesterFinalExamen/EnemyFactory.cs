@@ -286,8 +286,14 @@ namespace _2ndSemesterFinalExamen
         }
         public void Spawner()
         {
-           
-           while (Game1.Instance.gameState == GameStates.InGame)
+            while (Game1.Instance.gameState != GameStates.InGame)
+            {
+                totalTime = 0;
+                timer = 2D;
+                spawnTimer = 2D;
+            }
+
+                while (Game1.Instance.gameState == GameStates.InGame)
             {
 
 

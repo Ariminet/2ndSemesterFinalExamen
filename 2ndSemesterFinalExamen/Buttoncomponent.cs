@@ -44,12 +44,12 @@ namespace _2ndSemesterFinalExamen
             if (isHovering)
                 colour = Color.Gray;
 
-            spriteBatch.Draw(texture, Rectangle, colour);
+            spriteBatch.Draw(texture, Position, colour);
 
             if (!string.IsNullOrEmpty(Text))
             {
-                var x = (Rectangle.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
-                var y = (Rectangle.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
+                var x = (Position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
+                var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
             }
@@ -61,20 +61,23 @@ namespace _2ndSemesterFinalExamen
         {
             previousMouse = currentMouse;
             currentMouse = Mouse.GetState();
+            //var mouseRectangle = new Rectangle((int)Game1.Instance.mouseWorldPosition.X - (int)Game1.Instance.camera.Position.X, (int)Game1.Instance.mouseWorldPosition.Y - (int)Game1.Instance.camera.Position.Y, 1, 1);
+            var mouseRectangle = new Rectangle((int)currentMouse.X, (int)currentMouse.Y, 1, 1);
 
-            var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
-            
+
             isHovering = false;
 
             if (child != null)
             {
                 child.active = false;
             }
+            if (Position != Game1.Instance.buttonsWorldPosition + PosPlayer)
+            {
+                Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
+                Rectangle = new Rectangle((int)PosPlayer.X + (int)Game1.Instance.ViewWVH.X - texture.Width / 2, (int)PosPlayer.Y + (int)Game1.Instance.ViewWVH.Y - texture.Height / 2, texture.Width, texture.Height);
+            }
 
-            Position = Game1.Instance.Player.transform.Position + PosPlayer;
-
-            Rectangle = new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
-
+            
             if (mouseRectangle.Intersects(Rectangle))
             {
                 isHovering = true;
