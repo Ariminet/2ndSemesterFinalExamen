@@ -45,10 +45,15 @@ namespace _2ndSemesterFinalExamen
 
 		public float angleOfLine;
 
-		
+		public Vector2 mouseScreenPosition = Vector2.Zero;
+		public Vector2 mouseWorldPosition = Vector2.Zero;
+
+		public Vector2 buttonsScreenPosition = Vector2.Zero;
+		public Vector2 buttonsWorldPosition = Vector2.Zero;
+		public Vector2 ViewWVH;
 
 		public GameObject Player = new GameObject();
-		Camera camera;
+		public Camera camera;
 		private static Game1 instance;
 
 		public static Game1 Instance
@@ -81,13 +86,15 @@ namespace _2ndSemesterFinalExamen
 			_graphics.PreferredBackBufferHeight = 720;
 			_graphics.ApplyChanges();
 
-			
+			ViewWVH = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
+
+
+
 
 			this.camera = new Camera(_graphics.GraphicsDevice);
 			this.camera.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
 			GameDB.Initialize();
 			IniciateGameComponents();
-
 			foreach (GameObject gO in gameObjects)
 			{
 				gO.Awake();
@@ -146,41 +153,32 @@ namespace _2ndSemesterFinalExamen
 
 		protected override void Update(GameTime gameTime)
 		{
-			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-				Exit();
+			mouseScreenPosition = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
+			buttonsWorldPosition = this.camera.Position;
+			camera.ToWorld(ref mouseScreenPosition, out mouseWorldPosition);
+			camera.ToScreen(ref buttonsWorldPosition, out buttonsScreenPosition);
+			if (gameState == GameStates.InGame && Keyboard.GetState().IsKeyDown(Keys.Escape)) 
+			{
+				menuNavigator.currentGS = GameStates.Menu;
+				gameState = menuNavigator.currentGS;
+			}
+
+			//	Exit();
 
 			// TODO: Add your update logic here
 
-			menuNavigator.Update(gameTime);
+			
 
 
-			switch (gameState)
+			if (gameState != GameStates.InGame)
 			{
-				case GameStates.PreGame:
-					enemyFactory.EnemyPaused();
-					break;
-				case GameStates.LoadGame:
-					break;
-				case GameStates.NewGame:
-					break;
-				case GameStates.Menu:
-					GameMenu();
-					
-					break;
-				case GameStates.InGame:
-					InGameUpdate(gameTime);
-					break;
-				case GameStates.Upgrades:
-					UpgradesMenu();
-					enemyFactory.EnemyPaused();
-					break;
-				case GameStates.Pause:
-					PauseGame();
-					enemyFactory.EnemyPaused();
-					break;
-				default:
-					break;
+				menuNavigator.Update(gameTime);
 			}
+			else if (gameState == GameStates.InGame)
+			{
+				InGameUpdate(gameTime);
+			}
+			
 
 			base.Update(gameTime);
 		}
@@ -189,31 +187,26 @@ namespace _2ndSemesterFinalExamen
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 			_spriteBatch.Begin(this.camera);
-			
 			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
 
-			// TODO: Add your drawing code here
-			menuNavigator.Draw(_spriteBatch);
+			_spriteBatch.DrawString(gameFont, "MouseWorld X, Y: " + Game1.Instance.mouseWorldPosition, Player.transform.Position - new Vector2(300, 300), Color.White);
+			
+			_spriteBatch.DrawString(gameFont, "ButtonsScreenPos X, Y: " + Game1.Instance.buttonsScreenPosition, Player.transform.Position - new Vector2(300, 250), Color.White);
+			_spriteBatch.DrawString(gameFont, "ButtonsWorldPos X, Y: " + Game1.Instance.buttonsWorldPosition, Player.transform.Position - new Vector2(300, 200), Color.White);
+			_spriteBatch.DrawString(gameFont, "MouseScreen X, Y: " + Mouse.GetState().Position, Player.transform.Position - new Vector2(300, 150), Color.White);
+			//_spriteBatch.DrawString(gameFont, "CameraPos X, Y: " + this.camera.Position, Player.transform.Position - new Vector2(300, 150), Color.White);
+			_spriteBatch.DrawString(gameFont, "PlayerPos X, Y: " + Player.transform.Position, Player.transform.Position - new Vector2(300, 100), Color.White);
 
-			switch (gameState)
+
+			// TODO: Add your drawing code here
+			if (gameState != GameStates.InGame)
 			{
-				case GameStates.PreGame:
-					break;
-				case GameStates.Menu:
-					DrawGameMenu();
-					break;
-				case GameStates.InGame:
-					InGameDraw(_spriteBatch);
-					break;
-				case GameStates.Upgrades:
-					DrawUpgradesMenu();
-					break;
-				case GameStates.Pause:
-					DrawPauseGame();
-					break;
-				default:
-					break;
+				menuNavigator.Draw(_spriteBatch);
+			}else if(gameState == GameStates.InGame)
+			{
+				InGameDraw(_spriteBatch);
 			}
+					
 
 			_spriteBatch.End();
 			base.Draw(gameTime);
@@ -414,7 +407,7 @@ namespace _2ndSemesterFinalExamen
 			
 
 			Player.AddComponent(new Player());
-			Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2 - 48, _graphics.PreferredBackBufferHeight / 2 - 48);
+			Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
 			Player.AddComponent(new Projectile(Player.transform.direction,Player.transform.Position));
 			Player.AddComponent(new SpriteAnimation(Content.Load<Texture2D>("assets/Player/player"),1,8));
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkDown"), 4, 8);

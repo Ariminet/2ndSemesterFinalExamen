@@ -11,7 +11,7 @@ namespace _2ndSemesterFinalExamen
         private static MenuNavigator instance;
         public List<Component> preGameComponents, loadGameComponents, newGameComponents, inGameComponents, menuGameComponents, pauseGameComponents, upgradeGameComponents;
         private InputComponent userTag;
-        private GameStates currentGS = GameStates.PreGame;
+        public GameStates currentGS = GameStates.PreGame;
         private GameStates previousGS;
         public static MenuNavigator Instance
         {
@@ -36,13 +36,13 @@ namespace _2ndSemesterFinalExamen
             //PRE - GAME 
             var logIn = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, -30),
+                PosPlayer = new Vector2(0, 0),
                 Text = "Login via. Tag"
             };
 
             var createNewGame = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, 30),
+                PosPlayer = new Vector2(0, 60),
                 Text = "Create New Game"
             };
 
@@ -111,7 +111,7 @@ namespace _2ndSemesterFinalExamen
                 resumeGame,
                 upgradesButton,
                 quitButton,
-                backButton,
+                
             };
             //MENU - GAME 
 
@@ -132,6 +132,7 @@ namespace _2ndSemesterFinalExamen
 
         }
 
+       
         public  void Update(GameTime gameTime)
 		{
             if(Game1.Instance.gameState != currentGS)
