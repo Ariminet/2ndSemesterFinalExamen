@@ -21,7 +21,7 @@ namespace _2ndSemesterFinalExamen
 			string dbConnection = DecodeAPI.DecodeBase64(dbString);
 			connectionString = dbConnection;
 
-		}
+        }
        
 
 
@@ -29,18 +29,38 @@ namespace _2ndSemesterFinalExamen
         /// Adds Player information to DB with Unique ID, Player Tag + current points and level
         /// </summary>
         /// <param name="p">Player p</param>
-        public void AddPlayer(Player p)
+        public bool AddPlayer(Player p)
 		{
-            string query = "INSERT INTO Player VALUES('@Tag', @Points, @CurrentLevel);";
-            using (connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
-			{
-                connection.Open();
-                command.Parameters.AddWithValue("@Tag", p.Tag);
-                command.Parameters.AddWithValue("@Points", p.Points);
-                command.Parameters.AddWithValue("@CurrentLevel", p.CurrentLevel);
-                command.ExecuteNonQuery();
-            }
+            bool cleared = true;
+            
+                string query = "INSERT INTO Player VALUES(@Tag, @Points, @CurrentLevel);";
+                using (connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                   
+                    command.Parameters.AddWithValue("@Tag", p.Tag);
+                    command.Parameters.AddWithValue("@Points", p.Points);
+                    command.Parameters.AddWithValue("@CurrentLevel", p.CurrentLevel);
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    cleared = false;
+                }
+                if (cleared)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                }
+
+            
 
 
         }

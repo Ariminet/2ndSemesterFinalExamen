@@ -79,8 +79,8 @@ namespace _2ndSemesterFinalExamen
 
             if (!string.IsNullOrEmpty(CurrentText))
             {
-                var x = (Position.X + (Rectangle.Width / 2)) - (font.MeasureString(startText).X / 2);
-                var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(startText).Y / 2);
+                var x = (Position.X + (Rectangle.Width / 2)) - (font.MeasureString(CurrentText).X / 2);
+                var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(CurrentText).Y / 2);
 
                 spriteBatch.DrawString(font, CurrentText, new Vector2(x, y), Color.Black);
             }      

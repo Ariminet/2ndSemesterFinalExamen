@@ -10,8 +10,8 @@ namespace _2ndSemesterFinalExamen
     class Player : Component
     {
         public string Tag { get; set; }
-        public int Points { get; set; }
-        public int CurrentLevel { get; set; }
+        public int Points { get; set; } = 0;
+        public int CurrentLevel { get; set; } = 0;
         //public Vector2 position = new Vector2(500, 300);
         private int speed = 300;
 
