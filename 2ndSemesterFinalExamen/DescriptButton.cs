@@ -11,13 +11,14 @@ namespace _2ndSemesterFinalExamen
 {
        TextComponent textComp;
        Buttoncomponent buttonComp;
-
         
 
-        public DescriptButton(Texture2D textSprite, SpriteFont font, Texture2D buttonSprite, string text, Vector2 Pos)
+
+        public DescriptButton(Texture2D textSprite, SpriteFont font, Texture2D buttonSprite, string text, Vector2 Pos, Vector2 line1, Vector2 line2, Vector2 line3)
         {
             textComp = new TextComponent(textSprite, font);
-            buttonComp = new Buttoncomponent(buttonSprite, font);
+
+            buttonComp = new Buttoncomponent(buttonSprite, line1, line2, line3);
 
             textComp.Text = text;
 
@@ -26,6 +27,7 @@ namespace _2ndSemesterFinalExamen
 
             buttonComp.child = textComp;
             
+
         }
 
         public override void Draw (SpriteBatch spriteBatch)
@@ -42,7 +44,7 @@ namespace _2ndSemesterFinalExamen
         {
             buttonComp.Update(gameTime);
             textComp.Update(gameTime);
-            
+
         }
     }
 }

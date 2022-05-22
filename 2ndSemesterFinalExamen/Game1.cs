@@ -93,10 +93,12 @@ namespace _2ndSemesterFinalExamen
 				gO.Awake();
 			}
 
-			
+			line = new Texture2D(_graphics.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			line.SetData(new[] { Color.White });
 
 			base.Initialize();
 		}
+		
 
 
 		protected override void LoadContent()
