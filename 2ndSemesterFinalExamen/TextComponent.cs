@@ -57,10 +57,7 @@ namespace _2ndSemesterFinalExamen
 
         public override void Update(GameTime gameTime)
         {
-            if (Position != Game1.Instance.buttonsWorldPosition + PosPlayer)
-            {
                 Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
-            }
 
         }
 

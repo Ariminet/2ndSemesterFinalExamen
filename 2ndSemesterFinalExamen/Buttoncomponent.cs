@@ -126,12 +126,12 @@ namespace _2ndSemesterFinalExamen
                 }
             }
 
-            spriteBatch.Draw(texture, Rectangle, colour);
+            spriteBatch.Draw(texture, position, colour);
 
             if (!string.IsNullOrEmpty(Text))
             {
-                var x = (Position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
-                var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
+                var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
+                var y = (position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
             }
@@ -154,9 +154,9 @@ namespace _2ndSemesterFinalExamen
             {
                 child.active = false;
             }
-            if (Position != Game1.Instance.buttonsWorldPosition + PosPlayer)
+            if (position != Game1.Instance.buttonsWorldPosition + PosPlayer)
             {
-                Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
+                position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
                 Rectangle = new Rectangle((int)PosPlayer.X + (int)Game1.Instance.ViewWVH.X - texture.Width / 2, (int)PosPlayer.Y + (int)Game1.Instance.ViewWVH.Y - texture.Height / 2, texture.Width, texture.Height);
             }
 

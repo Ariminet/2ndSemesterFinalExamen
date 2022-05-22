@@ -9,10 +9,13 @@ namespace _2ndSemesterFinalExamen
     class MenuNavigator
     {
         private static MenuNavigator instance;
-        public List<Component> preGameComponents, loadGameComponents, newGameComponents, inGameComponents, menuGameComponents, pauseGameComponents, upgradeGameComponents;
+        public List<Component> preGameComponents, loadGameComponents, newGameComponents, inGameComponents, menuGameComponents, pauseGameComponents, upgradeGameComponents, gameOverComponents;
         private InputComponent userTag;
+        private InputComponent newUserTag;
         public GameStates currentGS = GameStates.PreGame;
         private GameStates previousGS;
+        private bool failedOrPassed = true;
+        private TextComponent IncorrectData, GameOverText;
         public static MenuNavigator Instance
         {
             get
@@ -29,20 +32,32 @@ namespace _2ndSemesterFinalExamen
         {
             var backButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(-550, -300),
+                PosPlayer = new Vector2(-525, -325),
                 Text = "Back"
+            };
+
+            IncorrectData = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, -150),
+                Text = ""
+            };
+
+            GameOverText = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 0),
+                Text = "Game Over..."
             };
             backButton.Click += PreviousGameState;
             //PRE - GAME 
             var logIn = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, 0),
+                PosPlayer = new Vector2(0, -30),
                 Text = "Login via. Tag"
             };
 
             var createNewGame = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, 60),
+                PosPlayer = new Vector2(0, 30),
                 Text = "Create New Game"
             };
 
@@ -55,17 +70,46 @@ namespace _2ndSemesterFinalExamen
                 createNewGame,
             };
             //PRE - GAME 
+            //NEW - GAME 
+            var newUserInfo = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, -90),
+                Text = "Player Tag:"
+            };
+            newUserTag = new InputComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, -30),
+                startText = "......",
+            };
+
+            var CreateChar = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 30),
+                Text = "Create Character"
+            };
+
+            CreateChar.Click += CreateCharacter;
+
+            newGameComponents = new List<Component>()
+            {
+                newUserInfo,
+                newUserTag,
+                CreateChar,
+                backButton,
+                
+            };
+            //NEW - GAME 
 
             //LOAD - GAME 
             var userTagInfo = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(-225, -30),
+                PosPlayer = new Vector2(0, -90),
                 Text = "User Tag:"
             };
              userTag = new InputComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
                 PosPlayer = new Vector2(0, -30),
-                startText = "...",
+                startText = "......",
             };
 
             var SendLogin = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
@@ -82,25 +126,26 @@ namespace _2ndSemesterFinalExamen
                 userTag,
                 SendLogin,
                 backButton,
+                
             };
             //LOAD - GAME 
 
             //MENU - GAME 
             var resumeGame = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, -60),
+                PosPlayer = new Vector2(0, -90),
                 Text = "ResumeGame"
             };
             var upgradesButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, 0),
+                PosPlayer = new Vector2(0, -30),
                 Text = "Talents",
             };
 
             var quitButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, 60),
-                Text = "Quit Game"
+                PosPlayer = new Vector2(0, 30),
+                Text = "Save Game"
             };
 
             resumeGame.Click += ResumePlayingGame;
@@ -130,6 +175,9 @@ namespace _2ndSemesterFinalExamen
                 fasterShots,
             };
 
+
+            
+
         }
 
        
@@ -148,6 +196,12 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.LoadGame:
+                    if (!failedOrPassed)
+                    {
+                        IncorrectData.Text = "Tag does not exsist";
+                        IncorrectData.Update(gameTime);
+
+                    }
                     foreach (var component in loadGameComponents)
                     {
                         component.Update(gameTime);
@@ -156,7 +210,14 @@ namespace _2ndSemesterFinalExamen
 				case GameStates.NewGame:
                     foreach (var component in newGameComponents)
                     {
+                        if (!failedOrPassed)
+                        {
+                            IncorrectData.Text = "Tag is already in use";
+                            IncorrectData.Update(gameTime);
+
+                        }
                         component.Update(gameTime);
+
                     }
                     break;
 				case GameStates.Menu:
@@ -183,7 +244,10 @@ namespace _2ndSemesterFinalExamen
                         component.Update(gameTime);
                     }
                     break;
-				default:
+                case GameStates.GameOver:
+                    GameOverText.Update(gameTime);
+                    break;
+                default:
 					break;
 			}
 		}
@@ -199,15 +263,27 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
                 case GameStates.LoadGame:
+                    if (!failedOrPassed)
+                    {
+                        IncorrectData.Draw(_spriteBatch);
+
+                    }
                     foreach (var component in loadGameComponents)
                     {
                         component.Draw(_spriteBatch);
                     }
                     break;
                 case GameStates.NewGame:
+                    if (!failedOrPassed)
+                    {
+                        IncorrectData.Draw(_spriteBatch);
+
+                        }
                     foreach (var component in newGameComponents)
                     {
-                        component.Draw(_spriteBatch);
+                        
+                            component.Draw(_spriteBatch);
+                       
                     }
                     break;
                 case GameStates.Menu:
@@ -234,6 +310,9 @@ namespace _2ndSemesterFinalExamen
                         component.Draw(_spriteBatch);
                     }
                     break;
+                case GameStates.GameOver:
+                    GameOverText.Draw(_spriteBatch);
+                    break;
                 default:
                     break;
             }
@@ -242,6 +321,7 @@ namespace _2ndSemesterFinalExamen
         private void PreviousGameState(object sender, System.EventArgs e)
         {
             currentGS = previousGS;
+            failedOrPassed = true;
         }
         private void LogInStateChange(object sender, System.EventArgs e)
         {
@@ -250,21 +330,34 @@ namespace _2ndSemesterFinalExamen
         }
         private void CreateNewGame(object sender, System.EventArgs e)
         {
-            previousGS = Game1.Instance.gameState;
+            previousGS = currentGS;
             currentGS = GameStates.NewGame;
         }
-
+        private void CreateCharacter(object sender, System.EventArgs e)
+        {
+            ((Player)Game1.Instance.Player.GetComponent<Player>()).Tag = newUserTag.CurrentValue;
+                 failedOrPassed = Game1.Instance.GameDB.AddPlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+                if (failedOrPassed)
+                {
+                    currentGS = GameStates.Menu;
+                }
+                else
+                {
+                    currentGS = GameStates.NewGame;
+                }
+           
+        }
         private void LogInToChar(object sender, System.EventArgs e)
         {
             ((Player)Game1.Instance.Player.GetComponent<Player>()).Tag = userTag.CurrentValue;
-            bool failedOrPassed = Game1.Instance.GameDB.GetPlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+             failedOrPassed = Game1.Instance.GameDB.GetPlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
             if (failedOrPassed)
             {
                 currentGS = GameStates.Menu;
             }
             else
             {
-                currentGS = GameStates.PreGame;
+                currentGS = GameStates.LoadGame;
             }
         }
 
