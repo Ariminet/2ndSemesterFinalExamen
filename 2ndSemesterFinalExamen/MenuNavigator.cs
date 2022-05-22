@@ -117,14 +117,17 @@ namespace _2ndSemesterFinalExamen
 
             //UPGRADE
 
-            var shot = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.shoot, "shoot", new Vector2(-50,-50) )
-            {
-              
-            };
+            var shot = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.shoot, "shoot", new Vector2(75, -250), new Vector2 (-30, -150),new Vector2(), new Vector2())
+            {};
+            var fasterShots = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.fasterShots, "faster shooting", new Vector2(-30, -150), new Vector2(), new Vector2(), new Vector2())
+            {};
+
+
 
             inGameComponents = new List<Component>()
             {
                 shot,
+                fasterShots,
             };
 
         }
