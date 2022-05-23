@@ -215,7 +215,6 @@ namespace _2ndSemesterFinalExamen
             using (SqlCommand command = new SqlCommand(query, connection))
             {
 
-                //command.Parameters.AddWithValue("@Tag", p.Tag);
                 connection.Open();
                 var readTalentData = command.ExecuteReader();
                 while (readTalentData.Read())
