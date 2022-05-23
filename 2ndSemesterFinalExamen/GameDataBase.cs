@@ -170,10 +170,11 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
                 command.Parameters.AddWithValue("@Tag", p.Tag);
                 command.Parameters.AddWithValue("@TalentTag", t.Tag);
                 command.Parameters.AddWithValue("@TalentLevel", t.CurrentLevel);
+
+                connection.Open();
                 command.ExecuteNonQuery();
             }
         }
