@@ -9,22 +9,27 @@ namespace _2ndSemesterFinalExamen
 {
     class TalentTree
     {
+        private static List<Talent> talentTree = new List<Talent>();
         static void GraphMake()
         {
             Graph graph = new Graph();
-
-            graph.AddTalent("Shoot", 1, 1,"blabla");
-            graph.AddTalent("Faster shots", 3, 0, "blabla");
-            graph.AddTalent("Quick reload", 3, 0, "blabla");
-            graph.AddTalent("Speed", 3, 0, "blabla");
-            graph.AddTalent("Spray shot", 1, 0, "blabla");
-            graph.AddTalent("Damage", 3, 0, "blabla");
-            graph.AddTalent("Bigger projectiles", 2, 0, "blabla");
-            graph.AddTalent("Piercing shot", 1, 0, "blabla");
-            graph.AddTalent("Dash", 1, 0, "blabla");
-            graph.AddTalent("Bullet shield", 2, 0, "blabla");
-            graph.AddTalent("Explosive shot", 1, 0, "blabla");
-            graph.AddTalent("Explode", 1, 0, "blabla");
+            talentTree = Game1.Instance.GameDB.GetTalents(((Player)Game1.Instance.Player.GetComponent<Player>()));
+			foreach (Talent t in talentTree)
+			{
+                graph.AddTalent(t.Tag, t.MaxLevel, t.CurrentLevel, t.Description);
+            }
+            //graph.AddTalent("Shoot", 1, 1,"blabla");
+            //graph.AddTalent("Faster shots", 3, 0, "blabla");
+            //graph.AddTalent("Quick reload", 3, 0, "blabla");
+            //graph.AddTalent("Speed", 3, 0, "blabla");
+            //graph.AddTalent("Spray shot", 1, 0, "blabla");
+            //graph.AddTalent("Damage", 3, 0, "blabla");
+            //graph.AddTalent("Bigger projectiles", 2, 0, "blabla");
+            //graph.AddTalent("Piercing shot", 1, 0, "blabla");
+            //graph.AddTalent("Dash", 1, 0, "blabla");
+            //graph.AddTalent("Bullet shield", 2, 0, "blabla");
+            //graph.AddTalent("Explosive shot", 1, 0, "blabla");
+            //graph.AddTalent("Explode", 1, 0, "blabla");
 
             graph.AddEdge("Shoot", "Faster shots");
             graph.AddEdge("Shoot", "Quick reload");
