@@ -185,6 +185,12 @@ namespace _2ndSemesterFinalExamen
 			if (((Player)Player.GetComponent<Player>()).dead)
 			{
 				gameState = GameStates.GameOver;
+				if(Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Enter))
+				{
+					menuNavigator.currentGS = GameStates.PreGame;
+					gameState = menuNavigator.currentGS;
+					((Player)Player.GetComponent<Player>()).dead = false;
+				}
 			}
 
 			base.Update(gameTime);
@@ -206,7 +212,11 @@ namespace _2ndSemesterFinalExamen
 
 
 			// TODO: Add your drawing code here
-			InGameDraw(_spriteBatch);
+			if(gameState != GameStates.PreGame)
+			{
+				InGameDraw(_spriteBatch);
+
+			}
 
 			if (gameState != GameStates.InGame)
 			{
