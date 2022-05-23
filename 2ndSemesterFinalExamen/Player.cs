@@ -15,6 +15,8 @@ namespace _2ndSemesterFinalExamen
         //public Vector2 position = new Vector2(500, 300);
         private int speed = 300;
 
+        public int Health { get; set; } = 0;
+
         //public Dir direction { get;  set; } = Dir.Down;
         //public bool isMoving { get; private set; } = false;
         public KeyboardState kStateOld { get; private set; } = Keyboard.GetState();

@@ -45,6 +45,7 @@ namespace _2ndSemesterFinalExamen
 		public MenuNavigator menuNavigator;
 
 		public float angleOfLine;
+		public GameSaveData GameSave;
 
 		public Vector2 mouseScreenPosition = Vector2.Zero;
 		public Vector2 mouseWorldPosition = Vector2.Zero;

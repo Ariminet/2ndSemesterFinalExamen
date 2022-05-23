@@ -358,8 +358,11 @@ namespace _2ndSemesterFinalExamen
         {
             ((Player)Game1.Instance.Player.GetComponent<Player>()).Tag = userTag.CurrentValue;
              failedOrPassed = Game1.Instance.GameDB.GetPlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+
             if (failedOrPassed)
             {
+                Game1.Instance.GameSave = new GameSaveData();
+                Game1.Instance.GameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
                 currentGS = GameStates.Menu;
             }
             else
@@ -379,9 +382,9 @@ namespace _2ndSemesterFinalExamen
         }
         private void StopPlayingGame(object sender, System.EventArgs e)
         {
-            GameSaveData gameSave = new GameSaveData();
-            gameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
-            Game1.Instance.GameDB.SaveGameSession(((Player)Game1.Instance.Player.GetComponent<Player>()), gameSave);
+            Game1.Instance.GameSave = new GameSaveData();
+            //gameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
+            Game1.Instance.GameDB.SaveGameSession(((Player)Game1.Instance.Player.GetComponent<Player>()), Game1.Instance.GameSave);
             
             //Game1.Instance.Exit();
         }

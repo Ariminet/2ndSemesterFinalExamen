@@ -11,6 +11,7 @@ namespace _2ndSemesterFinalExamen
         private Vector2 pos;
         private int speed;
         public int radius = 30;
+        public int Health { get; set; } = 0;
 
         bool dead = true;
 

@@ -228,37 +228,35 @@ namespace _2ndSemesterFinalExamen
 		{
             UpdatePlayer(p);
             InstanciateGameSession(p);
-
+            int itemCounter = 0;
             string query = "INSERT INTO SaveData VALUES";
             foreach (GameUnit g in GameSave.ListGameUnits)
 			{
-                query += $"((SELECT ID FROM Player WHERE Tag = @Tag),'{g.Tag}', {g.Health},{g.PosX},{g.PosY})";
-
+                itemCounter++;
+                if (GameSave.ListGameUnits.Count > itemCounter)
+                {
+                    query += $"((SELECT ID FROM Player WHERE Tag = @Tag),'{g.Tag}', {g.Health},{g.PosX},{g.PosY}),";
+                   
+                }
+                else
+                {
+                    query += $"((SELECT ID FROM Player WHERE Tag = @Tag),'{g.Tag}', {g.Health},{g.PosX},{g.PosY})";
+                }
             }
             query += ";";
 
-            StringBuilder errorMessages = new StringBuilder();
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-
+                command.Parameters.AddWithValue("@Tag", p.Tag);
                 try
                 {
                     connection.Open();
-                    command.Parameters.AddWithValue("@Tag", p.Tag);
                     command.ExecuteNonQuery();
                 }
                 catch (SqlException ex)
                 {
-                    for (int i = 0; i < ex.Errors.Count; i++)
-                    {
-                        errorMessages.Append("Index #" + i + "\n" +
-                            "Message: " + ex.Errors[i].Message + "\n" +
-                            "LineNumber: " + ex.Errors[i].LineNumber + "\n" +
-                            "Source: " + ex.Errors[i].Source + "\n" +
-                            "Procedure: " + ex.Errors[i].Procedure + "\n");
-                    }
-                    string randomError = errorMessages.ToString();
+                    
                 }
                
             }
@@ -277,12 +275,14 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                var readGameData = command.ExecuteReader();
-                connection.Open();
                 command.Parameters.AddWithValue("@Tag", p.Tag);
+
+                connection.Open();
+                var readGameData = command.ExecuteReader();
+
                 while (readGameData.Read())
                 {
-                    unitList.Add(new GameUnit(readGameData.GetString(0), readGameData.GetInt32(1), readGameData.GetInt32(2), readGameData.GetInt32(3)));
+                    unitList.Add(new GameUnit(readGameData.GetString(0), readGameData.GetInt16(1), readGameData.GetInt16(2), readGameData.GetInt16(3)));
                 }
             }
             return unitList;
