@@ -187,6 +187,7 @@ namespace _2ndSemesterFinalExamen
 				gameState = GameStates.GameOver;
 				if(Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Enter))
 				{
+					GameDB.UpdatePlayer(((Player)Player.GetComponent<Player>()));
 					menuNavigator.currentGS = GameStates.PreGame;
 					gameState = menuNavigator.currentGS;
 					((Player)Player.GetComponent<Player>()).dead = false;

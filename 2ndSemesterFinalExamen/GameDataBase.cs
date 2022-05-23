@@ -75,10 +75,10 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
                 command.Parameters.AddWithValue("@Tag", p.Tag);
                 command.Parameters.AddWithValue("@Points", p.Points);
                 command.Parameters.AddWithValue("@CurrentLevel", p.CurrentLevel);
+                connection.Open();
                 command.ExecuteNonQuery();
             }
         }
@@ -189,9 +189,10 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                var readTalentData = command.ExecuteReader();
-                connection.Open();
+                
                 command.Parameters.AddWithValue("@Tag", p.Tag);
+                connection.Open();
+                var readTalentData = command.ExecuteReader();
                 while (readTalentData.Read())
                 {
                     listTalent.Add(new Talent(readTalentData.GetString(1), readTalentData.GetInt32(2), readTalentData.GetInt32(3), readTalentData.GetString(4)));
@@ -212,8 +213,8 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
                 command.Parameters.AddWithValue("@Tag", p.Tag);
+                connection.Open();
                 command.ExecuteNonQuery();
             }
         }
