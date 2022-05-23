@@ -127,8 +127,8 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                var readTalentData = command.ExecuteReader();
                 connection.Open();
+                var readTalentData = command.ExecuteReader();
 				while (readTalentData.Read())
 				{
 					TalentTreeID.Add(readTalentData.GetInt32(0));
@@ -138,10 +138,18 @@ namespace _2ndSemesterFinalExamen
 
             List<string> Querys = new List<string>();
             query = "INSERT INTO PlayerTalentTree VALUES";
-
+            int itemCounter = 0;
             foreach (int tID in TalentTreeID)
 			{
-                query += $"((SELECT ID FROM Player WHERE Tag LIKE @Tag), {tID}, 0)";
+                itemCounter++;
+                if (TalentTreeID.Count > itemCounter)
+				{
+                    query += $"((SELECT ID FROM Player WHERE Tag LIKE @Tag), {tID}, 0),";
+                }else
+				{
+                    query += $"((SELECT ID FROM Player WHERE Tag LIKE @Tag), {tID}, 0)";
+                }
+                
                 
 			}
             query += ";";
@@ -149,9 +157,11 @@ namespace _2ndSemesterFinalExamen
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
+               
                 command.Parameters.AddWithValue("@Tag", p.Tag);
+                connection.Open();
                 command.ExecuteNonQuery();
+                
             }
         }
         public void UpdateTalent(Player p, Talent t)

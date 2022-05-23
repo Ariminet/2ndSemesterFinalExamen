@@ -41,8 +41,9 @@ namespace _2ndSemesterFinalExamen
         {
             if (active)
             {
+                Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
 
-            spriteBatch.Draw(texture, Rectangle, Color.White);
+                spriteBatch.Draw(texture, Position, Color.White);
 
             if (!string.IsNullOrEmpty(Text))
             {
@@ -57,8 +58,8 @@ namespace _2ndSemesterFinalExamen
 
         public override void Update(GameTime gameTime)
         {
-                Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
-
+            
+            
         }
 
     }

@@ -179,6 +179,8 @@ namespace _2ndSemesterFinalExamen
 			{
 				InGameUpdate(gameTime);
 			}
+			
+		
 			if (((Player)Player.GetComponent<Player>()).dead)
 			{
 				gameState = GameStates.GameOver;
@@ -198,7 +200,7 @@ namespace _2ndSemesterFinalExamen
 			//_spriteBatch.DrawString(gameFont, "ButtonsScreenPos X, Y: " + Game1.Instance.buttonsScreenPosition, Player.transform.Position - new Vector2(300, 250), Color.White);
 			//_spriteBatch.DrawString(gameFont, "ButtonsWorldPos X, Y: " + Game1.Instance.buttonsWorldPosition, Player.transform.Position - new Vector2(300, 200), Color.White);
 			//_spriteBatch.DrawString(gameFont, "MouseScreen X, Y: " + Mouse.GetState().Position, Player.transform.Position - new Vector2(300, 150), Color.White);
-			////_spriteBatch.DrawString(gameFont, "CameraPos X, Y: " + this.camera.Position, Player.transform.Position - new Vector2(300, 150), Color.White);
+			//_spriteBatch.DrawString(gameFont, "CameraPos X, Y: " + this.camera.Position, Player.transform.Position - new Vector2(300, 150), Color.White);
 			//_spriteBatch.DrawString(gameFont, "PlayerPos X, Y: " + Player.transform.Position, Player.transform.Position - new Vector2(300, 100), Color.White);
 
 
