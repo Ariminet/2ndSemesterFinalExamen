@@ -16,6 +16,7 @@ namespace _2ndSemesterFinalExamen
         private GameStates previousGS;
         private bool failedOrPassed = true;
         private TextComponent IncorrectData, GameOverText;
+        private Buttoncomponent quitButton;
         public static MenuNavigator Instance
         {
             get
@@ -44,10 +45,17 @@ namespace _2ndSemesterFinalExamen
 
             GameOverText = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(0, 0),
+                PosPlayer = new Vector2(-30, 0),
                 Text = "Game Over..."
             };
             backButton.Click += PreviousGameState;
+
+            quitButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 90),
+                Text = "Quit Game"
+            };
+            quitButton.Click += QuitPlayGame;
             //PRE - GAME 
             var logIn = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
@@ -143,19 +151,21 @@ namespace _2ndSemesterFinalExamen
                 Text = "Talents",
             };
 
-            var quitButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            var saveButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
                 PosPlayer = new Vector2(0, 30),
                 Text = "Save Game"
             };
-
+            
             resumeGame.Click += ResumePlayingGame;
             upgradesButton.Click += GoToUpgrades;
-            quitButton.Click += StopPlayingGame;
+            saveButton.Click += SaveTheGame;
+           
             menuGameComponents = new List<Component>()
             {
                 resumeGame,
                 upgradesButton,
+                saveButton,
                 quitButton,
                 
             };
@@ -176,8 +186,17 @@ namespace _2ndSemesterFinalExamen
                 fasterShots,
             };
 
+            //GAMEOVER - GAME 
+            gameOverComponents = new List<Component>()
+            {
+                GameOverText,
+                quitButton,
 
+            };
+            //GAMEOVER - GAME 
             
+
+
 
         }
 
@@ -222,6 +241,7 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.Menu:
+                    quitButton.PosPlayer = new Vector2(0, 90);
                     foreach (var component in menuGameComponents)
                     {
                         component.Update(gameTime);
@@ -246,7 +266,13 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
                 case GameStates.GameOver:
-                    GameOverText.Update(gameTime);
+                    //GameOverText.PosPlayer = new Vector2(0, -45);
+                    //quitButton.PosPlayer = new Vector2(-50, 45);
+                    //foreach (var component in gameOverComponents)
+                    //{
+                    //    component.Update(gameTime);
+                    //}
+                    
                     break;
                 default:
 					break;
@@ -312,7 +338,10 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
                 case GameStates.GameOver:
-                    GameOverText.Draw(_spriteBatch);
+                    //foreach (var component in gameOverComponents)
+                    //{
+                    //    component.Draw(_spriteBatch);
+                    //}
                     break;
                 default:
                     break;
@@ -380,12 +409,18 @@ namespace _2ndSemesterFinalExamen
         {
             currentGS = GameStates.Upgrades;
         }
-        private void StopPlayingGame(object sender, System.EventArgs e)
+        private void SaveTheGame(object sender, System.EventArgs e)
         {
             Game1.Instance.GameSave = new GameSaveData();
             //gameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
             Game1.Instance.GameDB.SaveGameSession(((Player)Game1.Instance.Player.GetComponent<Player>()), Game1.Instance.GameSave);
             
+            //Game1.Instance.Exit();
+        }
+        private void QuitPlayGame(object sender, System.EventArgs e)
+        {
+
+            currentGS = GameStates.PreGame;
             //Game1.Instance.Exit();
         }
     }
