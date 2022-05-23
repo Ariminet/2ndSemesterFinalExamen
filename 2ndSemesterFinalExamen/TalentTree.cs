@@ -10,6 +10,7 @@ namespace _2ndSemesterFinalExamen
     class TalentTree
     {
         private static List<Talent> talentTree = new List<Talent>();
+        private static List<TalentEdges> talentConnections = new List<TalentEdges>();
         static void GraphMake()
         {
             Graph graph = new Graph();
@@ -30,18 +31,22 @@ namespace _2ndSemesterFinalExamen
             //graph.AddTalent("Bullet shield", 2, 0, "blabla");
             //graph.AddTalent("Explosive shot", 1, 0, "blabla");
             //graph.AddTalent("Explode", 1, 0, "blabla");
-
-            graph.AddEdge("Shoot", "Faster shots");
-            graph.AddEdge("Shoot", "Quick reload");
-            graph.AddEdge("Shoot", "Speed");
-            graph.AddEdge("Faster shots", "Spray shot");
-            graph.AddEdge("Spray shot", "Damage");
-            graph.AddEdge("Spray shot", "Bullet shield");
-            graph.AddEdge("Quick reload", "Bigger projectiles");
-            graph.AddEdge("Quick reload", "Piercing shot");
-            graph.AddEdge("Bigger projectiles", "Explosive shot");
-            graph.AddEdge("Explosive shot", "Explode");
-            graph.AddEdge("Speed", "Dash");
+            talentConnections = Game1.Instance.GameDB.GetTalentConnections();
+            foreach (TalentEdges t in talentConnections)
+            {
+                graph.AddEdge(t.StartEdge, t.EndEdge);
+            }
+            //graph.AddEdge("Shoot", "Faster shots");
+            //graph.AddEdge("Shoot", "Quick reload");
+            //graph.AddEdge("Shoot", "Speed");
+            //graph.AddEdge("Faster shots", "Spray shot");
+            //graph.AddEdge("Spray shot", "Damage");
+            //graph.AddEdge("Spray shot", "Bullet shield");
+            //graph.AddEdge("Quick reload", "Bigger projectiles");
+            //graph.AddEdge("Quick reload", "Piercing shot");
+            //graph.AddEdge("Bigger projectiles", "Explosive shot");
+            //graph.AddEdge("Explosive shot", "Explode");
+            //graph.AddEdge("Speed", "Dash");
 
 
             static Talent DFS(Talent start, Talent goal)

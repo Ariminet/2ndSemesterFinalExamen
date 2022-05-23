@@ -203,6 +203,30 @@ namespace _2ndSemesterFinalExamen
 		}
 
         /// <summary>
+        /// Creates a List<TalentEdges> To populate edges between talents
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns>ListOfTalentConnections</returns>
+        public List<TalentEdges> GetTalentConnections()
+        {
+            List<TalentEdges> listEdges = new List<TalentEdges>();
+            string query = $"SELECT * FROM TalentConnections";
+            using (connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+
+                //command.Parameters.AddWithValue("@Tag", p.Tag);
+                connection.Open();
+                var readTalentData = command.ExecuteReader();
+                while (readTalentData.Read())
+                {
+                    listEdges.Add(new TalentEdges(readTalentData.GetString(1), readTalentData.GetString(2)));
+                }
+            }
+            return listEdges;
+        }
+
+        /// <summary>
         /// Deletes everything from SaveData Table in DB when Save Game is pressed for the current player active
         /// </summary>
         /// <param name="p"></param>
