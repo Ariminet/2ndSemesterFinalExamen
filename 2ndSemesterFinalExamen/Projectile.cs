@@ -16,6 +16,7 @@ namespace _2ndSemesterFinalExamen
         public int radius = 18;
         private Dir direction;
         private bool collided = false;
+        public int Damage { get; set; } = 25;
 
        
 
