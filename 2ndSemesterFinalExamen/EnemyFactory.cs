@@ -286,44 +286,49 @@ namespace _2ndSemesterFinalExamen
         }
         public void Spawner()
         {
-            while (Game1.Instance.gameState != GameStates.InGame)
-            {
-                totalTime = 0;
-                timer = 2D;
-                spawnTimer = 2D;
-            }
-
-                while (Game1.Instance.gameState == GameStates.InGame)
+            while (!((Player)Game1.Instance.Player.GetComponent<Player>()).dead)
             {
 
 
-                if (timer <= 0)
+                if (Game1.Instance.gameState != GameStates.InGame)
                 {
-                    int monType = rNum.Next(3);
-					switch (monType)
-					{
-                        case 0:
-                            SkullSpawner();
-                            break;
-                        case 1:
-                            GhostSpawner();
-                            break;
-                        case 2:
-                            MonSpawner();
-                            break;
-                        default:
-							break;
-					}
-					
-                    
-                    
+                    totalTime = 0;
+                    timer = 2D;
+                    spawnTimer = 2D;
                 }
 
-                if (spawnTimer > 0.5)
+                if (Game1.Instance.gameState == GameStates.InGame)
                 {
-                    spawnTimer -= 0.1;
-                }
 
+
+                    if (timer <= 0)
+                    {
+                        int monType = rNum.Next(3);
+                        switch (monType)
+                        {
+                            case 0:
+                                SkullSpawner();
+                                break;
+                            case 1:
+                                GhostSpawner();
+                                break;
+                            case 2:
+                                MonSpawner();
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                    }
+
+                    if (spawnTimer > 0.5)
+                    {
+                        spawnTimer -= 0.1;
+                    }
+
+                }
             }
         }
     }

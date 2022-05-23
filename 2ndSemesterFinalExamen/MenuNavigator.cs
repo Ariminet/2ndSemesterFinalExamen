@@ -70,6 +70,7 @@ namespace _2ndSemesterFinalExamen
                 createNewGame,
             };
             //PRE - GAME 
+
             //NEW - GAME 
             var newUserInfo = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
@@ -345,7 +346,13 @@ namespace _2ndSemesterFinalExamen
                 {
                     currentGS = GameStates.NewGame;
                 }
+			if (failedOrPassed)
+			{
+                Game1.Instance.GameDB.AddPlayerTalentTree(((Player)Game1.Instance.Player.GetComponent<Player>()));
+            }
            
+
+
         }
         private void LogInToChar(object sender, System.EventArgs e)
         {

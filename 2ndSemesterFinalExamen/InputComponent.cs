@@ -97,7 +97,7 @@ namespace _2ndSemesterFinalExamen
             var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
 
             isHovering = false;
-            if (Position != Game1.Instance.buttonsWorldPosition + PosPlayer)
+            if (Position != new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2))
             {
                 Position = new Vector2(Game1.Instance.buttonsWorldPosition.X + PosPlayer.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + PosPlayer.Y - texture.Height / 2);
                 Rectangle = new Rectangle((int)PosPlayer.X + (int)Game1.Instance.ViewWVH.X - texture.Width / 2, (int)PosPlayer.Y + (int)Game1.Instance.ViewWVH.Y - texture.Height / 2, texture.Width, texture.Height);
