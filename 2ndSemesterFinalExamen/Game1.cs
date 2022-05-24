@@ -38,12 +38,14 @@ namespace _2ndSemesterFinalExamen
 
 		public GameDataBase GameDB = new GameDataBase();
 		public SpriteFont gameFont;
-		public  Texture2D skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line, LevelBox;
+    
+		public  Texture2D gameOverButtonTexture,gameOverTexture, skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line, LevelBox;
+
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
 
 		public EnemyFactory enemyFactory;
 		public MenuNavigator menuNavigator;
-
+		private int currentLevel = 0;
 		public float angleOfLine;
 		public GameSaveData GameSave;
 
@@ -120,6 +122,8 @@ namespace _2ndSemesterFinalExamen
 			mon = Content.Load<Texture2D>("assets/Enemy/monster");
 			ghost = Content.Load<Texture2D>("assets/Enemy/Ghost");
 			buttonText = Content.Load<Texture2D>("assets/Buttons/knap");
+			gameOverTexture = Content.Load<Texture2D>("assets/Buttons/jack_the_ghost_hunter");
+			gameOverButtonTexture = Content.Load<Texture2D>("assets/Buttons/gameover");
 
 			//Talent icons
 			shoot = Content.Load<Texture2D>("assets/Icons/Shoot");
@@ -170,11 +174,11 @@ namespace _2ndSemesterFinalExamen
 			//	Exit();
 
 			// TODO: Add your update logic here
-
 			
 
 
-			if (gameState != GameStates.InGame)
+
+				if (gameState != GameStates.InGame)
 			{
 				menuNavigator.Update(gameTime);
 			}
@@ -189,10 +193,13 @@ namespace _2ndSemesterFinalExamen
 				gameState = GameStates.GameOver;
 				if(Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Enter))
 				{
+					enemyFactory.ResetEnemies();
 					GameDB.UpdatePlayer(((Player)Player.GetComponent<Player>()));
-					menuNavigator.currentGS = GameStates.PreGame;
+					menuNavigator.currentGS = GameStates.Menu;
 					gameState = menuNavigator.currentGS;
 					((Player)Player.GetComponent<Player>()).dead = false;
+					Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
+
 				}
 			}
 
@@ -274,7 +281,8 @@ namespace _2ndSemesterFinalExamen
 
 				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
 				{
-					((Player)Player.GetComponent<Player>()).dead = true;
+					//((Player)Player.GetComponent<Player>()).dead = true;
+					((Player)Player.GetComponent<Player>()).Health -= ((Enemy)e.GetComponent<Enemy>()).Damage;
 				}
 			}
 
@@ -286,7 +294,8 @@ namespace _2ndSemesterFinalExamen
 
 				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
 				{
-					((Player)Player.GetComponent<Player>()).dead = true;
+					//((Player)Player.GetComponent<Player>()).dead = true;
+					((Player)Player.GetComponent<Player>()).Health -= ((Enemy)e.GetComponent<Enemy>()).Damage;
 				}
 			}
 
@@ -298,7 +307,8 @@ namespace _2ndSemesterFinalExamen
 
 				if (Vector2.Distance(Player.transform.Position, e.transform.Position) < sum)
 				{
-					((Player)Player.GetComponent<Player>()).dead = true;
+					//((Player)Player.GetComponent<Player>()).dead = true;
+					((Player)Player.GetComponent<Player>()).Health -= ((Enemy)e.GetComponent<Enemy>()).Damage;
 				}
 			}
 
@@ -317,8 +327,10 @@ namespace _2ndSemesterFinalExamen
 						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
 						{
 							proj.Collided = true;
-							((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-							enemy.transform.Position = new Vector2(-5000, -5000);
+							((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							
+							//((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+							//enemy.transform.Position = new Vector2(-5000, -5000);
 						}
 					}
 					foreach (GameObject enemy in enemyFactory.monEnemies)
@@ -328,8 +340,9 @@ namespace _2ndSemesterFinalExamen
 						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
 						{
 							proj.Collided = true;
-							((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-							enemy.transform.Position = new Vector2(-5000, -5000);
+							((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							//((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+							//enemy.transform.Position = new Vector2(-5000, -5000);
 						}
 					}
 					foreach (GameObject enemy in enemyFactory.ghostEnemies)
@@ -339,8 +352,9 @@ namespace _2ndSemesterFinalExamen
 						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
 						{
 							proj.Collided = true;
-							((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
-							enemy.transform.Position = new Vector2(-5000, -5000);
+							((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							//((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
+							//enemy.transform.Position = new Vector2(-5000, -5000);
 						}
 					}
 				}

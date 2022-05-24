@@ -15,7 +15,8 @@ namespace _2ndSemesterFinalExamen
         //public Vector2 position = new Vector2(500, 300);
         private int speed = 300;
 
-        public int Health { get; set; } = 0;
+        public int Health { get; set; } = 100;
+        public int Damage { get; set; } = 25;
 
         //public Dir direction { get;  set; } = Dir.Down;
         //public bool isMoving { get; private set; } = false;
@@ -42,6 +43,10 @@ namespace _2ndSemesterFinalExamen
         {
             KeyboardState kState = Keyboard.GetState();
             //float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(Health <= 0)
+			{
+                dead = true;
+			}
 
             gameObject.transform.isMoving = false;
 			if (!dead) { 
