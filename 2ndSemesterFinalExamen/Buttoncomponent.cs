@@ -73,6 +73,7 @@ namespace _2ndSemesterFinalExamen
                 if (endOne != new Vector2())
                 {
                     Vector2 end = Game1.Instance.Player.transform.Position + endOne;
+                     
 
                     Vector2 edge = end - position;
                 float angle = (float)Math.Atan2(edge.Y, edge.X);
