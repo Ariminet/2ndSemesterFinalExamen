@@ -17,6 +17,10 @@ namespace _2ndSemesterFinalExamen
         private bool failedOrPassed = true;
         private TextComponent IncorrectData, GameOverText;
         private Buttoncomponent quitButton;
+
+        private TalentTree talentTree;
+        
+
         public static MenuNavigator Instance
         {
             get
@@ -56,6 +60,7 @@ namespace _2ndSemesterFinalExamen
                 Text = "Quit Game"
             };
             quitButton.Click += QuitPlayGame;
+
             //PRE - GAME 
             var logIn = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
@@ -173,18 +178,7 @@ namespace _2ndSemesterFinalExamen
 
             //UPGRADE
 
-            var shot = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.shoot, "shoot", new Vector2(75, -250), new Vector2 (-30, -150),new Vector2(), new Vector2())
-            {};
-            var fasterShots = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.fasterShots, "faster shooting", new Vector2(-30, -150), new Vector2(), new Vector2(), new Vector2())
-            {};
 
-
-
-            inGameComponents = new List<Component>()
-            {
-                shot,
-                fasterShots,
-            };
 
             //GAMEOVER - GAME 
             gameOverComponents = new List<Component>()
@@ -203,7 +197,22 @@ namespace _2ndSemesterFinalExamen
        
         public  void Update(GameTime gameTime)
 		{
-            if(Game1.Instance.gameState != currentGS)
+            if (talentTree != null)
+            {
+                var shot = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.shoot, new Vector2(75, -250), new Vector2(-30, -150), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[1])
+                { };
+                var fasterShots = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.fasterShots, new Vector2(-30, -150), new Vector2(), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[2])
+                { };
+
+
+                upgradeGameComponents = new List<Component>()
+            {
+                shot,
+                fasterShots,
+            };
+            }
+
+            if (Game1.Instance.gameState != currentGS)
 			{
                 Game1.Instance.gameState = currentGS;
             }
@@ -241,6 +250,12 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.Menu:
+
+                    if (talentTree == null)
+                    {
+                        talentTree = TalentTree.Instance;
+                    }
+
                     quitButton.PosPlayer = new Vector2(0, 90);
                     foreach (var component in menuGameComponents)
                     {

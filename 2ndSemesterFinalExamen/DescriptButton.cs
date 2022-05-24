@@ -14,13 +14,11 @@ namespace _2ndSemesterFinalExamen
         
 
 
-        public DescriptButton(Texture2D textSprite, SpriteFont font, Texture2D buttonSprite, string text, Vector2 Pos, Vector2 line1, Vector2 line2, Vector2 line3)
+        public DescriptButton(Texture2D textSprite, SpriteFont font, Texture2D buttonSprite, Vector2 Pos, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent)
         {
             textComp = new TextComponent(textSprite, font);
 
-            buttonComp = new Buttoncomponent(buttonSprite, line1, line2, line3);
-
-            textComp.Text = text;
+            buttonComp = new Buttoncomponent(buttonSprite, line1, line2, line3, aTalent);
 
             textComp.PosPlayer = Pos;
             buttonComp.PosPlayer = new Vector2 (Pos.X -50, Pos.Y+50);
