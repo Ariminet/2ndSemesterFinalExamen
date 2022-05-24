@@ -12,6 +12,7 @@ namespace _2ndSemesterFinalExamen
         public int speed { get; set; }
         public int radius = 30;
         public int Health { get; set; } = 50;
+        private int maxHealth = 50;
         public int Damage { get; set; } = 5;
         bool dead = true;
 
@@ -60,6 +61,7 @@ namespace _2ndSemesterFinalExamen
                 dead = true;
                 Game1.Instance.enemyFactory.CheckIfEnemiesAreDead();
                 gameObject.transform.Position = new Vector2(-5000, -5000);
+                Health = maxHealth;
             }
             if (gameObject.transform.isMoving)
             {
