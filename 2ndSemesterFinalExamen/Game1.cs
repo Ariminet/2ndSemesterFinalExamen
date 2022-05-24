@@ -58,6 +58,8 @@ namespace _2ndSemesterFinalExamen
 		public Camera camera;
 		private static Game1 instance;
 
+		public bool talenTreeCreated = false;
+
 		public static Game1 Instance
 		{
 			get

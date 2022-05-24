@@ -19,6 +19,7 @@ namespace _2ndSemesterFinalExamen
         private Buttoncomponent quitButton;
 
         private TalentTree talentTree;
+        private bool madeTalent = false;
         
 
         public static MenuNavigator Instance
@@ -197,7 +198,7 @@ namespace _2ndSemesterFinalExamen
        
         public  void Update(GameTime gameTime)
 		{
-            if (talentTree != null)
+            if (Game1.Instance.talenTreeCreated && !madeTalent)
             {
                 var shot = new DescriptButton(Game1.Instance.buttonText, Game1.Instance.gameFont, Game1.Instance.shoot, new Vector2(75, -250), new Vector2(-30, -150), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[1])
                 { };
@@ -210,6 +211,7 @@ namespace _2ndSemesterFinalExamen
                 shot,
                 fasterShots,
             };
+                madeTalent = true;
             }
 
             if (Game1.Instance.gameState != currentGS)
@@ -254,6 +256,7 @@ namespace _2ndSemesterFinalExamen
                     if (talentTree == null)
                     {
                         talentTree = TalentTree.Instance;
+                        TalentTree.Instance.GraphFill();
                     }
 
                     quitButton.PosPlayer = new Vector2(0, 90);
