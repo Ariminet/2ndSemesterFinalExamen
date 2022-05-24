@@ -17,7 +17,8 @@ enum GameStates
 	InGame,
 	Upgrades,
 	Pause,
-	GameOver
+	GameOver,
+	NextLevel,
 }
 
 enum Dir
@@ -45,7 +46,7 @@ namespace _2ndSemesterFinalExamen
 
 		public EnemyFactory enemyFactory;
 		public MenuNavigator menuNavigator;
-		private int currentLevel = 0;
+		public int currentLevel { get; set; } = 0;
 		public float angleOfLine;
 		public GameSaveData GameSave;
 

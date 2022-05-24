@@ -17,7 +17,11 @@ namespace _2ndSemesterFinalExamen
         public double timer = 2D;
         public double spawnTimer = 2D;
         public double totalTime = 0;
-
+        private int maxSpawns = 0;
+        private int currentSpawned = 0;
+        private int basicSpawns = 10;
+        private int tmpLevel = Game1.Instance.currentLevel;
+        private bool enemiesAlive = true;
 
         static Random rNum = new Random();
 
@@ -313,8 +317,108 @@ namespace _2ndSemesterFinalExamen
                     break;
             }
         }
+
+        public void SpeedBoostEnemies()
+        {
+            foreach (GameObject e in skullEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    ((Enemy)e.GetComponent<Enemy>()).speed += 3 * (Game1.Instance.currentLevel / 10);
+                }
+            }
+
+            foreach (GameObject e in ghostEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    ((Enemy)e.GetComponent<Enemy>()).speed += 5 * (Game1.Instance.currentLevel / 10);
+                }
+            }
+
+            foreach (GameObject e in monEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    ((Enemy)e.GetComponent<Enemy>()).speed += 2 * (Game1.Instance.currentLevel / 10);
+                }
+            }
+        }
+
+        public void HealthBoostEnemies()
+        {
+            foreach (GameObject e in skullEnemies)
+            {
+                    ((Enemy)e.GetComponent<Enemy>()).Health += 2 * (Game1.Instance.currentLevel / 10);
+            }
+
+            foreach (GameObject e in ghostEnemies)
+            {
+                    ((Enemy)e.GetComponent<Enemy>()).Health += 3 * (Game1.Instance.currentLevel / 10);
+            }
+
+            foreach (GameObject e in monEnemies)
+            {
+                    ((Enemy)e.GetComponent<Enemy>()).Health += 5 * (Game1.Instance.currentLevel / 10);
+            }
+        }
+
+        public void CheckIfEnemiesAreDead()
+        {
+            int numberOfActive = 0;
+            foreach (GameObject e in skullEnemies)
+            {
+				if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+				{
+                    numberOfActive++;
+				}
+				
+            }
+
+            foreach (GameObject e in ghostEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    numberOfActive++;
+                }
+            }
+
+            foreach (GameObject e in monEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    numberOfActive++;
+                }
+            }
+            if(numberOfActive <= 0)
+			{
+                enemiesAlive = true;
+
+            }else
+			{
+                enemiesAlive = false;
+            }
+        }
         public void Spawner()
         {
+            
+            if (Game1.Instance.currentLevel % 10 == 0)
+			{
+                basicSpawns += 5;
+                SpeedBoostEnemies();
+                HealthBoostEnemies();
+
+            }
+            if(!enemiesAlive && Game1.Instance.gameState == GameStates.InGame)
+			{
+                Game1.Instance.gameState = GameStates.NextLevel;
+                Game1.Instance.currentLevel++;
+                maxSpawns = Game1.Instance.currentLevel * 2 + basicSpawns;
+
+            }
+            
+            
+         
             while (true)
             {
 
@@ -329,7 +433,7 @@ namespace _2ndSemesterFinalExamen
                 if (Game1.Instance.gameState == GameStates.InGame)
                 {
 
-
+                    if (currentSpawned <= maxSpawns) { 
                     if (timer <= 0)
                     {
                         int monType = rNum.Next(3);
@@ -355,6 +459,7 @@ namespace _2ndSemesterFinalExamen
                     if (spawnTimer > 0.5)
                     {
                         spawnTimer -= 0.1;
+                    }
                     }
 
                 }

@@ -9,7 +9,7 @@ namespace _2ndSemesterFinalExamen
     class Enemy : Component
 {
         private Vector2 pos;
-        private int speed;
+        public int speed { get; set; }
         public int radius = 30;
         public int Health { get; set; } = 50;
         public int Damage { get; set; } = 5;
@@ -58,6 +58,7 @@ namespace _2ndSemesterFinalExamen
             if (Health <= 0)
             {
                 dead = true;
+                Game1.Instance.enemyFactory.CheckIfEnemiesAreDead();
                 gameObject.transform.Position = new Vector2(-5000, -5000);
             }
             if (gameObject.transform.isMoving)
