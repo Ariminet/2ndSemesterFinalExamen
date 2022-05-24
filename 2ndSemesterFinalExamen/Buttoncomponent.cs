@@ -50,13 +50,15 @@ namespace _2ndSemesterFinalExamen
         }
 
         //Button med linjer konstruktor
-        public Buttoncomponent(Texture2D texturHere, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent)
+        public Buttoncomponent(Texture2D texturHere, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent, SpriteFont fontHere)
         {
             texture = texturHere;
             endOne = line1;
             endTwo = line2;
             endThree = line3;
             thisTalent = aTalent;
+            font = fontHere;
+
         }
 
         public override void Draw( SpriteBatch spriteBatch)
@@ -71,6 +73,7 @@ namespace _2ndSemesterFinalExamen
                 if (endOne != new Vector2())
                 {
                     Vector2 end = Game1.Instance.Player.transform.Position + endOne;
+                     
 
                     Vector2 edge = end - position;
                 float angle = (float)Math.Atan2(edge.Y, edge.X);

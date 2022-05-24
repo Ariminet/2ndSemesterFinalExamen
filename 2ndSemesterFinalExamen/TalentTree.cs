@@ -100,6 +100,10 @@ namespace _2ndSemesterFinalExamen
             }
 
 
+            Game1.Instance.talenTreeCreated = true;
+            
+
+        }
             void Draw(SpriteBatch spBt, Texture2D shot)
             {
                 while (Game1.Instance.gameState == GameStates.InGame)
@@ -107,9 +111,6 @@ namespace _2ndSemesterFinalExamen
                     spBt.Draw(shot, new Vector2(50, 50), Color.White);
                 }
             }
-
-
-        }
     }
 }
 

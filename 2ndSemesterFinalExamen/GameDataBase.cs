@@ -196,7 +196,7 @@ namespace _2ndSemesterFinalExamen
                 var readTalentData = command.ExecuteReader();
                 while (readTalentData.Read())
                 {
-                    listTalent.Add(new Talent(readTalentData.GetString(1), readTalentData.GetInt32(2), readTalentData.GetInt32(3), readTalentData.GetString(4)));
+                    listTalent.Add(new Talent(readTalentData.GetString(0), readTalentData.GetInt16(1), readTalentData.GetInt16(2), readTalentData.GetString(3)));
                 }
             }
             return listTalent;

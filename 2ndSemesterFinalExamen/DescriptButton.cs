@@ -18,13 +18,12 @@ namespace _2ndSemesterFinalExamen
         {
             textComp = new TextComponent(textSprite, font);
 
-            buttonComp = new Buttoncomponent(buttonSprite, line1, line2, line3, aTalent);
+            buttonComp = new Buttoncomponent(buttonSprite, line1, line2, line3, aTalent, font);
 
             textComp.PosPlayer = Pos;
             buttonComp.PosPlayer = new Vector2 (Pos.X -50, Pos.Y+50);
 
-            buttonComp.child = textComp;
-            
+            buttonComp.child = textComp; 
 
         }
 
