@@ -9,15 +9,34 @@ namespace _2ndSemesterFinalExamen
 {
     class TalentTree
     {
-        private static List<Talent> talentTree = new List<Talent>();
-        private static List<TalentEdges> talentConnections = new List<TalentEdges>();
-        static void GraphMake()
+        public List<Talent> talentTree = new List<Talent>();
+        public List<TalentEdges> talentConnections = new List<TalentEdges>();
+
+        public Graph graph = new Graph();
+
+        private static TalentTree instance;
+        public static TalentTree Instance
         {
-            Graph graph = new Graph();
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new TalentTree();
+                }
+                return instance;
+            }
+        }
+
+
+
+        public void GraphFill()
+        {
+
             talentTree = Game1.Instance.GameDB.GetTalents(((Player)Game1.Instance.Player.GetComponent<Player>()));
 			foreach (Talent t in talentTree)
 			{
                 graph.AddTalent(t.Tag, t.MaxLevel, t.CurrentLevel, t.Description);
+
             }
             //graph.AddTalent("Shoot", 1, 1,"blabla");
             //graph.AddTalent("Faster shots", 3, 0, "blabla");
@@ -31,6 +50,7 @@ namespace _2ndSemesterFinalExamen
             //graph.AddTalent("Bullet shield", 2, 0, "blabla");
             //graph.AddTalent("Explosive shot", 1, 0, "blabla");
             //graph.AddTalent("Explode", 1, 0, "blabla");
+
             talentConnections = Game1.Instance.GameDB.GetTalentConnections();
             foreach (TalentEdges t in talentConnections)
             {
@@ -80,7 +100,7 @@ namespace _2ndSemesterFinalExamen
             }
 
 
-            static void Draw(SpriteBatch spBt, Texture2D shot)
+            void Draw(SpriteBatch spBt, Texture2D shot)
             {
                 while (Game1.Instance.gameState == GameStates.InGame)
                 {

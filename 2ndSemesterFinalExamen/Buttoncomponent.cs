@@ -30,9 +30,13 @@ namespace _2ndSemesterFinalExamen
         private Vector2 endTwo;
         private Vector2 endThree;
         
-        
-
         public TextComponent child;
+        public TextComponent levelBox;
+
+        public int levelnm;
+
+        public Talent thisTalent { get; set; }
+
         public string Text { get; set; }
 
         //Methods
@@ -46,12 +50,13 @@ namespace _2ndSemesterFinalExamen
         }
 
         //Button med linjer konstruktor
-        public Buttoncomponent(Texture2D texturHere, Vector2 line1, Vector2 line2, Vector2 line3)
+        public Buttoncomponent(Texture2D texturHere, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent)
         {
             texture = texturHere;
             endOne = line1;
             endTwo = line2;
             endThree = line3;
+            thisTalent = aTalent;
         }
 
         public override void Draw( SpriteBatch spriteBatch)
@@ -128,6 +133,12 @@ namespace _2ndSemesterFinalExamen
 
             spriteBatch.Draw(texture, position, colour);
 
+            if (levelBox != null)
+            {
+                spriteBatch.Draw(Game1.Instance.LevelBox, position, colour);
+                spriteBatch.DrawString(font, ""+levelnm, position, PenColour);
+            }
+
             if (!string.IsNullOrEmpty(Text))
             {
                 var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
@@ -136,6 +147,13 @@ namespace _2ndSemesterFinalExamen
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
             }
 
+            if (thisTalent != null)
+            {
+                var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
+                var y = (position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
+
+                spriteBatch.DrawString(font, thisTalent.Description, new Vector2(x, y), PenColour);
+            }
 
 
         }
@@ -146,7 +164,6 @@ namespace _2ndSemesterFinalExamen
             currentMouse = Mouse.GetState();
             //var mouseRectangle = new Rectangle((int)Game1.Instance.mouseWorldPosition.X - (int)Game1.Instance.camera.Position.X, (int)Game1.Instance.mouseWorldPosition.Y - (int)Game1.Instance.camera.Position.Y, 1, 1);
             var mouseRectangle = new Rectangle((int)currentMouse.X, (int)currentMouse.Y, 1, 1);
-
 
             isHovering = false;
 
@@ -173,6 +190,15 @@ namespace _2ndSemesterFinalExamen
                 {
                     child.active = true;
                 }
+            }
+
+            if (thisTalent != null)
+            {
+                Text = thisTalent.Description;
+                levelnm = thisTalent.CurrentLevel;
+            }
+            {
+
             }
         }
     
