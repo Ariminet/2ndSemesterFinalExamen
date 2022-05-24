@@ -7,6 +7,11 @@ using System.Threading;
 
 namespace _2ndSemesterFinalExamen
 {
+    enum FactoryStates
+	{
+        InProgess,
+        Paused,
+	}
     class EnemyFactory
     {
        
@@ -16,12 +21,14 @@ namespace _2ndSemesterFinalExamen
         public GameObject[] ghostEnemies = new GameObject[250];
         public double timer = 2D;
         public double spawnTimer = 2D;
+        public double spawnTimerMax = 5;
         public double totalTime = 0;
-        private int maxSpawns = 0;
         private int currentSpawned = 0;
         private int basicSpawns = 10;
+        private int maxSpawns = 10;
         private int tmpLevel = Game1.Instance.currentLevel;
         private bool enemiesAlive = true;
+        private bool nextLevelState = false;
 
         static Random rNum = new Random();
 
@@ -390,7 +397,7 @@ namespace _2ndSemesterFinalExamen
                     numberOfActive++;
                 }
             }
-            if(numberOfActive <= 0)
+            if(numberOfActive > 0)
 			{
                 enemiesAlive = true;
 
@@ -398,30 +405,40 @@ namespace _2ndSemesterFinalExamen
 			{
                 enemiesAlive = false;
             }
-        }
+         }
+        
         public void Spawner()
         {
+           
             
-            if (Game1.Instance.currentLevel % 10 == 0)
-			{
-                basicSpawns += 5;
-                SpeedBoostEnemies();
-                HealthBoostEnemies();
-
-            }
-            if(!enemiesAlive && Game1.Instance.gameState == GameStates.InGame)
-			{
-                Game1.Instance.gameState = GameStates.NextLevel;
-                Game1.Instance.currentLevel++;
-                maxSpawns = Game1.Instance.currentLevel * 2 + basicSpawns;
-
-            }
             
             
          
             while (true)
             {
+                if (nextLevelState && Game1.Instance.currentLevel >= 10 &&  10 % Game1.Instance.currentLevel == 0)
+                {
+                    basicSpawns += 5;
+                    SpeedBoostEnemies();
+                    HealthBoostEnemies();
+                    spawnTimerMax -= 0.1;
+                    nextLevelState = false;
 
+                }
+               
+                    //maxSpawns = Game1.Instance.currentLevel * 2 + basicSpawns;
+                
+               
+                
+                if (currentSpawned >= maxSpawns && !enemiesAlive && Game1.Instance.gameState == GameStates.InGame)
+                {
+                    Game1.Instance.gameState = GameStates.NextLevel;
+                     Game1.Instance.currentLevel++;
+                    maxSpawns = Game1.Instance.currentLevel * 2 + basicSpawns;
+                    currentSpawned = 0;
+                    nextLevelState = true;
+
+                }
 
                 if (Game1.Instance.gameState != GameStates.InGame)
                 {
@@ -441,12 +458,15 @@ namespace _2ndSemesterFinalExamen
                         {
                             case 0:
                                 SkullSpawner();
+                                    currentSpawned++;
                                 break;
                             case 1:
                                 GhostSpawner();
+                                    currentSpawned++;
                                 break;
                             case 2:
                                 MonSpawner();
+                                    currentSpawned++;
                                 break;
                             default:
                                 break;
@@ -456,9 +476,9 @@ namespace _2ndSemesterFinalExamen
 
                     }
 
-                    if (spawnTimer > 0.5)
+                    if (spawnTimer > 5)
                     {
-                        spawnTimer -= 0.1;
+                        spawnTimer -= spawnTimerMax;
                     }
                     }
 

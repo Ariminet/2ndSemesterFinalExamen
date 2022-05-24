@@ -16,7 +16,7 @@ namespace _2ndSemesterFinalExamen
         private int speed = 300;
 
         public int Health { get; set; } = 100;
-        public int Damage { get; set; } = 25;
+        public int Damage { get; set; } = 100;
 
         //public Dir direction { get;  set; } = Dir.Down;
         //public bool isMoving { get; private set; } = false;

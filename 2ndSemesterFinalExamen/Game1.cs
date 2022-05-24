@@ -46,7 +46,7 @@ namespace _2ndSemesterFinalExamen
 
 		public EnemyFactory enemyFactory;
 		public MenuNavigator menuNavigator;
-		public int currentLevel { get; set; } = 0;
+		public int currentLevel { get; set; } = 1;
 		public float angleOfLine;
 		public GameSaveData GameSave;
 
@@ -200,6 +200,7 @@ namespace _2ndSemesterFinalExamen
 					GameDB.UpdatePlayer(((Player)Player.GetComponent<Player>()));
 					menuNavigator.currentGS = GameStates.Menu;
 					gameState = menuNavigator.currentGS;
+					((Player)Player.GetComponent<Player>()).Health = 100;
 					((Player)Player.GetComponent<Player>()).dead = false;
 					Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
 

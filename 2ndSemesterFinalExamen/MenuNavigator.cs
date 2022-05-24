@@ -274,10 +274,10 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.InGame:
-                    foreach (var component in inGameComponents)
-                    {
-                        component.Update(gameTime);
-                    }
+                    //foreach (var component in inGameComponents)
+                    //{
+                    //    component.Update(gameTime);
+                    //}
                     break;
 				case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
@@ -346,10 +346,10 @@ namespace _2ndSemesterFinalExamen
                     }
                      break;
                 case GameStates.InGame:
-                    foreach (var component in inGameComponents)
-                    {
-                        component.Draw(_spriteBatch);
-                    }
+                    //foreach (var component in inGameComponents)
+                    //{
+                    //    component.Draw(_spriteBatch);
+                    //}
                     break;
                 case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
