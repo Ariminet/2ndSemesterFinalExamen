@@ -11,8 +11,8 @@ namespace _2ndSemesterFinalExamen
         private Vector2 pos;
         private int speed;
         public int radius = 30;
-        public int Health { get; set; } = 0;
-
+        public int Health { get; set; } = 50;
+        public int Damage { get; set; } = 5;
         bool dead = true;
 
         public Enemy(int spe) //skabellsen af fjende typen
@@ -55,6 +55,11 @@ namespace _2ndSemesterFinalExamen
 		//}
         public override void Update(GameTime gameTime)
         {
+            if (Health <= 0)
+            {
+                dead = true;
+                gameObject.transform.Position = new Vector2(-5000, -5000);
+            }
             if (gameObject.transform.isMoving)
             {
             ((SpriteAnimation)gameObject.GetComponent<SpriteAnimation>()).anim.AnimUpdate(gameTime);

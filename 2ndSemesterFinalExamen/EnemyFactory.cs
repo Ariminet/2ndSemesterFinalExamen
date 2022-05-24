@@ -90,6 +90,35 @@ namespace _2ndSemesterFinalExamen
            timer = 2D;
            spawnTimer = 2D;
         }
+        public void ResetEnemies()
+		{
+			foreach (GameObject e in skullEnemies)
+			{
+				if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+				{
+                    ((Enemy)e.GetComponent<Enemy>()).Dead = true;
+                    e.transform.Position = new Vector2(-5000, -5000);
+                }
+			}
+
+            foreach (GameObject e in ghostEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    ((Enemy)e.GetComponent<Enemy>()).Dead = true;
+                    e.transform.Position = new Vector2(-5000, -5000);
+                }
+            }
+
+            foreach (GameObject e in monEnemies)
+            {
+                if (!((Enemy)e.GetComponent<Enemy>()).Dead)
+                {
+                    ((Enemy)e.GetComponent<Enemy>()).Dead = true;
+                    e.transform.Position = new Vector2(-5000, -5000);
+                }
+            }
+        }
 
         public void SkullSpawner()
 		{
@@ -286,7 +315,7 @@ namespace _2ndSemesterFinalExamen
         }
         public void Spawner()
         {
-            while (!((Player)Game1.Instance.Player.GetComponent<Player>()).dead)
+            while (true)
             {
 
 

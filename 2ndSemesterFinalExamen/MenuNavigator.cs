@@ -15,7 +15,7 @@ namespace _2ndSemesterFinalExamen
         public GameStates currentGS = GameStates.PreGame;
         private GameStates previousGS;
         private bool failedOrPassed = true;
-        private TextComponent IncorrectData, GameOverText;
+        private TextComponent IncorrectData, GameOverText, GameOverTextUnder;
         private Buttoncomponent quitButton;
 
         private TalentTree talentTree;
@@ -48,10 +48,17 @@ namespace _2ndSemesterFinalExamen
                 Text = ""
             };
 
-            GameOverText = new TextComponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            GameOverText = new TextComponent(Game1.Instance.gameOverTexture, Game1.Instance.gameFont)
             {
-                PosPlayer = new Vector2(-30, 0),
-                Text = "Game Over..."
+                PosPlayer = new Vector2(0, -100),
+                Text = ""
+                
+            };
+            GameOverTextUnder = new TextComponent(Game1.Instance.gameOverButtonTexture, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, 150),
+                Text = ""
+
             };
             backButton.Click += PreviousGameState;
 
@@ -185,7 +192,8 @@ namespace _2ndSemesterFinalExamen
             gameOverComponents = new List<Component>()
             {
                 GameOverText,
-                quitButton,
+                GameOverTextUnder,
+                //quitButton,
 
             };
             //GAMEOVER - GAME 
@@ -284,14 +292,14 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
                 case GameStates.GameOver:
-                    //GameOverText.PosPlayer = new Vector2(0, -45);
-                    //quitButton.PosPlayer = new Vector2(-50, 45);
-                    //foreach (var component in gameOverComponents)
-                    //{
-                    //    component.Update(gameTime);
-                    //}
-                    
-                    break;
+					//GameOverText.PosPlayer = new Vector2(0, -45);
+					//quitButton.PosPlayer = new Vector2(-50, 45);
+					foreach (var component in gameOverComponents)
+					{
+						component.Update(gameTime);
+					}
+
+					break;
                 default:
 					break;
 			}
@@ -356,11 +364,11 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
                 case GameStates.GameOver:
-                    //foreach (var component in gameOverComponents)
-                    //{
-                    //    component.Draw(_spriteBatch);
-                    //}
-                    break;
+					foreach (var component in gameOverComponents)
+					{
+						component.Draw(_spriteBatch);
+					}
+					break;
                 default:
                     break;
             }
