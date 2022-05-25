@@ -9,7 +9,7 @@ namespace _2ndSemesterFinalExamen
     class MenuNavigator
     {
         private static MenuNavigator instance;
-        public List<Component> preGameComponents, loadGameComponents, newGameComponents, inGameComponents, menuGameComponents, pauseGameComponents, upgradeGameComponents, gameOverComponents;
+        public List<Component> preGameComponents, loadGameComponents, newGameComponents, inGameComponents, menuGameComponents, pauseGameComponents, upgradeGameComponents, gameOverComponents,nextLevelComponents;
         private InputComponent userTag;
         private InputComponent newUserTag;
         public GameStates currentGS = GameStates.PreGame;
@@ -156,7 +156,7 @@ namespace _2ndSemesterFinalExamen
             var resumeGame = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
                 PosPlayer = new Vector2(0, -90),
-                Text = "ResumeGame"
+                Text = "Resume Game"
             };
             var upgradesButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
@@ -197,13 +197,30 @@ namespace _2ndSemesterFinalExamen
 
             };
             //GAMEOVER - GAME 
-            
 
+           
+            //NEXT LEVEL - GAME 
+            var nextLevelButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(0, -90),
+                Text = "Next Level"
+            };
 
+            nextLevelButton.Click += ResumePlayingGame;
+
+            nextLevelComponents = new List<Component>()
+            {
+                nextLevelButton,
+                upgradesButton,
+                saveButton,
+                quitButton,
+
+            };
+            //NEXTLEVEL - GAME 
 
         }
 
-       
+
         public  void Update(GameTime gameTime)
 		{
             if (Game1.Instance.talenTreeCreated && !madeTalent)
@@ -266,6 +283,7 @@ namespace _2ndSemesterFinalExamen
                         talentTree = TalentTree.Instance;
                         TalentTree.Instance.GraphFill();
                     }
+                    
 
                     quitButton.PosPlayer = new Vector2(0, 90);
                     foreach (var component in menuGameComponents)
@@ -274,10 +292,10 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.InGame:
-                    foreach (var component in inGameComponents)
-                    {
-                        component.Update(gameTime);
-                    }
+                    //foreach (var component in inGameComponents)
+                    //{
+                    //    component.Update(gameTime);
+                    //}
                     break;
 				case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
@@ -300,6 +318,16 @@ namespace _2ndSemesterFinalExamen
 					}
 
 					break;
+                case GameStates.NextLevel:
+                    if (((Player)Game1.Instance.Player.GetComponent<Player>()).CurrentLevel != Game1.Instance.currentLevel)
+                    {
+                        Game1.Instance.currentLevel = ((Player)Game1.Instance.Player.GetComponent<Player>()).CurrentLevel;
+                    }
+                    foreach (var component in nextLevelComponents)
+                    {
+                        component.Update(gameTime);
+                    }
+                    break;
                 default:
 					break;
 			}
@@ -346,10 +374,10 @@ namespace _2ndSemesterFinalExamen
                     }
                      break;
                 case GameStates.InGame:
-                    foreach (var component in inGameComponents)
-                    {
-                        component.Draw(_spriteBatch);
-                    }
+                    //foreach (var component in inGameComponents)
+                    //{
+                    //    component.Draw(_spriteBatch);
+                    //}
                     break;
                 case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
@@ -366,9 +394,15 @@ namespace _2ndSemesterFinalExamen
                 case GameStates.GameOver:
 					foreach (var component in gameOverComponents)
 					{
-						component.Draw(_spriteBatch);
-					}
-					break;
+                        component.Draw(_spriteBatch);
+                    }
+                    break;
+                case GameStates.NextLevel:
+                    foreach (var component in nextLevelComponents)
+                    {
+                        component.Draw(_spriteBatch);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -419,6 +453,8 @@ namespace _2ndSemesterFinalExamen
                 Game1.Instance.GameSave = new GameSaveData();
                 Game1.Instance.GameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
                 currentGS = GameStates.Menu;
+                Game1.Instance.currentLevel = ((Player)Game1.Instance.Player.GetComponent<Player>()).CurrentLevel;
+                Game1.Instance.enemyFactory.SetFactoryStats();
             }
             else
             {

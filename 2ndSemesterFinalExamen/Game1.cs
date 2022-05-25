@@ -17,7 +17,8 @@ enum GameStates
 	InGame,
 	Upgrades,
 	Pause,
-	GameOver
+	GameOver,
+	NextLevel,
 }
 
 enum Dir
@@ -45,7 +46,7 @@ namespace _2ndSemesterFinalExamen
 
 		public EnemyFactory enemyFactory;
 		public MenuNavigator menuNavigator;
-		private int currentLevel = 0;
+		public int currentLevel { get; set; } = 1;
 		public float angleOfLine;
 		public GameSaveData GameSave;
 
@@ -181,7 +182,7 @@ namespace _2ndSemesterFinalExamen
 
 
 
-				if (gameState != GameStates.InGame)
+		    if (gameState != GameStates.InGame)
 			{
 				menuNavigator.Update(gameTime);
 			}
@@ -200,7 +201,9 @@ namespace _2ndSemesterFinalExamen
 					GameDB.UpdatePlayer(((Player)Player.GetComponent<Player>()));
 					menuNavigator.currentGS = GameStates.Menu;
 					gameState = menuNavigator.currentGS;
+					((Player)Player.GetComponent<Player>()).Health = ((Player)Player.GetComponent<Player>()).MaxHealth;
 					((Player)Player.GetComponent<Player>()).dead = false;
+					enemyFactory.enemyKills = 0;
 					Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
 
 				}
@@ -216,6 +219,9 @@ namespace _2ndSemesterFinalExamen
 			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
 
 			//_spriteBatch.DrawString(gameFont, "MouseWorld X, Y: " + Game1.Instance.mouseWorldPosition, Player.transform.Position - new Vector2(300, 300), Color.White);
+			_spriteBatch.DrawString(gameFont, "Level: " + currentLevel, Player.transform.Position - new Vector2(300, 300), Color.White);
+			_spriteBatch.DrawString(gameFont, "Kills: " + enemyFactory.enemyKills + "/" + enemyFactory.maxSpawns, Player.transform.Position - new Vector2(300, 250), Color.White);
+			_spriteBatch.DrawString(gameFont, "Current GameState: " + gameState, Player.transform.Position - new Vector2(300, 200), Color.White);
 
 			//_spriteBatch.DrawString(gameFont, "ButtonsScreenPos X, Y: " + Game1.Instance.buttonsScreenPosition, Player.transform.Position - new Vector2(300, 250), Color.White);
 			//_spriteBatch.DrawString(gameFont, "ButtonsWorldPos X, Y: " + Game1.Instance.buttonsWorldPosition, Player.transform.Position - new Vector2(300, 200), Color.White);
@@ -225,7 +231,7 @@ namespace _2ndSemesterFinalExamen
 
 
 			// TODO: Add your drawing code here
-			if(gameState != GameStates.PreGame)
+			if (gameState != GameStates.PreGame)
 			{
 				InGameDraw(_spriteBatch);
 
@@ -249,18 +255,12 @@ namespace _2ndSemesterFinalExamen
 
 		
 		
-		public void GameMenu()
-		{
-
-		}
-		public void DrawGameMenu()
-		{
-
-		}
+		
 		public void InGameUpdate(GameTime gameTime) 
 		{
 			dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-			enemyFactory.timer -= dt;
+			EnemyFactory.timer -= dt;
+			EnemyFactory.totalTime += dt;
 
 
 
@@ -423,23 +423,6 @@ namespace _2ndSemesterFinalExamen
 			}
 
 		}
-		public void UpgradesMenu() 
-		{
-
-		}
-		public void DrawUpgradesMenu()
-		{
-
-		}
-		public void PauseGame()
-		{
-
-		}
-		public void DrawPauseGame()
-		{
-
-		}
-
 		public void IniciateGameComponents()
 		{
 			//GameObject Player = new GameObject();

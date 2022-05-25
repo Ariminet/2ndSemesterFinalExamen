@@ -16,7 +16,8 @@ namespace _2ndSemesterFinalExamen
         private int speed = 300;
 
         public int Health { get; set; } = 100;
-        public int Damage { get; set; } = 25;
+        public int MaxHealth { get; set; } = 100;
+        public int Damage { get; set; } = 125;
 
         //public Dir direction { get;  set; } = Dir.Down;
         //public bool isMoving { get; private set; } = false;
@@ -38,7 +39,12 @@ namespace _2ndSemesterFinalExamen
 		//	position.Y = newY;
 		//}
 
+        public void LoadPlayer(int MaxHealth)
+		{
+            this.MaxHealth = Health;
+            this.Health = MaxHealth;
 
+        }
 		public override void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
