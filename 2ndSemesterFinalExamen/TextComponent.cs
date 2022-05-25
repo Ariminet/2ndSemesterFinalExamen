@@ -11,6 +11,7 @@ namespace _2ndSemesterFinalExamen
     {
         private SpriteFont font;
         private Texture2D texture;
+        
         private Buttoncomponent parent;
         private Vector2 Position;
         public Vector2 PosPlayer { get; set; }
