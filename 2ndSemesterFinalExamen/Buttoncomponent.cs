@@ -14,6 +14,7 @@ namespace _2ndSemesterFinalExamen
         private SpriteFont font;
         private bool isHovering;
         private MouseState previousMouse;
+
         private Texture2D texture;
 
         //Properties
@@ -58,6 +59,8 @@ namespace _2ndSemesterFinalExamen
             endThree = line3;
             thisTalent = aTalent;
             font = fontHere;
+            PenColour = Color.Black;
+            
 
         }
 
@@ -72,8 +75,7 @@ namespace _2ndSemesterFinalExamen
             {
                 if (endOne != new Vector2())
                 {
-                    Vector2 end = Game1.Instance.Player.transform.Position + endOne;
-                     
+                    Vector2 end  = new Vector2(Game1.Instance.buttonsWorldPosition.X + endOne.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + endOne.Y - texture.Height / 2);
 
                     Vector2 edge = end - position;
                 float angle = (float)Math.Atan2(edge.Y, edge.X);
@@ -92,9 +94,10 @@ namespace _2ndSemesterFinalExamen
                     0);
 
                 }
+
                 if (endTwo != new Vector2())
                 {
-                    Vector2 end = Game1.Instance.Player.transform.Position + endTwo;
+                    Vector2 end = new Vector2(Game1.Instance.buttonsWorldPosition.X + endTwo.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + endTwo.Y - texture.Height / 2);
 
                     Vector2 edge = end - position;
                     float angle = (float)Math.Atan2(edge.Y, edge.X);
@@ -114,7 +117,7 @@ namespace _2ndSemesterFinalExamen
                 }
                 if (endThree != new Vector2())
                 {
-                    Vector2 end = Game1.Instance.Player.transform.Position + endThree;
+                    Vector2 end = new Vector2(Game1.Instance.buttonsWorldPosition.X + endThree.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + endThree.Y - texture.Height / 2);
 
                     Vector2 edge = end - position;
                     float angle = (float)Math.Atan2(edge.Y, edge.X);
@@ -136,10 +139,10 @@ namespace _2ndSemesterFinalExamen
 
             spriteBatch.Draw(texture, position, colour);
 
-            if (levelBox != null)
+            if (thisTalent != null)
             {
                 spriteBatch.Draw(Game1.Instance.LevelBox, position, colour);
-                spriteBatch.DrawString(font, ""+levelnm, position, PenColour);
+                spriteBatch.DrawString(font, " "+levelnm, position, PenColour);
             }
 
             if (!string.IsNullOrEmpty(Text))
@@ -152,10 +155,13 @@ namespace _2ndSemesterFinalExamen
 
             if (thisTalent != null)
             {
-                var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
-                var y = (position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
+                if (child.active)
+                {
+                var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(thisTalent.Description).X / 2);
+                var y = (position.Y + (Rectangle.Height / 2)) - (font.MeasureString(thisTalent.Description).Y / 2);
 
                 spriteBatch.DrawString(font, thisTalent.Description, new Vector2(x, y), PenColour);
+                }
             }
 
 
@@ -195,14 +201,7 @@ namespace _2ndSemesterFinalExamen
                 }
             }
 
-            if (thisTalent != null)
-            {
-                Text = thisTalent.Description;
-                levelnm = thisTalent.CurrentLevel;
-            }
-            {
-
-            }
+            
         }
     
     }
