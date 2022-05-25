@@ -10,16 +10,18 @@ namespace _2ndSemesterFinalExamen
 {
         private Vector2 pos;
         public int speed { get; set; }
+        public int baseSpeed { get; set; } = 150;
         public int radius = 30;
         public int Health { get; set; } = 50;
-        private int maxHealth = 50;
+        public int maxHealth = 50;
         public int Damage { get; set; } = 5;
         bool dead = true;
 
-        public Enemy(int spe) //skabellsen af fjende typen
+        public Enemy() //skabellsen af fjende typen
         {
-            this.speed = spe;
-            
+            this.speed = baseSpeed;
+            Health = maxHealth;
+
         }
         public bool Dead
         {
@@ -59,9 +61,10 @@ namespace _2ndSemesterFinalExamen
             if (Health <= 0)
             {
                 dead = true;
-                Game1.Instance.enemyFactory.CheckIfEnemiesAreDead();
-                gameObject.transform.Position = new Vector2(-5000, -5000);
+                //Game1.Instance.enemyFactory.CheckIfEnemiesAreDead();
+                gameObject.transform.Position = new Vector2(-2000, -2000);
                 Health = maxHealth;
+                Game1.Instance.enemyFactory.enemyKills++;
             }
             if (gameObject.transform.isMoving)
             {
