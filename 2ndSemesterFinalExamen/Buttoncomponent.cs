@@ -32,7 +32,6 @@ namespace _2ndSemesterFinalExamen
         private Vector2 endThree;
         
         public TextComponent child;
-        public TextComponent levelBox;
 
         public int levelnm;
 
@@ -139,29 +138,20 @@ namespace _2ndSemesterFinalExamen
 
             spriteBatch.Draw(texture, position, colour);
 
-            if (thisTalent != null)
+            //talent level box
+            if (thisTalent != null && thisTalent.MaxLevel > 1)
             {
                 spriteBatch.Draw(Game1.Instance.LevelBox, position, colour);
                 spriteBatch.DrawString(font, " "+levelnm, position, PenColour);
             }
 
+            //tekst
             if (!string.IsNullOrEmpty(Text))
             {
                 var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
                 var y = (position.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
-            }
-
-            if (thisTalent != null)
-            {
-                if (child.active)
-                {
-                var x = (position.X + (Rectangle.Width / 2)) - (font.MeasureString(thisTalent.Description).X / 2);
-                var y = (position.Y + (Rectangle.Height / 2)) - (font.MeasureString(thisTalent.Description).Y / 2);
-
-                spriteBatch.DrawString(font, thisTalent.Description, new Vector2(x, y), PenColour);
-                }
             }
 
 
