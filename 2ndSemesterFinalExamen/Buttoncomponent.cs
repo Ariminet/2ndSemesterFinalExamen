@@ -154,7 +154,6 @@ namespace _2ndSemesterFinalExamen
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
             }
 
-
         }
        
         public override void Update(GameTime gameTime)

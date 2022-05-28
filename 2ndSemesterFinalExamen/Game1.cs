@@ -40,7 +40,7 @@ namespace _2ndSemesterFinalExamen
 		public GameDataBase GameDB = new GameDataBase();
 		public SpriteFont gameFont;
     
-		public  Texture2D gameOverButtonTexture,gameOverTexture, skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line, LevelBox, talentBox;
+		public  Texture2D gameOverButtonTexture,gameOverTexture, skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line, LevelBox, talentBox, talentName;
 
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
 
@@ -144,6 +144,7 @@ namespace _2ndSemesterFinalExamen
 
 			LevelBox = Content.Load<Texture2D>("assets/Buttons/talentCount");
 			talentBox = Content.Load<Texture2D>("assets/Buttons/talentDescriptBox");
+			talentName = Content.Load<Texture2D>("assets/Buttons/talentNavn");
 
 			enemyFactory = EnemyFactory.Instance;
 			menuNavigator = MenuNavigator.Instance;
