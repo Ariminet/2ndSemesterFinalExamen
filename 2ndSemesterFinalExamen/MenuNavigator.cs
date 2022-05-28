@@ -225,9 +225,9 @@ namespace _2ndSemesterFinalExamen
 		{
             if (Game1.Instance.talenTreeCreated && !madeTalent)
             {
-                var shot = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.gameFont, Game1.Instance.shoot, new Vector2(0, -250), new Vector2(-60, -150), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[5])
+                var shot = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.gameFont, Game1.Instance.shoot, new Vector2(0, -250), new Vector2(-60, -150), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[9])
                 { };
-                var fasterShots = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.gameFont, Game1.Instance.fasterShots, new Vector2(-60, -150), new Vector2(), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[7])
+                var fasterShots = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.gameFont, Game1.Instance.fasterShots, new Vector2(-60, -150), new Vector2(), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[6])
                 { };
 
 

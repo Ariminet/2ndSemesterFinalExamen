@@ -14,6 +14,8 @@ namespace _2ndSemesterFinalExamen
         
         private Buttoncomponent parent;
         private Vector2 Position;
+
+        public Talent thisTalent;
         public Vector2 PosPlayer { get; set; }
         public Rectangle Rectangle
         {
@@ -38,6 +40,7 @@ namespace _2ndSemesterFinalExamen
             font = fontHere;
             this.parent = parent;
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (active)
@@ -53,6 +56,13 @@ namespace _2ndSemesterFinalExamen
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), Color.Black);
             }
+                if (thisTalent != null)
+                {
+                    var x = (Position.X + (Rectangle.Width / 2)) - (font.MeasureString(thisTalent.Description).X / 2);
+                    var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(thisTalent.Description).Y / 2);
+
+                    spriteBatch.DrawString(font, thisTalent.Description, new Vector2(x, y), Color.Black);
+                }
             }
 
         }

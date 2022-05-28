@@ -20,8 +20,10 @@ namespace _2ndSemesterFinalExamen
 
             buttonComp = new Buttoncomponent(buttonSprite, line1, line2, line3, aTalent, font);
 
-            textComp.PosPlayer = new Vector2(Pos.X -50, Pos.Y -50);
+            textComp.PosPlayer = new Vector2(Pos.X -0, Pos.Y - 60);
             buttonComp.PosPlayer = Pos;
+
+            textComp.thisTalent = aTalent;
 
             buttonComp.child = textComp; 
 
