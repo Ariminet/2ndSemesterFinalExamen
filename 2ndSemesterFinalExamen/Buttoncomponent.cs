@@ -72,7 +72,7 @@ namespace _2ndSemesterFinalExamen
 
             if (child != null)
             {
-                if (endOne != new Vector2())
+                if (endOne != new Vector2(0,0))
                 {
                     Vector2 end  = new Vector2(Game1.Instance.buttonsWorldPosition.X + endOne.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + endOne.Y - texture.Height / 2);
 
@@ -83,7 +83,7 @@ namespace _2ndSemesterFinalExamen
                     new Rectangle(
                         (int)position.X + texture.Width / 2,
                         (int)position.Y + texture.Height / 2,
-                        (int)edge.Length()*2,
+                        (int)edge.Length(),
                         1),
                     null,
                     Color.White,
@@ -94,7 +94,7 @@ namespace _2ndSemesterFinalExamen
 
                 }
 
-                if (endTwo != new Vector2())
+                if (endTwo != new Vector2(0,0))
                 {
                     Vector2 end = new Vector2(Game1.Instance.buttonsWorldPosition.X + endTwo.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + endTwo.Y - texture.Height / 2);
 
@@ -114,7 +114,7 @@ namespace _2ndSemesterFinalExamen
                         SpriteEffects.None,
                         0);
                 }
-                if (endThree != new Vector2())
+                if (endThree != new Vector2(0,0))
                 {
                     Vector2 end = new Vector2(Game1.Instance.buttonsWorldPosition.X + endThree.X - texture.Width / 2, Game1.Instance.buttonsWorldPosition.Y + endThree.Y - texture.Height / 2);
 

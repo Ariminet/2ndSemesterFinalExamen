@@ -11,6 +11,7 @@ namespace _2ndSemesterFinalExamen
     {
         private SpriteFont font;
         private Texture2D texture;
+        public Texture2D talentName;
         
         private Buttoncomponent parent;
         private Vector2 Position;
@@ -62,6 +63,10 @@ namespace _2ndSemesterFinalExamen
                     var y = (Position.Y + (Rectangle.Height / 2)) - (font.MeasureString(thisTalent.Description).Y / 2);
 
                     spriteBatch.DrawString(font, thisTalent.Description, new Vector2(x, y), Color.Black);
+
+                    spriteBatch.Draw(talentName, new Vector2 (Position.X, Position.Y - 50), Color.White);
+
+                    spriteBatch.DrawString(font, thisTalent.Tag, new Vector2(Position.X + 10, y - 50), Color.Black);
                 }
             }
 
