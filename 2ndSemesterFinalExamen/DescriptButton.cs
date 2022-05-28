@@ -14,7 +14,7 @@ namespace _2ndSemesterFinalExamen
         
 
 
-        public DescriptButton(Texture2D talentBox, SpriteFont font, Texture2D buttonSprite, Vector2 Pos, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent)
+        public DescriptButton(Texture2D talentBox, Texture2D talentName, SpriteFont font, Texture2D buttonSprite, Vector2 Pos, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent)
         {
             textComp = new TextComponent(talentBox, font);
 
@@ -24,6 +24,8 @@ namespace _2ndSemesterFinalExamen
             buttonComp.PosPlayer = Pos;
 
             textComp.thisTalent = aTalent;
+
+            textComp.talentName = talentName;
 
             buttonComp.child = textComp; 
 

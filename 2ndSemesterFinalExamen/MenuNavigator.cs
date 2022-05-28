@@ -225,17 +225,60 @@ namespace _2ndSemesterFinalExamen
 		{
             if (Game1.Instance.talenTreeCreated && !madeTalent)
             {
-                var shot = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.gameFont, Game1.Instance.shoot, new Vector2(0, -250), new Vector2(-60, -150), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[9])
+                var u = 20;
+                
+                var shot = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.shoot, new Vector2(0, -250+u), new Vector2(-90, -150 + u), new Vector2(0,-150+u), new Vector2(90, -150+u), TalentTree.Instance.graph.Talents[9])
                 { };
-                var fasterShots = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.gameFont, Game1.Instance.fasterShots, new Vector2(-60, -150), new Vector2(), new Vector2(), new Vector2(), TalentTree.Instance.graph.Talents[6])
+                var fasterShots = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.fasterShots, new Vector2(-90, -150+u), new Vector2(-160, -50 + u), new Vector2(0,0), new Vector2(0,0), TalentTree.Instance.graph.Talents[6])
                 { };
+                var quickReload = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.quickReload, new Vector2(0, -150+u), new Vector2(-50, -50+u), new Vector2(50, -50 + u), new Vector2(0,0), TalentTree.Instance.graph.Talents[8])
+                { };
+                var speed = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.speed, new Vector2(90, -150+u), new Vector2(150, -50 + u), new Vector2(0,0), new Vector2(0,0), TalentTree.Instance.graph.Talents[10])
+                { };
+                var sprayShot = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.sprayShot, new Vector2(-160, -50+u), new Vector2(-120, 50 + u), new Vector2(-220, 50 + u), new Vector2(0,0), TalentTree.Instance.graph.Talents[11])
+                { };
+                var biggerProjectilles = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.biggerProjectiles, new Vector2(-50, -50+u), new Vector2(0, 50 + u), new Vector2(0,0), new Vector2(0,0), TalentTree.Instance.graph.Talents[0])
+                { };
+                var piercingShot = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.piercingShot, new Vector2(50, -50+u), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), TalentTree.Instance.graph.Talents[7])
+                { };
+                var Dash = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.dash, new Vector2(150, -50+u), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), TalentTree.Instance.graph.Talents[3])
+                { };
+                var BulletShield = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.bulletShield, new Vector2(-120, 50 + u), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), TalentTree.Instance.graph.Talents[1])
+                { };
+                var ExplosiveShots = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.explosiveShot, new Vector2(0, 50 + u), new Vector2(0, 150 + u), new Vector2(0, 0), new Vector2(0, 0), TalentTree.Instance.graph.Talents[5])
+                { };
+                var Explode = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.explode, new Vector2(0, 150 + u), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), TalentTree.Instance.graph.Talents[4])
+                { };
+                var Damage = new DescriptButton(Game1.Instance.talentBox, Game1.Instance.talentName, Game1.Instance.gameFont, Game1.Instance.damage, new Vector2(-220, 50 + u), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), TalentTree.Instance.graph.Talents[2])
+                { };
+
+                var backButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
+                {
+                    PosPlayer = new Vector2(-525, -325),
+                    Text = "Back"
+                };
 
 
                 upgradeGameComponents = new List<Component>()
             {
                 shot,
                 fasterShots,
+                quickReload,
+                speed,
+                sprayShot,
+                biggerProjectilles,
+                piercingShot,
+                Dash,
+                BulletShield,
+                ExplosiveShots,
+                Explode,
+                Damage,
+                backButton,
+
             };
+
+                backButton.Click += PreviousGameState;
+
                 madeTalent = true;
             }
 
