@@ -11,8 +11,8 @@ namespace _2ndSemesterFinalExamen
 {
        TextComponent textComp;
        Buttoncomponent buttonComp;
-        
 
+        public event EventHandler Click;
 
         public DescriptButton(Texture2D talentBox, Texture2D talentName, SpriteFont font, Texture2D buttonSprite, Vector2 Pos, Vector2 line1, Vector2 line2, Vector2 line3, Talent aTalent)
         {
@@ -27,7 +27,7 @@ namespace _2ndSemesterFinalExamen
 
             textComp.talentName = talentName;
 
-            buttonComp.child = textComp; 
+            buttonComp.child = textComp;
 
         }
 
@@ -45,6 +45,8 @@ namespace _2ndSemesterFinalExamen
         {
             buttonComp.Update(gameTime);
             textComp.Update(gameTime);
+
+            buttonComp.Click += this.Click;
 
         }
     }
