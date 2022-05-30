@@ -276,7 +276,7 @@ namespace _2ndSemesterFinalExamen
                 backButton,
 
             };
-
+                fasterShots.Click += FasterShoot;
                 backButton.Click += PreviousGameState;
 
                 madeTalent = true;
@@ -456,6 +456,7 @@ namespace _2ndSemesterFinalExamen
             currentGS = previousGS;
             failedOrPassed = true;
         }
+
         private void LogInStateChange(object sender, System.EventArgs e)
         {
             previousGS = currentGS;
@@ -512,6 +513,7 @@ namespace _2ndSemesterFinalExamen
 		}
         private void GoToUpgrades(object sender, System.EventArgs e)
         {
+            previousGS = currentGS;
             currentGS = GameStates.Upgrades;
         }
         private void SaveTheGame(object sender, System.EventArgs e)
@@ -527,6 +529,12 @@ namespace _2ndSemesterFinalExamen
 
             currentGS = GameStates.PreGame;
             //Game1.Instance.Exit();
+        }
+
+        //talent events
+        private void FasterShoot (object sender, System.EventArgs e)
+        {
+            TalentTree.Instance.DFS(TalentTree.Instance.graph.Talents[9], TalentTree.Instance.graph.Talents[6]);
         }
     }
 }

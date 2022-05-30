@@ -33,8 +33,8 @@ namespace _2ndSemesterFinalExamen
         {
 
             talentTree = Game1.Instance.GameDB.GetTalents(((Player)Game1.Instance.Player.GetComponent<Player>()));
-			foreach (Talent t in talentTree)
-			{
+            foreach (Talent t in talentTree)
+            {
                 graph.AddTalent(t.Tag, t.MaxLevel, t.CurrentLevel, t.Description);
 
             }
@@ -68,8 +68,10 @@ namespace _2ndSemesterFinalExamen
             //graph.AddEdge("Explosive shot", "Explode");
             //graph.AddEdge("Speed", "Dash");
 
+            Game1.Instance.talenTreeCreated = true;
+        }
 
-            static Talent DFS(Talent start, Talent goal)
+            public Talent DFS(Talent start, Talent goal)
             {
                 Stack<Edge> edges = new Stack<Edge>();
                 edges.Push(new Edge(start, start));
@@ -100,10 +102,10 @@ namespace _2ndSemesterFinalExamen
             }
 
 
-            Game1.Instance.talenTreeCreated = true;
+           
             
 
-        }
+        
             void Draw(SpriteBatch spBt, Texture2D shot)
             {
                 while (Game1.Instance.gameState == GameStates.InGame)
