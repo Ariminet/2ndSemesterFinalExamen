@@ -36,6 +36,7 @@ namespace _2ndSemesterFinalExamen
 
         private MenuNavigator()
         {
+
             var backButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
                 PosPlayer = new Vector2(-525, -325),
@@ -114,6 +115,7 @@ namespace _2ndSemesterFinalExamen
 
             newGameComponents = new List<Component>()
             {
+                
                 newUserInfo,
                 newUserTag,
                 CreateChar,
@@ -184,8 +186,18 @@ namespace _2ndSemesterFinalExamen
             };
             //MENU - GAME 
 
-            //UPGRADE
+            //INGAME
+            var pointCounter = new TextComponent(Game1.Instance.point, Game1.Instance.gameFont)
+            {
+                PosPlayer = new Vector2(500,-300),
+                Text = "string",
 
+            };
+
+            inGameComponents = new List<Component>()
+            {
+                pointCounter,
+            };
 
 
             //GAMEOVER - GAME 
@@ -335,10 +347,10 @@ namespace _2ndSemesterFinalExamen
                     }
                     break;
 				case GameStates.InGame:
-                    //foreach (var component in inGameComponents)
-                    //{
-                    //    component.Update(gameTime);
-                    //}
+                    foreach (var component in inGameComponents)
+                    {
+                        component.Update(gameTime);
+                    }
                     break;
 				case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
@@ -417,10 +429,10 @@ namespace _2ndSemesterFinalExamen
                     }
                      break;
                 case GameStates.InGame:
-                    //foreach (var component in inGameComponents)
-                    //{
-                    //    component.Draw(_spriteBatch);
-                    //}
+                    foreach (var component in inGameComponents)
+                    {
+                        component.Draw(_spriteBatch);
+                    }
                     break;
                 case GameStates.Upgrades:
                     foreach (var component in upgradeGameComponents)
