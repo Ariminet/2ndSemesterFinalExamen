@@ -40,7 +40,7 @@ namespace _2ndSemesterFinalExamen
 		public GameDataBase GameDB = new GameDataBase();
 		public SpriteFont gameFont;
     
-		public  Texture2D gameOverButtonTexture,gameOverTexture, skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line, LevelBox, talentBox, talentName;
+		public  Texture2D gameOverButtonTexture,gameOverTexture, skull, mon, ghost,ball, background,buttonText, shoot, fasterShots, quickReload, speed, sprayShot, biggerProjectiles, piercingShot, dash, bulletShield, explosiveShot, explode, damage, line, LevelBox, talentBox, talentName, point;
 
 		public List<GameObject> gameObjects { get; private set; } = new List<GameObject>();
 
@@ -62,6 +62,8 @@ namespace _2ndSemesterFinalExamen
 		private static Game1 instance;
 
 		public bool talenTreeCreated = false;
+
+		public int points = 10;
 
 		public static Game1 Instance
 		{
@@ -142,9 +144,12 @@ namespace _2ndSemesterFinalExamen
 			explosiveShot = Content.Load<Texture2D>("assets/Icons/explosive shot");
 			explode = Content.Load<Texture2D>("assets/Icons/explosion");
 
+			
 			LevelBox = Content.Load<Texture2D>("assets/Buttons/talentCount");
 			talentBox = Content.Load<Texture2D>("assets/Buttons/talentDescriptBox");
 			talentName = Content.Load<Texture2D>("assets/Buttons/talentNavn");
+
+			point = Content.Load<Texture2D>("assets/images/point");
 
 			enemyFactory = EnemyFactory.Instance;
 			menuNavigator = MenuNavigator.Instance;
@@ -243,6 +248,11 @@ namespace _2ndSemesterFinalExamen
 				menuNavigator.Draw(_spriteBatch);
 			}
 
+			if (gameState == GameStates.InGame)
+            {
+				_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
+				_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);
+			}
 			
 			
 			
