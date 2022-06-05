@@ -11,6 +11,7 @@ namespace _2ndSemesterFinalExamen
 {
        TextComponent textComp;
        Buttoncomponent buttonComp;
+        bool talentMade = false;
 
         public event EventHandler Click;
 
@@ -46,7 +47,11 @@ namespace _2ndSemesterFinalExamen
             buttonComp.Update(gameTime);
             textComp.Update(gameTime);
 
-            buttonComp.Click += this.Click;
+            if (buttonComp.thisTalent != null && !talentMade )
+            {
+                buttonComp.Click += this.Click;
+                talentMade = true;
+            }
 
         }
     }
