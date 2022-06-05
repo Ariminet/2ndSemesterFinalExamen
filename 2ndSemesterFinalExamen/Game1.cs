@@ -63,7 +63,7 @@ namespace _2ndSemesterFinalExamen
 
 		public bool talenTreeCreated = false;
 
-		public int points = 10;
+		public int points = 100;
 
 		public static Game1 Instance
 		{
@@ -249,6 +249,12 @@ namespace _2ndSemesterFinalExamen
 			}
 
 			if (gameState == GameStates.InGame)
+            {
+				_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
+				_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);
+			}
+
+			if(gameState == GameStates.Upgrades)
             {
 				_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
 				_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);

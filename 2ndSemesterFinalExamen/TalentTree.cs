@@ -71,48 +71,64 @@ namespace _2ndSemesterFinalExamen
             Game1.Instance.talenTreeCreated = true;
         }
 
-            public Talent DFS(Talent start, Talent goal)
+        public bool DFS(Talent start, Talent goal)
+        {
+            Stack<Edge> edges = new Stack<Edge>();
+            edges.Push(new Edge(start, start));
+
+            while (edges.Count > 0)
             {
-                Stack<Edge> edges = new Stack<Edge>();
-                edges.Push(new Edge(start, start));
-
-                while (edges.Count > 0)
+                Edge edge = edges.Pop();
+                if (!edge.To.Discovered)
                 {
-                    Edge edge = edges.Pop();
-                    if (!edge.To.Discovered)
-                    {
-                        edge.To.Discovered = true;
-                        edge.To.Parent = edge.From;
+                    edge.To.Discovered = true;
+                    edge.To.Parent = edge.From;
 
-                    }
-                    if (edge.To == goal)
-                    {
-                        return edge.To;
-                    }
 
-                    foreach (Edge e in edge.To.edges)
+
+                }
+                if (edge.To == goal)
+                {
+
+                    if (edge.From.Locked == false)
                     {
-                        if (!e.To.Discovered)
+
+                        foreach (Talent t in graph.Talents)
                         {
-                            edges.Push(e);
+                            t.Discovered = false;
                         }
+                        return true;
+                    }
+
+                }
+
+                foreach (Edge e in edge.To.edges)
+                {
+                    if (!e.To.Discovered)
+                    {
+                        edges.Push(e);
                     }
                 }
-                return null;
             }
-
-
-           
-            
-
-        
-            void Draw(SpriteBatch spBt, Texture2D shot)
+            foreach (Talent t in graph.Talents)
             {
-                while (Game1.Instance.gameState == GameStates.InGame)
-                {
-                    spBt.Draw(shot, new Vector2(50, 50), Color.White);
-                }
+                t.Discovered = false;
             }
+            return false;
+        }
+
+
+
+
+
+
+        void Draw(SpriteBatch spBt, Texture2D shot)
+        {
+            while (Game1.Instance.gameState == GameStates.InGame)
+            {
+                spBt.Draw(shot, new Vector2(50, 50), Color.White);
+            }
+        }
     }
 }
 

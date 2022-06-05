@@ -18,7 +18,7 @@ namespace _2ndSemesterFinalExamen
 
         public Talent Parent { get; set; }
 
-        public bool Locked { get; set; }
+        public bool Locked = true;
 
         public Talent(string Tag, int MaxLevel, int CurrentLevel, string Description)
 		{
