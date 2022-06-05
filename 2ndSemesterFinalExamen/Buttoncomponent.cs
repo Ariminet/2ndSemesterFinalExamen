@@ -136,7 +136,22 @@ namespace _2ndSemesterFinalExamen
                 }
             }
 
-            spriteBatch.Draw(texture, position, colour);
+            if (thisTalent != null && thisTalent.Locked == true)
+            {
+                spriteBatch.Draw(texture, position, Color.Gray);
+            }
+
+            if (thisTalent != null && thisTalent.Locked == false)
+            {
+                spriteBatch.Draw(texture, position, colour);
+            }
+
+            if (thisTalent == null)
+            {
+                spriteBatch.Draw(texture, position, colour);
+            }
+
+            //spriteBatch.Draw(texture, position, colour);
 
             //talent level box
             if (thisTalent != null && thisTalent.MaxLevel > 1)
