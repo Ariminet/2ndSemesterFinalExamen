@@ -190,6 +190,11 @@ namespace _2ndSemesterFinalExamen
                 Rectangle = new Rectangle((int)PosPlayer.X + (int)Game1.Instance.ViewWVH.X - texture.Width / 2, (int)PosPlayer.Y + (int)Game1.Instance.ViewWVH.Y - texture.Height / 2, texture.Width, texture.Height);
             }
 
+            if (thisTalent != null)
+            {
+                levelnm = thisTalent.CurrentLevel;
+            }
+
             if (mouseRectangle.Intersects(Rectangle))
             {
                 isHovering = true;

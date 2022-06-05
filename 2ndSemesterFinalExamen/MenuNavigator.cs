@@ -563,14 +563,23 @@ namespace _2ndSemesterFinalExamen
         {
             int index = TalentTree.Instance.graph.Talents.IndexOf((sender as Buttoncomponent).thisTalent);
 
-            if (TalentTree.Instance.graph.Talents[index].Locked == true && Game1.Instance.points >= 10)
-            {
-                if (TalentTree.Instance.DFS(TalentTree.Instance.graph.Talents[9], TalentTree.Instance.graph.Talents[index]))
+                if (TalentTree.Instance.graph.Talents[index].CurrentLevel < TalentTree.Instance.graph.Talents[index].MaxLevel && TalentTree.Instance.graph.Talents[index].Locked == false && Game1.Instance.points >= 10)
                 {
-                    TalentTree.Instance.graph.Talents[index].Locked = false;
+                    Game1.Instance.GameDB.UpdateTalent(((Player)Game1.Instance.Player.GetComponent<Player>()), TalentTree.Instance.graph.Talents[index]);
                     Game1.Instance.points -= 10;
+                    TalentTree.Instance.graph.Talents[index].CurrentLevel += 1;
                 }
 
+            if (TalentTree.Instance.graph.Talents[index].Locked == true && Game1.Instance.points >= 10)
+            {
+
+                if (TalentTree.Instance.DFS(TalentTree.Instance.graph.Talents[9], TalentTree.Instance.graph.Talents[index]))
+                {
+                    Game1.Instance.GameDB.UpdateTalent(((Player)Game1.Instance.Player.GetComponent<Player>()), TalentTree.Instance.graph.Talents[index]); 
+                    TalentTree.Instance.graph.Talents[index].Locked = false;
+                    Game1.Instance.points -= 10;
+                    TalentTree.Instance.graph.Talents[index].CurrentLevel += 1;
+                }
             }
 
 
