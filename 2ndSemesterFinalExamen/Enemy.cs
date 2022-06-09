@@ -15,7 +15,9 @@ namespace _2ndSemesterFinalExamen
         public int Health { get; set; } = 50;
         public int maxHealth = 50;
         public int Damage { get; set; } = 5;
+        public int Points { get; set; } = 0;
         bool dead = true;
+        
 
         public Enemy() //skabellsen af fjende typen
         {
@@ -64,6 +66,7 @@ namespace _2ndSemesterFinalExamen
                 //Game1.Instance.enemyFactory.CheckIfEnemiesAreDead();
                 gameObject.transform.Position = new Vector2(-2000, -2000);
                 Health = maxHealth;
+                ((Player)Game1.Instance.Player.GetComponent<Player>()).Points += this.Points;
                 Game1.Instance.enemyFactory.enemyKills++;
             }
             if (gameObject.transform.isMoving)

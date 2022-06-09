@@ -37,6 +37,8 @@ namespace _2ndSemesterFinalExamen
         private MenuNavigator()
         {
 
+           
+
             var backButton = new Buttoncomponent(Game1.Instance.buttonText, Game1.Instance.gameFont)
             {
                 PosPlayer = new Vector2(-525, -325),
@@ -112,6 +114,8 @@ namespace _2ndSemesterFinalExamen
             };
 
             CreateChar.Click += CreateCharacter;
+
+            
 
             newGameComponents = new List<Component>()
             {
@@ -308,6 +312,10 @@ namespace _2ndSemesterFinalExamen
             if (Game1.Instance.gameState != currentGS)
             {
                 Game1.Instance.gameState = currentGS;
+                if(Game1.Instance.gameState != GameStates.PreGame && Game1.Instance.gameState != GameStates.LoadGame  && Game1.Instance.gameState != GameStates.NewGame)
+				{
+                    Game1.Instance.GameDB.UpdatePlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+                }
             }
             switch (Game1.Instance.gameState)
             {
@@ -403,6 +411,7 @@ namespace _2ndSemesterFinalExamen
 
         public void Draw(SpriteBatch _spriteBatch)
         {
+			
             switch (Game1.Instance.gameState)
             {
                 case GameStates.PreGame:
@@ -486,6 +495,7 @@ namespace _2ndSemesterFinalExamen
         {
             previousGS = currentGS;
             currentGS = GameStates.LoadGame;
+
         }
         private void CreateNewGame(object sender, System.EventArgs e)
         {
@@ -524,6 +534,7 @@ namespace _2ndSemesterFinalExamen
                 currentGS = GameStates.Menu;
                 Game1.Instance.currentLevel = ((Player)Game1.Instance.Player.GetComponent<Player>()).CurrentLevel;
                 Game1.Instance.enemyFactory.SetFactoryStats();
+				
             }
             else
             {
@@ -546,6 +557,7 @@ namespace _2ndSemesterFinalExamen
             Game1.Instance.GameSave = new GameSaveData();
             //gameSave.ListGameUnits = Game1.Instance.GameDB.GetSaveGame(((Player)Game1.Instance.Player.GetComponent<Player>()));
             Game1.Instance.GameDB.SaveGameSession(((Player)Game1.Instance.Player.GetComponent<Player>()), Game1.Instance.GameSave);
+            
 
             //Game1.Instance.Exit();
         }
@@ -553,6 +565,12 @@ namespace _2ndSemesterFinalExamen
         {
 
             currentGS = GameStates.PreGame;
+            talentTree = null;
+            Game1.Instance.talenTreeCreated = false;
+            madeTalent = false;
+
+            ((Player)Game1.Instance.Player.GetComponent<Player>()).Abilities.RemoveRange(0, ((Player)Game1.Instance.Player.GetComponent<Player>()).Abilities.Count);
+             
             //Game1.Instance.Exit();
         }
 
@@ -565,9 +583,15 @@ namespace _2ndSemesterFinalExamen
 
                 if (TalentTree.Instance.graph.Talents[index].CurrentLevel < TalentTree.Instance.graph.Talents[index].MaxLevel && TalentTree.Instance.graph.Talents[index].Locked == false && Game1.Instance.points >= 10)
                 {
-                    Game1.Instance.GameDB.UpdateTalent(((Player)Game1.Instance.Player.GetComponent<Player>()), TalentTree.Instance.graph.Talents[index]);
-                    Game1.Instance.points -= 10;
+                if(((Player)Game1.Instance.Player.GetComponent<Player>()).Points >= 10)
+				{
+                    ((Player)Game1.Instance.Player.GetComponent<Player>()).Points -= 10;
                     TalentTree.Instance.graph.Talents[index].CurrentLevel += 1;
+                    Game1.Instance.GameDB.UpdateTalent(((Player)Game1.Instance.Player.GetComponent<Player>()), TalentTree.Instance.graph.Talents[index]);
+                    Game1.Instance.GameDB.UpdatePlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+                    ((Player)Game1.Instance.Player.GetComponent<Player>()).Abilities.Add(new Ability(TalentTree.Instance.graph.Talents[index].Tag, TalentTree.Instance.graph.Talents[index].CurrentLevel));
+                }
+                   
                 }
 
             if (TalentTree.Instance.graph.Talents[index].Locked == true && Game1.Instance.points >= 10)
@@ -575,10 +599,15 @@ namespace _2ndSemesterFinalExamen
 
                 if (TalentTree.Instance.DFS(TalentTree.Instance.graph.Talents[9], TalentTree.Instance.graph.Talents[index]))
                 {
-                    Game1.Instance.GameDB.UpdateTalent(((Player)Game1.Instance.Player.GetComponent<Player>()), TalentTree.Instance.graph.Talents[index]); 
-                    TalentTree.Instance.graph.Talents[index].Locked = false;
-                    Game1.Instance.points -= 10;
-                    TalentTree.Instance.graph.Talents[index].CurrentLevel += 1;
+                    if (((Player)Game1.Instance.Player.GetComponent<Player>()).Points >= 10)
+                    {
+                        TalentTree.Instance.graph.Talents[index].Locked = false;
+                        ((Player)Game1.Instance.Player.GetComponent<Player>()).Points -= 10;
+                        TalentTree.Instance.graph.Talents[index].CurrentLevel += 1;
+                        Game1.Instance.GameDB.UpdateTalent(((Player)Game1.Instance.Player.GetComponent<Player>()), TalentTree.Instance.graph.Talents[index]);
+                        Game1.Instance.GameDB.UpdatePlayer(((Player)Game1.Instance.Player.GetComponent<Player>()));
+                        ((Player)Game1.Instance.Player.GetComponent<Player>()).Abilities.Add(new Ability(TalentTree.Instance.graph.Talents[index].Tag, TalentTree.Instance.graph.Talents[index].CurrentLevel));
+                    }
                 }
             }
 

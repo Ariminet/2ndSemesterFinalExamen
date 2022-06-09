@@ -26,7 +26,10 @@ enum Dir
 	Down,
 	Up,
 	Left,
-	Right
+	Right,
+	Shield,
+	StrafeLeft,
+	StrafeRight,
 }
 namespace _2ndSemesterFinalExamen
 {
@@ -60,6 +63,8 @@ namespace _2ndSemesterFinalExamen
 		public GameObject Player = new GameObject();
 		public Camera camera;
 		private static Game1 instance;
+		private List<Component> uiGameComponents;
+		private TextComponent PointCounter, HealthCounter, LevelCounter, EnemyCounter,MagazineCounter;
 
 		public bool talenTreeCreated = false;
 
@@ -112,6 +117,8 @@ namespace _2ndSemesterFinalExamen
 			line = new Texture2D(_graphics.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			line.SetData(new[] { Color.White });
 
+
+			
 			base.Initialize();
 		}
 		
@@ -165,6 +172,40 @@ namespace _2ndSemesterFinalExamen
 			{
 				gO.Start();
 			}
+
+			 PointCounter = new TextComponent(buttonText, gameFont)
+			{
+				PosPlayer = new Vector2(525, -325),
+				Text = $"Health: {((Player)Player.GetComponent<Player>()).Health}"
+			};
+			 HealthCounter = new TextComponent(buttonText, gameFont)
+			{
+				PosPlayer = new Vector2(300, -325),
+				Text = $"Points: {((Player)Player.GetComponent<Player>()).Points}"
+			};
+			 LevelCounter = new TextComponent(buttonText, gameFont)
+			{
+				PosPlayer = new Vector2(525, 325),
+				Text = $"Level: {currentLevel}"
+			};
+			 EnemyCounter = new TextComponent(buttonText, gameFont)
+			{
+				PosPlayer = new Vector2(75, -325),
+				Text = $"Enemies Left: {enemyFactory.enemyKills + "/" + enemyFactory.maxSpawns}"
+			};
+			MagazineCounter = new TextComponent(buttonText, gameFont)
+			{
+				PosPlayer = new Vector2(-150, -325),
+				Text = $"Magazine: {((Player)Player.GetComponent<Player>()).magazine + "/3" }"
+			};
+			uiGameComponents = new List<Component>()
+			{
+				PointCounter,
+				HealthCounter,
+				LevelCounter,
+				EnemyCounter,
+				MagazineCounter,
+			};
 		}
 
 		
@@ -185,10 +226,15 @@ namespace _2ndSemesterFinalExamen
 
 			// TODO: Add your update logic here
 			
+				PointCounter.Text = $"Health: {((Player)Game1.Instance.Player.GetComponent<Player>()).Health}";
+				HealthCounter.Text = $"Points: {((Player)Game1.Instance.Player.GetComponent<Player>()).Points}";
+				LevelCounter.Text = $"Level: {currentLevel}";
+				EnemyCounter.Text = $"Enemies Left: {enemyFactory.enemyKills + "/" + enemyFactory.maxSpawns}";
+			MagazineCounter.Text = $"Magazine: {((Player)Game1.Instance.Player.GetComponent<Player>()).magazine + "/3" }";
 
 
 
-		    if (gameState != GameStates.InGame)
+			if (gameState != GameStates.InGame)
 			{
 				menuNavigator.Update(gameTime);
 			}
@@ -225,10 +271,13 @@ namespace _2ndSemesterFinalExamen
 			_spriteBatch.Draw(background, new Vector2(-450, -450), Color.White);
 
 			//_spriteBatch.DrawString(gameFont, "MouseWorld X, Y: " + Game1.Instance.mouseWorldPosition, Player.transform.Position - new Vector2(300, 300), Color.White);
-			_spriteBatch.DrawString(gameFont, "Level: " + currentLevel, Player.transform.Position - new Vector2(300, 300), Color.White);
-			_spriteBatch.DrawString(gameFont, "Kills: " + enemyFactory.enemyKills + "/" + enemyFactory.maxSpawns, Player.transform.Position - new Vector2(300, 250), Color.White);
-			_spriteBatch.DrawString(gameFont, "Current GameState: " + gameState, Player.transform.Position - new Vector2(300, 200), Color.White);
-
+			//_spriteBatch.DrawString(gameFont, "Level: " + currentLevel, Player.transform.Position - new Vector2(300, 300), Color.White);
+			//_spriteBatch.DrawString(gameFont, "Kills: " + enemyFactory.enemyKills + "/" + enemyFactory.maxSpawns, Player.transform.Position - new Vector2(300, 250), Color.White);
+			//_spriteBatch.DrawString(gameFont, "Current GameState: " + gameState, Player.transform.Position - new Vector2(300, 200), Color.White);
+			foreach (var component in uiGameComponents)
+			{
+				component.Draw(_spriteBatch);
+			}
 			//_spriteBatch.DrawString(gameFont, "ButtonsScreenPos X, Y: " + Game1.Instance.buttonsScreenPosition, Player.transform.Position - new Vector2(300, 250), Color.White);
 			//_spriteBatch.DrawString(gameFont, "ButtonsWorldPos X, Y: " + Game1.Instance.buttonsWorldPosition, Player.transform.Position - new Vector2(300, 200), Color.White);
 			//_spriteBatch.DrawString(gameFont, "MouseScreen X, Y: " + Mouse.GetState().Position, Player.transform.Position - new Vector2(300, 150), Color.White);
@@ -248,17 +297,17 @@ namespace _2ndSemesterFinalExamen
 				menuNavigator.Draw(_spriteBatch);
 			}
 
-			if (gameState == GameStates.InGame)
-            {
-				_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
-				_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);
-			}
+			//if (gameState == GameStates.InGame)
+   //         {
+			//	_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
+			//	_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);
+			//}
 
-			if(gameState == GameStates.Upgrades)
-            {
-				_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
-				_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);
-			}
+			//if(gameState == GameStates.Upgrades)
+   //         {
+			//	_spriteBatch.Draw(point, Player.transform.Position - new Vector2(-600, 300), Color.White);
+			//	_spriteBatch.DrawString(gameFont, "" + points, Player.transform.Position - new Vector2(-600, 300), Color.White);
+			//}
 			
 			
 			
@@ -282,7 +331,8 @@ namespace _2ndSemesterFinalExamen
 
 
 			Player.Update(gameTime);
-			this.camera.Position = Player.transform.Position + new Vector2(48, 48);
+			//this.camera.Position = Player.transform.Position + new Vector2(48, 48);
+			this.camera.Position = Player.transform.Position;
 			this.camera.Update(gameTime);
 			if (((Projectile)Player.GetComponent<Projectile>()) != null)
 			{
@@ -346,8 +396,24 @@ namespace _2ndSemesterFinalExamen
 
 						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
 						{
-							proj.Collided = true;
-							((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							if (!proj.PiercingShot)
+							{
+								proj.Collided = true;
+							}
+							if (proj.explosiveShot)
+							{
+								foreach (GameObject e in enemyFactory.skullEnemies)
+								{
+									int s = 300 + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+									if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+									{
+										((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage + 50;
+									}
+								}
+							}else
+							{
+								((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							}
 							
 							//((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
 							//enemy.transform.Position = new Vector2(-5000, -5000);
@@ -359,8 +425,25 @@ namespace _2ndSemesterFinalExamen
 
 						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
 						{
-							proj.Collided = true;
-							((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							if (!proj.PiercingShot)
+							{
+								proj.Collided = true;
+							}
+							if (proj.explosiveShot)
+							{
+								foreach (GameObject e in enemyFactory.skullEnemies)
+								{
+									int s = 300 + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+									if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+									{
+										((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage + 50;
+									}
+								}
+							}
+							else
+							{
+								((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							}
 							//((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
 							//enemy.transform.Position = new Vector2(-5000, -5000);
 						}
@@ -371,8 +454,25 @@ namespace _2ndSemesterFinalExamen
 
 						if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
 						{
-							proj.Collided = true;
-							((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							if (!proj.PiercingShot)
+							{
+								proj.Collided = true;
+							}
+							if (proj.explosiveShot)
+							{
+								foreach (GameObject e in enemyFactory.skullEnemies)
+								{
+									int s = 300 + ((Enemy)enemy.GetComponent<Enemy>()).radius;
+									if (Vector2.Distance(proj.Position, enemy.transform.Position) < sum)
+									{
+										((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage + 50;
+									}
+								}
+							}
+							else
+							{
+								((Enemy)enemy.GetComponent<Enemy>()).Health -= ((Player)Player.GetComponent<Player>()).Damage;
+							}
 							//((Enemy)enemy.GetComponent<Enemy>()).Dead = true;
 							//enemy.transform.Position = new Vector2(-5000, -5000);
 						}
@@ -448,7 +548,7 @@ namespace _2ndSemesterFinalExamen
 
 			Player.AddComponent(new Player());
 			Player.transform.Position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
-			Player.AddComponent(new Projectile(Player.transform.direction,Player.transform.Position));
+			Player.AddComponent(new Projectile(Player.transform.direction,Player.transform.Position,1.0f, 1000,false));
 			Player.AddComponent(new SpriteAnimation(Content.Load<Texture2D>("assets/Player/player"),1,8));
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkDown"), 4, 8);
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[1] = new SpriteAnimation(Content.Load<Texture2D>("assets/Player/walkUp"), 4, 8);
@@ -457,8 +557,10 @@ namespace _2ndSemesterFinalExamen
 			((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)Player.GetComponent<SpriteAnimation>()).animations[0];
 			
 			gameObjects.Add(Player);
+			((Player)Player.GetComponent<Player>()).PlayerSet = true;
 
-			
+
+
 		}
 
 
