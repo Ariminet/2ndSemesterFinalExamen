@@ -59,6 +59,7 @@ namespace _2ndSemesterFinalExamen
             {
                 GameObject tmp = new GameObject();
                 tmp.AddComponent(new Enemy());
+                ((Enemy)tmp.GetComponent<Enemy>()).Points = 10;
                 tmp.AddComponent(new SpriteAnimation(Game1.Instance.skull, 4, 8));
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.Instance.skull, 10, 8);
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0];
@@ -68,6 +69,7 @@ namespace _2ndSemesterFinalExamen
             {
                 GameObject tmp = new GameObject();
                 tmp.AddComponent(new Enemy());
+                ((Enemy)tmp.GetComponent<Enemy>()).Points = 15;
                 tmp.AddComponent(new SpriteAnimation(Game1.Instance.mon, 4, 8));
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.Instance.mon, 10, 8);
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0];
@@ -77,6 +79,7 @@ namespace _2ndSemesterFinalExamen
             {
                 GameObject tmp = new GameObject();
                 tmp.AddComponent(new Enemy());
+                ((Enemy)tmp.GetComponent<Enemy>()).Points = 5;
                 tmp.AddComponent(new SpriteAnimation(Game1.Instance.ghost, 4, 8));
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0] = new SpriteAnimation(Game1.Instance.ghost, 10, 8);
                 ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).anim = ((SpriteAnimation)tmp.GetComponent<SpriteAnimation>()).animations[0];

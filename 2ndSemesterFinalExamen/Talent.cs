@@ -18,7 +18,7 @@ namespace _2ndSemesterFinalExamen
 
         public Talent Parent { get; set; }
 
-        public bool Locked = true;
+        public bool Locked;
 
         public Talent(string Tag, int MaxLevel, int CurrentLevel, string Description)
 		{
@@ -27,7 +27,10 @@ namespace _2ndSemesterFinalExamen
             this.CurrentLevel = CurrentLevel;
             this.Description = Description;
 
+            Locked =  this.CurrentLevel > 0 ? false : true;
+
         }
+      
 
         public void AddEdge(Talent other)
         {

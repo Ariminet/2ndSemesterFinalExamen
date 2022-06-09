@@ -166,7 +166,7 @@ namespace _2ndSemesterFinalExamen
         }
         public void UpdateTalent(Player p, Talent t)
 		{
-            string query = "UPDATE PlayerTalentTree SET  current_level = @TalentLevel  WHERE Player_id = (SELECT ID FROM Player WHERE Tag = @Tag) AND talent_tree_id = (SELECT ID FROM TalentTree WHERE Tag LIKE '@TalentTag');";
+            string query = "UPDATE PlayerTalentTree SET  current_level = @TalentLevel  WHERE Player_id = (SELECT ID FROM Player WHERE Tag LIKE @Tag) AND talent_tree_id = (SELECT ID FROM TalentTree WHERE Tag LIKE @TalentTag);";
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {

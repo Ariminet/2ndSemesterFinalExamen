@@ -29,6 +29,7 @@ namespace _2ndSemesterFinalExamen
 
 
 
+        
         public void GraphFill()
         {
 
@@ -37,6 +38,13 @@ namespace _2ndSemesterFinalExamen
             {
                 graph.AddTalent(t.Tag, t.MaxLevel, t.CurrentLevel, t.Description);
 
+            }
+            foreach (Talent t in graph.Talents)
+            {
+                if (t.CurrentLevel > 0)
+                {
+                    ((Player)Game1.Instance.Player.GetComponent<Player>()).Abilities.Add(new Ability(t.Tag, t.CurrentLevel));
+                }
             }
             //graph.AddTalent("Shoot", 1, 1,"blabla");
             //graph.AddTalent("Faster shots", 3, 0, "blabla");
